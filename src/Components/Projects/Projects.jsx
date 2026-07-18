@@ -18,7 +18,7 @@ const projects = [
   image: srikrishnarestaurant,
   title: "Sri Krishna Restaurant",
   desc: "A complete restaurant management website featuring digital menu, QR code ordering, online food ordering, billing system, order tracking, and admin dashboard for seamless restaurant operations.",
-  link: "https://sri-krishna-restaurant-git-main-nttechworks5s-projects.vercel.app/"
+  link: "https://nttechworks5.github.io/-Sri-Krishna-Restaurant/"
 },
 
   {
