@@ -1,4 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+/* =========================================
+   XYRONTECH PROJECTS
+   PREMIUM MODERN ANIMATED DESIGN
+========================================= */
 
 * {
   margin: 0;
@@ -7,238 +10,1414 @@
   font-family: "Poppins", sans-serif;
 }
 
+
+/* =========================================
+   RESET
+========================================= */
+
+
+
+/* =========================================
+   SECTION
+========================================= */
+
 .projects-section {
+
   width: 100%;
-  padding: 60px 20px;
-  background: linear-gradient(180deg, var(--section-bg-start), var(--section-bg-end));
+
+  padding:
+    110px
+    20px
+    120px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(37, 99, 235, 0.04),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(139, 92, 246, 0.04),
+      transparent 30%
+    ),
+
+    linear-gradient(
+      180deg,
+      var(--section-bg-start, #ffffff),
+      var(--section-bg-end, #f8fafc)
+    );
+
 }
+
+
+/* =========================================
+   HEADER
+========================================= */
 
 .projects-header {
-  max-width: 760px;
-  margin: 0 auto 45px;
+
+  max-width: 780px;
+
+  margin:
+    0
+    auto
+    70px;
+
   text-align: center;
+
+  position: relative;
+
+  z-index: 5;
+
 }
+
+
+/* =========================================
+   EYEBROW
+========================================= */
+
+.projects-eyebrow {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding:
+    7px
+    16px;
+
+  margin-bottom: 18px;
+
+  border-radius: 999px;
+
+  color: #2563eb;
+
+  background: #eff6ff;
+
+  border:
+    1px solid
+    #bfdbfe;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+
+}
+
+
+/* =========================================
+   SUBTITLE
+========================================= */
+
+.projects-header
+.section-subtitle {
+
+  max-width: 650px;
+
+  margin-left: auto;
+
+  margin-right: auto;
+
+}
+
+
+/* =========================================
+   GRID
+========================================= */
 
 .projects-grid {
-  max-width: 1200px;
-  margin: auto;
+
+  width: 100%;
+
+  max-width: 1250px;
+
+  margin: 0 auto;
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 32px;
+
+  position: relative;
+
+  z-index: 2;
+
 }
+
+
+/* =========================================
+   CARD LINK
+========================================= */
 
 .project-card-link {
+
+  display: block;
+
   text-decoration: none;
+
   color: inherit;
+
+  min-width: 0;
+
 }
+
+
+/* =========================================
+   CARD
+========================================= */
 
 .project-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.4s ease;
+
   position: relative;
+
   height: 100%;
-  box-shadow: var(--shadow);
-}
 
-.project-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(37,99,235,.05), rgba(6,182,212,.05));
+  min-height: 570px;
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+
+  border-radius: 28px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.9
+    );
+
+  border:
+    1px solid
+    rgba(
+      226,
+      232,
+      240,
+      0.9
+    );
+
+  box-shadow:
+
+    0
+    10px
+    35px
+    rgba(
+      15,
+      23,
+      42,
+      0.06
+    );
+
   opacity: 0;
-  transition: 0.4s ease;
-  pointer-events: none;
+
+  transition:
+
+    opacity
+    0.8s
+    ease,
+
+    transform
+    0.8s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    ),
+
+    box-shadow
+    0.5s
+    ease,
+
+    border-color
+    0.5s
+    ease;
+
 }
 
-.project-card:hover {
-  transform: translateY(-10px);
-  border-color: #BFDBFE;
-  box-shadow: var(--shadow-hover);
+
+/* =========================================
+   INITIAL ANIMATION
+========================================= */
+
+.project-from-left {
+
+  transform:
+    translateX(-70px)
+    translateY(30px);
+
 }
 
-.project-card:hover::before {
+
+.project-from-right {
+
+  transform:
+    translateX(70px)
+    translateY(30px);
+
+}
+
+
+/* =========================================
+   VISIBLE
+========================================= */
+
+.project-card.project-visible {
+
   opacity: 1;
+
+  transform:
+    translateX(0)
+    translateY(0);
+
 }
+
+
+/* =========================================
+   STAGGER
+========================================= */
+
+.project-card-link:nth-child(2)
+.project-card {
+
+  transition-delay:
+    0.12s;
+
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
 
 .project-image {
+
+  width: 100%;
+
+  height: 300px;
+
   position: relative;
+
   overflow: hidden;
+
+  background:
+    #e2e8f0;
+
 }
+
+
+/* =========================================
+   IMAGE
+========================================= */
 
 .project-image img {
+
   width: 100%;
-  height: 240px;
+
+  height: 100%;
+
   object-fit: cover;
-  transition: 0.6s ease;
+
+  display: block;
+
+  transition:
+
+    transform
+    0.9s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    ),
+
+    filter
+    0.7s
+    ease;
+
 }
 
-.project-card:hover .project-image img {
-  transform: scale(1.07);
-}
 
-.project-image::after {
-  content: "";
+/* =========================================
+   IMAGE OVERLAY
+========================================= */
+
+.image-overlay {
+
   position: absolute;
+
   inset: 0;
-  background: linear-gradient(to top, rgba(15,23,42,.4), transparent);
+
+  background:
+
+    linear-gradient(
+      180deg,
+      transparent
+      35%,
+      rgba(
+        15,
+        23,
+        42,
+        0.45
+      )
+    );
+
   opacity: 0;
-  transition: 0.4s ease;
+
+  transition:
+    opacity
+    0.5s
+    ease;
+
 }
 
-.project-card:hover .project-image::after {
-  opacity: 1;
+
+/* =========================================
+   SHINE SWEEP
+========================================= */
+
+.project-image::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: -120%;
+
+  width: 80%;
+
+  height: 100%;
+
+  z-index: 3;
+
+  pointer-events: none;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(
+        255,
+        255,
+        255,
+        0.28
+      ),
+      transparent
+    );
+
+  transform:
+    skewX(-20deg);
+
+  transition:
+    left
+    0.8s
+    ease;
+
 }
+
+
+/* =========================================
+   CATEGORY
+========================================= */
+
+.project-category {
+
+  position: absolute;
+
+  top: 20px;
+
+  left: 20px;
+
+  z-index: 5;
+
+  padding:
+    8px
+    14px;
+
+  border-radius:
+    999px;
+
+  color: #ffffff;
+
+  background:
+    rgba(
+      15,
+      23,
+      42,
+      0.65
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.25
+    );
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  transform:
+    translateY(-10px);
+
+  opacity: 0;
+
+  transition:
+
+    opacity
+    0.5s
+    ease,
+
+    transform
+    0.5s
+    ease;
+
+}
+
+
+/* =========================================
+   VIEW PROJECT
+========================================= */
+
+.view-project {
+
+  position: absolute;
+
+  right: 20px;
+
+  bottom: 20px;
+
+  z-index: 5;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding:
+    10px
+    15px;
+
+  border-radius:
+    999px;
+
+  color: #ffffff;
+
+  background:
+    rgba(
+      15,
+      23,
+      42,
+      0.7
+    );
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.2
+    );
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  opacity: 0;
+
+  transform:
+    translateY(15px);
+
+  transition:
+
+    opacity
+    0.5s
+    ease,
+
+    transform
+    0.5s
+    ease;
+
+}
+
+
+.view-project svg {
+
+  font-size: 17px;
+
+  transition:
+    transform
+    0.4s
+    ease;
+
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
 
 .project-content {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
+
   flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  padding:
+    28px;
+
+  position: relative;
+
 }
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+.project-number {
+
+  position: absolute;
+
+  top: 25px;
+
+  right: 28px;
+
+  color:
+    rgba(
+      37,
+      99,
+      235,
+      0.08
+    );
+
+  font-size: 70px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  pointer-events: none;
+
+  transition:
+
+    color
+    0.5s
+    ease,
+
+    transform
+    0.5s
+    ease;
+
+}
+
+
+/* =========================================
+   INFO
+========================================= */
+
+.project-info {
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
 
 .project-content h3 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--heading);
-  margin-bottom: 12px;
-  transition: 0.35s ease;
+
+  margin:
+    0
+    0
+    12px;
+
+  padding-right:
+    70px;
+
+  color:
+    var(--heading, #0f172a);
+
+  font-size:
+    23px;
+
+  font-weight:
+    700;
+
+  line-height:
+    1.35;
+
+  transition:
+
+    color
+    0.4s
+    ease,
+
+    transform
+    0.4s
+    ease;
+
 }
 
-.project-card:hover .project-content h3 {
-  color: var(--primary);
-}
+
+/* =========================================
+   DESCRIPTION
+========================================= */
 
 .project-content p {
-  color: var(--text);
-  font-size: 16px;
-  line-height: 1.8;
-  margin-bottom: 24px;
-  flex: 1;
+
+  max-width:
+    540px;
+
+  margin:
+    0;
+
+  color:
+    var(--text, #64748b);
+
+  font-size:
+    14px;
+
+  line-height:
+    1.8;
+
 }
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.project-footer {
+
+  margin-top:
+    auto;
+
+  padding-top:
+    25px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    15px;
+
+}
+
+
+/* =========================================
+   LINK TEXT
+========================================= */
+
+.project-link-text {
+
+  color:
+    #64748b;
+
+  font-size:
+    13px;
+
+  font-weight:
+    600;
+
+  transition:
+    color
+    0.4s
+    ease;
+
+}
+
+
+/* =========================================
+   ACTION BUTTON
+========================================= */
 
 .project-links {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--soft-bg);
-  color: var(--soft-text);
-  transition: 0.4s ease;
+
+  width:
+    52px;
+
+  height:
+    52px;
+
+  flex-shrink:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    50%;
+
+  color:
+    #2563eb;
+
+  background:
+    #eff6ff;
+
+  border:
+    1px solid
+    #bfdbfe;
+
+  transition:
+
+    transform
+    0.5s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    ),
+
+    background
+    0.5s
+    ease,
+
+    color
+    0.5s
+    ease,
+
+    box-shadow
+    0.5s
+    ease;
+
 }
+
 
 .project-links svg {
-  font-size: 20px;
-  transition: 0.4s ease;
+
+  font-size:
+    20px;
+
+  transition:
+    transform
+    0.4s
+    ease;
+
 }
 
-.project-card:hover .project-links {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: #fff;
-  transform: rotate(-8deg) scale(1.08);
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.24);
-}
 
-.project-card:hover .project-links svg {
-  transform: translate(4px, -4px) rotate(12deg);
-}
+/* =========================================
+   HOVER
+========================================= */
 
-@media (max-width: 1024px) {
-  .projects-section {
-    padding: 80px 25px;
+@media (
+  hover: hover
+) and (
+  pointer: fine
+) {
+
+
+  .project-card-link:hover
+  .project-card {
+
+    transform:
+      translateY(-12px);
+
+    border-color:
+      rgba(
+        147,
+        197,
+        253,
+        0.8
+      );
+
+    box-shadow:
+
+      0
+      30px
+      70px
+      rgba(
+        37,
+        99,
+        235,
+        0.13
+      );
+
   }
 
-  .projects-header {
-    margin-bottom: 60px;
-  }
 
-  .projects-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-  }
+  /* IMAGE ZOOM */
 
+  .project-card-link:hover
   .project-image img {
-    height: 220px;
+
+    transform:
+      scale(1.08);
+
+    filter:
+      saturate(1.08);
+
   }
+
+
+  /* OVERLAY */
+
+  .project-card-link:hover
+  .image-overlay {
+
+    opacity:
+      1;
+
+  }
+
+
+  /* SHINE */
+
+  .project-card-link:hover
+  .project-image::before {
+
+    left:
+      130%;
+
+  }
+
+
+  /* CATEGORY */
+
+  .project-card-link:hover
+  .project-category {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+
+  }
+
+
+  /* VIEW */
+
+  .project-card-link:hover
+  .view-project {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+
+  }
+
+
+  .project-card-link:hover
+  .view-project svg {
+
+    transform:
+      translate(
+        3px,
+        -3px
+      );
+
+  }
+
+
+  /* TITLE */
+
+  .project-card-link:hover
+  .project-content h3 {
+
+    color:
+      #2563eb;
+
+    transform:
+      translateX(3px);
+
+  }
+
+
+  /* NUMBER */
+
+  .project-card-link:hover
+  .project-number {
+
+    color:
+      rgba(
+        37,
+        99,
+        235,
+        0.13
+      );
+
+    transform:
+      scale(1.05);
+
+  }
+
+
+  /* LINK TEXT */
+
+  .project-card-link:hover
+  .project-link-text {
+
+    color:
+      #2563eb;
+
+  }
+
+
+  /* BUTTON */
+
+  .project-card-link:hover
+  .project-links {
+
+    color:
+      #ffffff;
+
+    background:
+      linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+      );
+
+    border-color:
+      transparent;
+
+    transform:
+      rotate(-8deg)
+      scale(1.08);
+
+    box-shadow:
+
+      0
+      12px
+      28px
+      rgba(
+        37,
+        99,
+        235,
+        0.22
+      );
+
+  }
+
+
+  .project-card-link:hover
+  .project-links svg {
+
+    transform:
+      translate(
+        3px,
+        -3px
+      )
+      rotate(8deg);
+
+  }
+
 }
 
-@media (max-width: 768px) {
-  .projects-section {
-    padding: 50px 16px;
-  }
 
-  .projects-header {
-    margin-bottom: 45px;
+/* =========================================
+   PURPLE PROJECT
+========================================= */
+
+.project-purple:hover
+.project-card {
+
+  border-color:
+    rgba(
+      196,
+      181,
+      253,
+      0.8
+    );
+
+  box-shadow:
+
+    0
+    30px
+    70px
+    rgba(
+      139,
+      92,
+      246,
+      0.13
+    );
+
+}
+
+
+.project-purple:hover
+.project-content h3 {
+
+  color:
+    #7c3aed;
+
+}
+
+
+.project-purple:hover
+.project-links {
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #a855f7
+    );
+
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (
+  max-width: 1024px
+) {
+
+  .projects-section {
+
+    padding:
+      90px
+      25px
+      100px;
+
   }
 
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+
+    gap:
+      24px;
+
   }
 
   .project-card {
-    border-radius: 18px;
+
+    min-height:
+      550px;
+
   }
 
-  .project-image img {
-    height: 210px;
+  .project-image {
+
+    height:
+      250px;
+
   }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (
+  max-width: 768px
+) {
+
+  .projects-section {
+
+    padding:
+      75px
+      16px
+      90px;
+
+  }
+
+
+  .projects-header {
+
+    margin-bottom:
+      50px;
+
+  }
+
+
+  .projects-grid {
+
+    grid-template-columns:
+      1fr;
+
+    gap:
+      24px;
+
+    max-width:
+      500px;
+
+  }
+
+
+  .project-card {
+
+    min-height:
+      auto;
+
+    border-radius:
+      23px;
+
+  }
+
+
+  .project-image {
+
+    height:
+      230px;
+
+  }
+
 
   .project-content {
-    padding: 20px;
+
+    padding:
+      24px;
+
   }
+
 
   .project-content h3 {
-    font-size: 20px;
+
+    font-size:
+      20px;
+
   }
 
+
   .project-content p {
-    font-size: 15px;
-    margin-bottom: 20px;
+
+    font-size:
+      13.5px;
+
+    line-height:
+      1.75;
+
   }
+
 
   .project-links {
-    width: 46px;
-    height: 46px;
+
+    width:
+      46px;
+
+    height:
+      46px;
+
   }
+
+
+  /* MOBILE ANIMATION */
+
+  .project-from-left {
+
+    transform:
+      translateX(-45px);
+
+  }
+
+
+  .project-from-right {
+
+    transform:
+      translateX(45px);
+
+  }
+
+
+  /* Always show category */
+
+  .project-category {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+
+  }
+
+
+  /* Always show view */
+
+  .view-project {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+
+  }
+
 }
 
-@media (max-width: 375px) {
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (
+  max-width: 480px
+) {
+
   .projects-section {
-    padding: 45px 14px;
+
+    padding:
+      65px
+      14px
+      80px;
+
   }
 
-  .project-image img {
-    height: 190px;
+
+  .projects-header {
+
+    margin-bottom:
+      40px;
+
   }
+
+
+  .projects-grid {
+
+    gap:
+      20px;
+
+  }
+
+
+  .project-image {
+
+    height:
+      205px;
+
+  }
+
 
   .project-content {
-    padding: 18px;
+
+    padding:
+      21px;
+
   }
+
 
   .project-content h3 {
-    font-size: 18px;
+
+    font-size:
+      18px;
+
   }
+
 
   .project-content p {
-    font-size: 14px;
-    line-height: 1.7;
+
+    font-size:
+      13px;
+
+    line-height:
+      1.7;
+
   }
+
+
+  .project-number {
+
+    font-size:
+      55px;
+
+    right:
+      20px;
+
+  }
+
+
+  .project-footer {
+
+    padding-top:
+      20px;
+
+  }
+
+
+  .project-link-text {
+
+    font-size:
+      12px;
+
+  }
+
 }
 
-@media (min-width: 1400px) {
-  .projects-grid {
-    max-width: 1350px;
-    gap: 36px;
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (
+  prefers-reduced-motion: reduce
+) {
+
+  .project-card,
+  .project-image img,
+  .project-links,
+  .project-category,
+  .view-project {
+
+    transition:
+      none !important;
+
   }
 
-  .project-image img {
-    height: 260px;
-  }
 }

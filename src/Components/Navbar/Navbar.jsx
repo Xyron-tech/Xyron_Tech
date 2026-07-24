@@ -12,7 +12,6 @@ const menuItems = [
   { name: "About", id: "about" },
   { name: "Services", id: "services" },
   { name: "Projects", id: "projects" },
-  { name: "Team", id: "team" },
   { name: "Contact", id: "contact" }
   
 ];

@@ -41,7 +41,7 @@ function App() {
       <Services />
       <Projects />
       {/* <Pricing /> */}
-      <Team />
+      {/* <Team /> */}
       <Contact />
       <Footer />
       <WhatsAppFloat />

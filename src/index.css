@@ -155,7 +155,13 @@ html[data-theme="dark"] .nav-menu li.active::after {
   height: 4px;
   border-radius: 999px;
 }
-
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+}
 /* Make icons use subtle radial background */
 html[data-theme="dark"] .icon-box {
   background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.02), transparent 40%);
