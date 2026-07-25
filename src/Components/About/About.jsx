@@ -42,7 +42,7 @@ const About = () => {
 
       <div className="about-header">
         <span className="about-eyebrow">
-          About XyronTech
+          About Us
         </span>
 
         <h2>

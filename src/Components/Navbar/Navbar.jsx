@@ -11,6 +11,7 @@ const menuItems = [
   { name: "Home", id: "home" },
   { name: "About", id: "about" },
   { name: "Services", id: "services" },
+   { name: "How We Work", id: "how-we-work" },
   { name: "Projects", id: "projects" },
   { name: "Contact", id: "contact" }
   
@@ -64,7 +65,7 @@ const Navbar = () => {
       <div className="nav-logo" onClick={() => scrollToSection("home")}>
         <img src={logo} alt="XyronTech Logo" />
         <h2>
-          <span>Xyron</span>Tech
+          <span>Xyron</span>WebTech
         </h2>
       </div>
 
@@ -102,7 +103,7 @@ const Navbar = () => {
         <div className="mobile-menu-header">
           <div className="mobile-menu-brand">
             <span className="mobile-menu-title">Navigation</span>
-            <span className="mobile-menu-subtitle">XyronTech</span>
+            <span className="mobile-menu-subtitle">XyronWebTech</span>
           </div>
           <button
             className="mobile-close"

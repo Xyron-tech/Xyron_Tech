@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import "./Contact.css";
 
@@ -18,13 +19,13 @@ const contactInfo = [
   {
     icon: <FiPhone />,
     title: "Call Us",
-    value: "+91 99944 72896, +91 96267 82279",
+    value: "+91 99944 72896 / +91 96267 82279",
     link: "tel:+919994472896",
   },
   {
     icon: <FaWhatsapp />,
     title: "WhatsApp",
-    value: "+91 9843336980, +91 99944 72896",
+    value: "+91 98433 36980 / +91 99944 72896",
     link: "https://wa.me/919994472896",
   },
   {
@@ -60,11 +61,15 @@ const Contact = () => {
   return (
     <section className="contact-section" id="contact">
 
-      {/* =========================
+      {/* =====================================================
           SECTION HEADER
-      ========================== */}
+      ===================================================== */}
 
       <div className="contact-header section-header">
+
+        <span className="contact-eyebrow">
+          LET'S CONNECT
+        </span>
 
         <h2 className="section-title">
           Contact Us
@@ -72,7 +77,8 @@ const Contact = () => {
 
         <p className="section-subtitle">
           Have an idea or project in mind? We'd love to hear from you.
-          Fill out the form below and we'll get back to you shortly.
+          Tell us what you're looking for and let's build something
+          meaningful together.
         </p>
 
         <span
@@ -83,116 +89,12 @@ const Contact = () => {
       </div>
 
 
-      {/* =========================
-          CONTACT WRAPPER
-      ========================== */}
+      {/* =====================================================
+          FORM
+          FORM IS CENTERED AND FULL WIDTH
+      ===================================================== */}
 
-      <div className="contact-wrapper">
-
-
-        {/* =========================
-            CONTACT INFO
-        ========================== */}
-
-        <div className="contact-info-card">
-
-          <div className="contact-info-header">
-
-            <span className="contact-eyebrow">
-              LET'S CONNECT
-            </span>
-
-            <h3>
-              Get In Touch
-            </h3>
-
-            <p>
-              Whether you need a website, web application,
-              mobile app or digital solution, our team is
-              ready to help you turn your idea into reality.
-            </p>
-
-          </div>
-
-
-          {/* Contact Details */}
-
-          <div className="contact-list">
-
-            {contactInfo.map((item, index) => (
-
-              <a
-                href={item.link}
-                key={index}
-                className="contact-item"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-
-                <div className="contact-icon">
-                  {item.icon}
-                </div>
-
-                <div className="contact-item-content">
-
-                  <h4>
-                    {item.title}
-                  </h4>
-
-                  <span>
-                    {item.value}
-                  </span>
-
-                </div>
-
-              </a>
-
-            ))}
-
-          </div>
-
-
-          {/* Social Media */}
-
-          <div className="social-section">
-
-            <span className="social-title">
-              Follow XyronTech
-            </span>
-
-            <div className="social-row">
-
-              <a
-                href="https://youtube.com/@xyron_tech?si=TxNLumDpZEFMBmAY"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-btn"
-              >
-                <FaYoutube />
-                <span>YouTube</span>
-              </a>
-
-
-              <a
-                href="https://www.instagram.com/xyrontech.websites?igsh=NDU1aXd0anM1dGdx"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-btn"
-              >
-                <FaInstagram />
-                <span>Instagram</span>
-              </a>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        {/* =========================
-            CONTACT FORM
-        ========================== */}
+      <div className="contact-form-wrapper">
 
         <div className="contact-form-card">
 
@@ -220,7 +122,9 @@ const Contact = () => {
             method="POST"
           >
 
-            {/* Web3Forms */}
+            {/* =========================
+                WEB3FORMS
+            ========================== */}
 
             <input
               type="hidden"
@@ -247,7 +151,7 @@ const Contact = () => {
             />
 
 
-            {/* Selected Service */}
+            {/* SELECTED SERVICE */}
 
             <input
               type="hidden"
@@ -261,7 +165,6 @@ const Contact = () => {
 
 
             {/* =========================
-                ROW 1
                 NAME + EMAIL
             ========================== */}
 
@@ -304,7 +207,6 @@ const Contact = () => {
 
 
             {/* =========================
-                ROW 2
                 SERVICE + OTHER
             ========================== */}
 
@@ -377,7 +279,7 @@ const Contact = () => {
 
 
             {/* =========================
-                MESSAGE
+                PROJECT DETAILS
             ========================== */}
 
             <div className="form-field">
@@ -389,7 +291,7 @@ const Contact = () => {
               <textarea
                 id="message"
                 name="message"
-                rows="7"
+                rows="8"
                 placeholder="Tell us about your project, requirements or idea..."
                 required
               />
@@ -420,8 +322,114 @@ const Contact = () => {
 
       </div>
 
+
+      {/* =====================================================
+          CONTACT DETAILS
+          SEPARATE CARDS BELOW FORM
+      ===================================================== */}
+
+      <div className="contact-details-section">
+
+        <div className="contact-info-header">
+
+          <span className="contact-eyebrow">
+            GET IN TOUCH
+          </span>
+
+          <h3>
+            We're Here to Help
+          </h3>
+
+          <p>
+            Whether you need a website, web application,
+            mobile app or digital solution, our team is
+            ready to help you turn your idea into reality.
+          </p>
+
+        </div>
+
+
+        {/* CONTACT CARDS */}
+
+        <div className="contact-list">
+
+          {contactInfo.map((item, index) => (
+
+            <a
+              href={item.link}
+              key={index}
+              className="contact-item"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              <div className="contact-icon">
+                {item.icon}
+              </div>
+
+              <div className="contact-item-content">
+
+                <h4>
+                  {item.title}
+                </h4>
+
+                <span>
+                  {item.value}
+                </span>
+
+              </div>
+
+            </a>
+
+          ))}
+
+        </div>
+
+
+        {/* =================================================
+            SOCIAL MEDIA
+        ================================================= */}
+
+        <div className="social-section">
+
+          <span className="social-title">
+            Follow XyronTech
+          </span>
+
+          <div className="social-row">
+
+            <a
+              href="https://youtube.com/@xyron_tech?si=TxNLumDpZEFMBmAY"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn"
+              aria-label="XyronTech YouTube"
+            >
+              <FaYoutube />
+              <span>YouTube</span>
+            </a>
+
+
+            <a
+              href="https://www.instagram.com/xyronwebtech.websites?igsh=NDU1aXd0anM1dGdx"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-btn"
+              aria-label="XyronTech Instagram"
+            >
+              <FaInstagram />
+              <span>Instagram</span>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </section>
   );
 };
 
 export default Contact;
+

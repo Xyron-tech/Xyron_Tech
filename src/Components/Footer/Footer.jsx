@@ -1,3 +1,4 @@
+
 import React from "react";
 import "./Footer.css";
 
@@ -15,13 +16,24 @@ import {
   FiMapPin,
 } from "react-icons/fi";
 
+
+// ======================================================
+// QUICK LINKS
+// ======================================================
+
 const quickLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
   { name: "Projects", href: "#projects" },
+  { name: "How We Work", href: "#how-we-work" },
   { name: "Contact", href: "#contact" },
 ];
+
+
+// ======================================================
+// CONTACT INFORMATION
+// ======================================================
 
 const contactInfo = [
   {
@@ -44,27 +56,46 @@ const contactInfo = [
   },
 ];
 
+
+// ======================================================
+// FOOTER COMPONENT
+// ======================================================
+
 const Footer = () => {
   return (
     <footer className="footer">
+
       <div className="footer-container">
 
-        {/* BRAND */}
+
+        {/* ==================================================
+            BRAND SECTION
+        ================================================== */}
+
         <div className="footer-brand">
 
           <div className="footer-logo">
-            <img src={logo} alt="XyronTech Logo" />
+
+            <img
+              src={logo}
+              alt="XyronTech Logo"
+            />
 
             <h2>
-              <span>Xyron</span>Tech
+              <span>Xyron</span>WebTech
             </h2>
+
           </div>
+
 
           <p className="footer-description">
             Building modern digital solutions for startups,
             businesses and creators with premium web
             experiences that leave a lasting impression.
           </p>
+
+
+          {/* SOCIAL MEDIA */}
 
           <div className="footer-social">
 
@@ -77,8 +108,9 @@ const Footer = () => {
               <FaYoutube />
             </a>
 
+
             <a
-              href="https://www.instagram.com/xyrontech.websites?igsh=NDU1aXd0anM1dGdx"
+              href="https://www.instagram.com/xyronwebtech.websites?igsh=NDU1aXd0anM1dGdx"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="XyronTech Instagram"
@@ -91,33 +123,59 @@ const Footer = () => {
         </div>
 
 
-        {/* QUICK LINKS */}
+
+        {/* ==================================================
+            QUICK LINKS
+        ================================================== */}
+
         <div className="footer-column">
 
-          <h3>Quick Links</h3>
+          <h3>
+            Quick Links
+          </h3>
+
 
           <ul>
+
             {quickLinks.map((item, index) => (
+
               <li key={index}>
+
                 <a href={item.href}>
+
                   <FaArrowRight />
-                  <span>{item.name}</span>
+
+                  <span>
+                    {item.name}
+                  </span>
+
                 </a>
+
               </li>
+
             ))}
+
           </ul>
 
         </div>
 
 
-        {/* CONTACT */}
+
+        {/* ==================================================
+            CONTACT US
+        ================================================== */}
+
         <div className="footer-column footer-contact-column">
 
-          <h3>Contact Us</h3>
+          <h3>
+            Contact Us
+          </h3>
+
 
           <div className="footer-contact-list">
 
             {contactInfo.map((item, index) => (
+
               <a
                 key={index}
                 href={item.href}
@@ -130,12 +188,21 @@ const Footer = () => {
                   {item.icon}
                 </div>
 
+
                 <div className="footer-contact-text">
-                  <span>{item.title}</span>
-                  <p>{item.value}</p>
+
+                  <span>
+                    {item.title}
+                  </span>
+
+                  <p>
+                    {item.value}
+                  </p>
+
                 </div>
 
               </a>
+
             ))}
 
           </div>
@@ -145,14 +212,20 @@ const Footer = () => {
       </div>
 
 
-      {/* BOTTOM */}
+
+      {/* ==================================================
+          FOOTER BOTTOM
+      ================================================== */}
+
       <div className="footer-bottom">
 
         <div className="footer-bottom-line"></div>
 
+
         <p>
           © 2026 <strong>XyronTech</strong>. All Rights Reserved.
         </p>
+
 
         <span>
           Crafted with ❤️ using React.
@@ -164,4 +237,6 @@ const Footer = () => {
   );
 };
 
+
 export default Footer;
+
