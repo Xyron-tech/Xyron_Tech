@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./Projects.css";
-
+import SEO from "../SEO/SEO";
 import {
   FiExternalLink,
   FiArrowUpRight,
@@ -8,7 +8,11 @@ import {
 
 import portfolio from "../../assets/portfolio.webp";
 import srikrishnarestaurant from "../../assets/srikrishnarestaurant.webp";
-
+<SEO
+title="Projects | XYRON Web Tech"
+description="View our latest projects."
+keywords="Portfolio, Website Projects"
+/>
 const projects = [
   {
     image: srikrishnarestaurant,

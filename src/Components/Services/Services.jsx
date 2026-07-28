@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./Services.css";
-
+import SEO from "../SEO/SEO";
 import {
   FiSmartphone,
   FiBriefcase,
@@ -14,7 +14,11 @@ import {
   FiUsers,
   FiVideo,
 } from "react-icons/fi";
-
+<SEO
+title="Services | XYRON Web Tech"
+description="Website Development Services."
+keywords="React Development, Business Website"
+/>
 const services = [
   {
     icon: <FiSmartphone />,

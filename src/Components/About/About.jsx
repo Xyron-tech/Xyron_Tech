@@ -1,13 +1,17 @@
 import React from "react";
 import "./About.css";
-
+import SEO from "../SEO/SEO";
 import {
   FiTarget,
   FiEye,
 } from "react-icons/fi";
 
 import { TbDiamond } from "react-icons/tb";
-
+<SEO
+title="About | XYRON Web Tech"
+description="Learn about XYRON Web Tech."
+keywords="About XYRON, Web Development Company"
+/>
 const aboutCards = [
   {
     id: 1,

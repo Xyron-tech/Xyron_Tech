@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import logo from "../../assets/logo.webp";
-
 import {
   FiMenu,
   FiX,

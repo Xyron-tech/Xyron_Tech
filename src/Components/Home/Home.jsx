@@ -1,11 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import "./Home.css";
-
+import SEO from "../SEO/SEO";
 import {
   Swiper,
   SwiperSlide,
 } from "swiper/react";
+<>
+    <SEO
+        title="XYRON Web Tech | Professional Website Development"
+        description="Professional Website Development Company specializing in React websites, UI/UX Design and SEO."
+        keywords="Website Development, React, UI UX, SEO, Web Design, Full Stack"
+    />
 
+    {/* Existing Home Code */}
+</>
 import {
   Autoplay,
   Pagination,

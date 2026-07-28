@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import "./Contact.css";
-
+import SEO from "../SEO/SEO";
 import {
   FiPhone,
   FiMail,
@@ -14,7 +14,11 @@ import {
   FaYoutube,
   FaInstagram,
 } from "react-icons/fa";
-
+<SEO
+title="Contact | XYRON Web Tech"
+description="Contact XYRON Web Tech."
+keywords="Contact Website Company"
+/>
 const contactInfo = [
   {
     icon: <FiPhone />,
