@@ -139,7 +139,7 @@
 
   width: 100%;
 
-  max-width: 1250px;
+  max-width: 1500px;
 
   margin: 0 auto;
 
@@ -147,7 +147,7 @@
 
   grid-template-columns:
     repeat(
-      2,
+      3,
       minmax(0, 1fr)
     );
 
@@ -314,6 +314,8 @@
 
   height: 300px;
 
+  background: #f8fafc;
+
   position: relative;
 
   overflow: hidden;
@@ -334,7 +336,8 @@
 
   height: 100%;
 
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 
   display: block;
 
@@ -1137,6 +1140,12 @@
 
   .projects-grid {
 
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
     gap:
       24px;
 
@@ -1419,4 +1428,9 @@
 
   }
 
+}
+
+/* Keep the complete project screenshot visible, including on hover. */
+.project-card-link:hover .project-image img {
+  transform: none;
 }

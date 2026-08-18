@@ -7,6 +7,7 @@ import {
 
 import portfolio from "../../assets/portfolio.webp";
 import srikrishnarestaurant from "../../assets/srikrishnarestaurant.webp";
+import srivarahidattaguru from "../../assets/srivarahidattaguru.webp";
 
 const projects = [
   {
@@ -25,6 +26,15 @@ const projects = [
     desc: "A modern corporate website built for APK Infotech showcasing IT services, internships, placement support, training programs, and responsive business solutions.",
     link: "https://apk-info-tech-94vd.vercel.app",
     color: "purple",
+  },
+
+  {
+    image: srivarahidattaguru,
+    title: "Sri Varahi Datta Guru Trust",
+    category: "Trust & Donation Platform",
+    desc: "A full-featured trust website with event booking, video, audio and photo galleries, user login and registration, Razorpay donations, live donation totals, and a public donor list. Built with React, Express and MongoDB.",
+    link: "https://www.srivarahidattagurutrust.com",
+    color: "blue",
   },
 ];
 
@@ -130,8 +140,8 @@ const Projects = () => {
             <a
               key={project.title}
               href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={project.link ? "_blank" : undefined}
+              rel={project.link ? "noopener noreferrer" : undefined}
               className={`project-card-link project-${project.color}`}
             >
 
