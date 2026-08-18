@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import "./Services.css";
-import SEO from "../SEO/SEO";
 import {
   FiSmartphone,
   FiBriefcase,
@@ -14,11 +13,7 @@ import {
   FiUsers,
   FiVideo,
 } from "react-icons/fi";
-<SEO
-title="Services | XYRON Web Tech"
-description="Website Development Services."
-keywords="React Development, Business Website"
-/>
+
 const services = [
   {
     icon: <FiSmartphone />,
@@ -122,12 +117,13 @@ useEffect(() => {
 
       <div className="services-header section-header">
         <h2 className="section-title">
-          Our Services
+          Web Development Services by Xyron Web Tech
         </h2>
 
         <p className="section-subtitle">
-          We design and develop premium digital experiences
-          that help businesses grow faster online.
+          XyronWebTech designs and develops premium digital experiences —
+          responsive websites, e-commerce stores and business solutions
+          built for growth and search visibility.
         </p>
 
         <span className="section-accent"></span>

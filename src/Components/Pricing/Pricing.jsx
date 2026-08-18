@@ -4,13 +4,8 @@ import PricingCard from "./PricingCard";
 
 import { TbRocket, TbHexagon } from "react-icons/tb";
 import { FiBriefcase } from "react-icons/fi";
-import SEO from "../SEO/SEO";
+
 const Pricing = () => {
-<SEO
-title="About | XYRON Web Tech"
-description="Learn about XYRON Web Tech."
-keywords="About XYRON, Web Development Company"
-/>
   const PricingCards = [
 
     {

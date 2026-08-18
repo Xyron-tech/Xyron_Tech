@@ -1,7 +1,5 @@
-
 import React, { useState } from "react";
 import "./Contact.css";
-import SEO from "../SEO/SEO";
 import {
   FiPhone,
   FiMail,
@@ -14,11 +12,7 @@ import {
   FaYoutube,
   FaInstagram,
 } from "react-icons/fa";
-<SEO
-title="Contact | XYRON Web Tech"
-description="Contact XYRON Web Tech."
-keywords="Contact Website Company"
-/>
+
 const contactInfo = [
   {
     icon: <FiPhone />,
@@ -76,13 +70,12 @@ const Contact = () => {
         </span>
 
         <h2 className="section-title">
-          Contact Us
+          Contact Xyron Web Tech
         </h2>
 
         <p className="section-subtitle">
-          Have an idea or project in mind? We'd love to hear from you.
-          Tell us what you're looking for and let's build something
-          meaningful together.
+          Ready to build your website with XyronWebTech? Reach out to our team
+          at xyronwebtech.com — we'd love to discuss your project and goals.
         </p>
 
         <span

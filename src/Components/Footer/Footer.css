@@ -157,7 +157,8 @@
     );
 }
 
-.footer-logo h2 {
+.footer-logo h2,
+.footer-logo .footer-brand-name {
   margin: 0;
 
   color: #e5e7eb;
@@ -170,7 +171,8 @@
   letter-spacing: -0.03em;
 }
 
-.footer-logo h2 span {
+.footer-logo h2 span,
+.footer-logo .footer-brand-name span {
   background:
     linear-gradient(
       135deg,
@@ -620,7 +622,8 @@
     gap: 45px;
   }
 
-  .footer-logo h2 {
+  .footer-logo h2,
+.footer-logo .footer-brand-name {
     font-size: 28px;
   }
 
@@ -757,7 +760,8 @@
     height: 50px;
   }
 
-  .footer-logo h2 {
+  .footer-logo h2,
+.footer-logo .footer-brand-name {
     font-size: 24px;
   }
 
@@ -841,7 +845,8 @@
     padding-right: 14px;
   }
 
-  .footer-logo h2 {
+  .footer-logo h2,
+.footer-logo .footer-brand-name {
     font-size: 22px;
   }
 

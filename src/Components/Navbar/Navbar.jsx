@@ -17,7 +17,7 @@ const menuItems = [
 ];
 
 const whatsappLink =
-  "https://wa.me/919626782279?text=Hello%20XyronTech,%20I'm%20interested%20in%20your%20web%20development%20services.";
+  "https://wa.me/919626782279?text=Hello%20Xyron%20Web%20Tech,%20I'm%20interested%20in%20your%20web%20development%20services.";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,10 +62,10 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="nav-logo" onClick={() => scrollToSection("home")}>
-        <img src={logo} alt="XyronTech Logo" />
-        <h2>
+        <img src={logo} alt="Xyron Web Tech — XyronWebTech Logo" />
+        <p className="nav-brand">
           <span>Xyron</span>WebTech
-        </h2>
+        </p>
       </div>
 
       <ul className="nav-menu">

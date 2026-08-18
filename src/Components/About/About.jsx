@@ -1,17 +1,12 @@
 import React from "react";
 import "./About.css";
-import SEO from "../SEO/SEO";
 import {
   FiTarget,
   FiEye,
 } from "react-icons/fi";
 
 import { TbDiamond } from "react-icons/tb";
-<SEO
-title="About | XYRON Web Tech"
-description="Learn about XYRON Web Tech."
-keywords="About XYRON, Web Development Company"
-/>
+
 const aboutCards = [
   {
     id: 1,
@@ -50,15 +45,15 @@ const About = () => {
         </span>
 
         <h2>
-          We Build Digital Experiences
+          About Xyron Web Tech
           <br />
-          <span>That Make an Impact</span>
+          <span>Digital Experiences That Make an Impact</span>
         </h2>
 
         <p>
-          XyronTech is a technology-focused digital solutions team
-          helping businesses, startups and individuals build modern,
-          responsive and user-friendly digital experiences.
+          Xyron Web Tech (XyronWebTech) is a professional web development company
+          helping businesses, startups and individuals build modern, responsive
+          and SEO-friendly digital experiences at xyronwebtech.com.
         </p>
 
         <div className="about-accent" />

@@ -77,20 +77,20 @@ const Footer = () => {
 
             <img
               src={logo}
-              alt="XyronTech Logo"
+              alt="Xyron Web Tech — XyronWebTech Logo"
             />
 
-            <h2>
+            <p className="footer-brand-name">
               <span>Xyron</span>WebTech
-            </h2>
+            </p>
 
           </div>
 
 
           <p className="footer-description">
-            Building modern digital solutions for startups,
-            businesses and creators with premium web
-            experiences that leave a lasting impression.
+            Xyron Web Tech (xyronwebtech.com) builds modern, responsive and
+            SEO-friendly websites for startups, businesses and creators —
+            premium digital experiences that leave a lasting impression.
           </p>
 
 

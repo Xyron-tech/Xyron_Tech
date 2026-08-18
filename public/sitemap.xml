@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<url>
+  <url>
+    <loc>https://xyronwebtech.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
 
-<loc>https://xron-web-tech.vercel.app/</loc>
+  <url>
+    <loc>https://xyronwebtech.com/#services</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 
-<changefreq>weekly</changefreq>
+  <url>
+    <loc>https://xyronwebtech.com/#about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
-<priority>1.0</priority>
+  <url>
+    <loc>https://xyronwebtech.com/#how-we-work</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
-</url>
+  <url>
+    <loc>https://xyronwebtech.com/#projects</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://xyronwebtech.com/#contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
 </urlset>

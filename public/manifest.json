@@ -1,21 +1,31 @@
 {
-  "name": "Xyron Web Tech",
-  "short_name": "Xyron",
-  "description": "Professional Website Development Company",
-  "start_url": "/",
+  "name": "Xyron Web Tech | XyronWebTech",
+  "short_name": "XyronWebTech",
+  "description": "Xyron Web Tech (xyronwebtech.com) builds modern, responsive and SEO-friendly websites for businesses, startups and organizations across India.",
+  "id": "https://xyronwebtech.com/",
+  "start_url": "https://xyronwebtech.com/",
+  "scope": "https://xyronwebtech.com/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": [
+    "business",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "/favicon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/favicon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

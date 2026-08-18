@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import "./Projects.css";
-import SEO from "../SEO/SEO";
 import {
   FiExternalLink,
   FiArrowUpRight,
@@ -8,11 +7,7 @@ import {
 
 import portfolio from "../../assets/portfolio.webp";
 import srikrishnarestaurant from "../../assets/srikrishnarestaurant.webp";
-<SEO
-title="Projects | XYRON Web Tech"
-description="View our latest projects."
-keywords="Portfolio, Website Projects"
-/>
+
 const projects = [
   {
     image: srikrishnarestaurant,
@@ -104,14 +99,12 @@ const Projects = () => {
         </span>
 
         <h2 className="section-title">
-          Projects We’re Proud Of
+          Xyron Web Tech Projects Portfolio
         </h2>
 
         <p className="section-subtitle">
-          Discover some of our latest digital
-          experiences crafted with modern
-          technologies, creative design and
-          exceptional user experience.
+          Explore websites and digital projects crafted by XyronWebTech —
+          modern design, responsive development and business-focused solutions.
         </p>
 
         <span

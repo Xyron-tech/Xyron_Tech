@@ -1,6 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
-
 :root {
+  --font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-xs: 0.8125rem;
+  --font-sm: 0.9375rem;
+  --font-base: 1.0625rem;
+  --font-md: 1.125rem;
+  --font-lg: 1.375rem;
+  --font-xl: 1.5rem;
+  --font-2xl: 2rem;
+  --font-3xl: clamp(2.25rem, 4.8vw, 3rem);
+  --font-display: clamp(2.5rem, 5.5vw, 3.75rem);
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.7;
+  --leading-relaxed: 1.85;
+
   --primary: #2563EB;
   --secondary: #0EA5E9;
   --accent: #06B6D4;
@@ -155,6 +168,14 @@ html[data-theme="dark"] .nav-menu li.active::after {
   height: 4px;
   border-radius: 999px;
 }
+html {
+  font-family: var(--font-family);
+  font-size: 106.25%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 html,
 body {
   width: 100%;
@@ -170,8 +191,9 @@ html[data-theme="dark"] .icon-box {
 body {
   background: var(--bg);
   color: var(--text);
-  font-size: 16px;
-  line-height: 1.6;
+  font-family: var(--font-family);
+  font-size: var(--font-base);
+  line-height: var(--leading-normal);
   overflow-x: hidden;
   transition: background-color var(--theme-transition, 350ms) ease, color var(--theme-transition, 350ms) ease;
 }

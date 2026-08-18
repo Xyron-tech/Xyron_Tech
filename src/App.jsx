@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import SEO from "./Components/SEO/SEO";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Components/Home/Home";
 import About from "./Components/About/About";
@@ -11,6 +12,7 @@ import HowWeWork from "./Components/HowWeWork/HowWeWork";
 import WhatsAppFloat from "./Components/WhatsAppFloat/WhatsAppFloat";
 
 import "./styles/section-headers.css";
+import "./styles/typography.css";
 import Team from "./Components/Team/Team/Team";
 
 function App() {
@@ -51,14 +53,14 @@ function App() {
   return (
     <div>
 
+      <SEO path="/" />
+
       <Navbar />
 
       <Home />
 
-      <About />
-
       <Services />
-
+      <About />
       <HowWeWork />
 
       <Projects />

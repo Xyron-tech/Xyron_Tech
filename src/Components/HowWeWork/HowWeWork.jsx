@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./HowWeWork.css";
-import SEO from "../SEO/SEO";
 import {
   FiX,
   FiChevronLeft,
@@ -15,12 +14,7 @@ import {
 } from "react-icons/fi";
 
 import { FaRocket } from "react-icons/fa";
- <SEO
-        title="How We Work | XYRON Web Tech"
-        description="Discover how XYRON Web Tech transforms your ideas into high-performance websites through our proven design and development process."
-        keywords="How We Work, Website Development Process, UI UX Design Process, React Development, Web Agency, XYRON Web Tech"
-      />
-    
+
 const processSteps = [
   {
     number: "01",
@@ -197,11 +191,11 @@ const HowWeWork = () => {
               OUR PROCESS
             </span>
 
-            <h2>How We Work</h2>
+            <h2>How Xyron Web Tech Works</h2>
 
             <p>
-              From idea to launch, we build your digital solution
-              step by step — with you.
+              From idea to launch, XyronWebTech builds your digital solution
+              step by step — with clarity, quality and you at every stage.
             </p>
           </div>
 
