@@ -1,11 +1,12 @@
 :root {
   --font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-xs: 0.8125rem;
-  --font-sm: 0.9375rem;
+  /* Consistent, accessible type scale (based on a 16px root). */
+  --font-xs: 0.875rem;
+  --font-sm: 1rem;
   --font-base: 1.0625rem;
-  --font-md: 1.125rem;
+  --font-md: 1.1875rem;
   --font-lg: 1.375rem;
-  --font-xl: 1.5rem;
+  --font-xl: 1.625rem;
   --font-2xl: 2rem;
   --font-3xl: clamp(2.25rem, 4.8vw, 3rem);
   --font-display: clamp(2.5rem, 5.5vw, 3.75rem);
@@ -170,7 +171,7 @@ html[data-theme="dark"] .nav-menu li.active::after {
 }
 html {
   font-family: var(--font-family);
-  font-size: 106.25%;
+  font-size: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

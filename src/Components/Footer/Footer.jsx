@@ -6,6 +6,8 @@ import logo from "../../assets/logo.webp";
 import {
   FaYoutube,
   FaInstagram,
+  FaLinkedinIn,
+  FaFacebookF,
   FaArrowRight,
 } from "react-icons/fa";
 
@@ -115,6 +117,24 @@ const Footer = () => {
               aria-label="XyronTech Instagram"
             >
               <FaInstagram />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/xyron-web-tech-13b306425/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Xyron Web Tech LinkedIn"
+            >
+              <FaLinkedinIn />
+            </a>
+
+            <a
+              href="https://www.facebook.com/xyronwebtech/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Xyron Web Tech Facebook"
+            >
+              <FaFacebookF />
             </a>
 
           </div>

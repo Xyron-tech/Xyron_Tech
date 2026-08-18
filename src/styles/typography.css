@@ -4,6 +4,91 @@
   font-family: var(--font-family);
 }
 
+/* Site-wide type system: Poppins everywhere, one colour and size hierarchy. */
+#root,
+#root button,
+#root input,
+#root textarea,
+#root select {
+  font-family: var(--font-family) !important;
+}
+
+#root h1,
+#root h2,
+#root h3,
+#root h4,
+#root h5,
+#root h6 {
+  color: var(--heading) !important;
+  font-family: var(--font-family) !important;
+  line-height: var(--leading-tight);
+}
+
+#root h1 { font-size: clamp(2.5rem, 5vw, 3.625rem); }
+#root h2 { font-size: clamp(2rem, 4vw, 3rem); }
+#root h3 { font-size: clamp(1.25rem, 2.2vw, 1.5rem); }
+#root h4 { font-size: var(--font-md); }
+
+#root p,
+#root li,
+#root label,
+#root input,
+#root textarea,
+#root select {
+  color: var(--text);
+  font-size: var(--font-base);
+  line-height: var(--leading-normal);
+}
+
+#root button,
+#root .nav-menu li,
+#root .footer-column a {
+  font-size: var(--font-sm);
+}
+
+#root .header-badge,
+#root .service-tag,
+#root .section-kicker,
+#root .footer-bottom p {
+  font-size: var(--font-xs);
+}
+
+/* Keep common interface copy readable and consistent throughout the site. */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+@media (max-width: 640px) {
+  .header-content h1 {
+    font-size: clamp(2.25rem, 10vw, 2.875rem);
+  }
+
+  .section-title,
+  .about-header .section-title,
+  .services-header .section-title,
+  .projects-header .section-title,
+  .contact-header .section-title,
+  .how-we-work-header h2,
+  .about-header h2 {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+  }
+
+  .section-subtitle,
+  .about-header p,
+  .how-we-work-header p {
+    font-size: var(--font-base);
+  }
+
+  .service-card h3,
+  .project-content h3,
+  .process-card-content h3 {
+    font-size: var(--font-md);
+  }
+}
+
 /* ── Hero ── */
 .header-content h1 {
   font-size: clamp(2.625rem, 5vw, 3.625rem);
@@ -149,4 +234,158 @@
 
 .Pricing-card h3 {
   font-size: var(--font-xl);
+}
+
+.section-title,
+.how-we-work-header h2 {
+  font-size: clamp(2.25rem, 4.8vw, 3.25rem);
+}
+
+.Pricing-header > h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+/* Homepage highlight cards: readable at every breakpoint without overflow. */
+#root .highlight-value {
+  font-size: clamp(1.75rem, 2vw, 2rem);
+  line-height: 1.1;
+}
+
+#root .highlight-card h3 {
+  font-size: clamp(1.125rem, 1.25vw, 1.25rem);
+  line-height: 1.35;
+}
+
+#root .highlight-card p {
+  font-size: clamp(1rem, 1vw, 1.0625rem);
+  line-height: 1.65;
+}
+
+#root .highlight-card {
+  min-height: 19rem;
+  padding: 30px;
+}
+
+@media (max-width: 1024px) {
+  #root .highlight-value {
+    font-size: 1.875rem;
+  }
+
+  #root .highlight-card h3 {
+    font-size: 1.1875rem;
+  }
+}
+
+@media (max-width: 640px) {
+  #root .highlight-card {
+    min-height: 0;
+    padding: 24px;
+  }
+
+  #root .highlight-value {
+    font-size: 1.75rem;
+  }
+
+  #root .highlight-card h3 {
+    font-size: 1.125rem;
+  }
+
+  #root .highlight-card p {
+    font-size: 1rem;
+  }
+}
+
+/* Shared light-theme colour hierarchy for every section. */
+#root .section-title,
+#root .about-header h2,
+#root .how-we-work-header h2,
+#root .Pricing-header > h1,
+#root .header-content h1,
+#root .service-card h3,
+#root .project-content h3,
+#root .process-card-content h3,
+#root .Pricing-card h3,
+#root .contact-form-title,
+#root .footer-column h3 {
+  color: var(--heading) !important;
+}
+
+#root .section-subtitle,
+#root .about-header p,
+#root .how-we-work-header p,
+#root .header-content p,
+#root .service-card p,
+#root .project-content p,
+#root .process-card-content p,
+#root .Pricing-header p,
+#root .footer-description {
+  color: var(--text) !important;
+}
+
+/* Navbar and footer scale, matched to the reference layout. */
+#root .nav-logo .nav-brand,
+#root .nav-logo h2 {
+  font-size: clamp(1.75rem, 2vw, 2.25rem);
+  line-height: 1.1;
+}
+
+#root .nav-menu li {
+  font-size: 1.0625rem;
+}
+
+#root .nav-btn {
+  font-size: 1rem;
+}
+
+#root .footer-logo .footer-brand-name,
+#root .footer-logo h2 {
+  color: #e5e7eb !important;
+  font-size: clamp(1.75rem, 2vw, 2.25rem);
+  line-height: 1.2;
+}
+
+#root .footer-description {
+  color: #94a3b8 !important;
+  font-size: clamp(1.0625rem, 1.2vw, 1.25rem);
+  line-height: 1.8;
+}
+
+#root .footer-column h3 {
+  color: #e5e7eb !important;
+  font-size: 1.375rem;
+}
+
+#root .footer-column a,
+#root .footer-contact-text p {
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+#root .footer-contact-text span {
+  font-size: 1rem;
+}
+
+#root .footer-bottom p,
+#root .footer-bottom > span {
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 640px) {
+  #root .nav-logo .nav-brand,
+  #root .nav-logo h2 {
+    font-size: 1.5rem;
+  }
+
+  #root .footer-logo .footer-brand-name,
+  #root .footer-logo h2 {
+    font-size: 1.625rem;
+  }
+
+  #root .footer-description {
+    font-size: 1rem;
+  }
+
+  #root .footer-column h3 {
+    font-size: 1.25rem;
+  }
 }
