@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./Services.css";
+
 import {
   FiSmartphone,
   FiBriefcase,
@@ -7,9 +8,6 @@ import {
   FiShoppingCart,
   FiTool,
   FiRefreshCw,
-  FiBookOpen,
-  FiCalendar,
-  FiMonitor,
   FiUsers,
   FiVideo,
 } from "react-icons/fi";
@@ -18,117 +16,129 @@ const services = [
   {
     icon: <FiSmartphone />,
     title: "Responsive Websites",
-    desc: "Beautiful websites that work perfectly across mobile, tablet and desktop devices.",
+    desc: "Fast, modern websites that deliver a seamless experience across mobile, tablet and desktop.",
     tag: "Mobile First",
     color: "blue",
   },
   {
     icon: <FiBriefcase />,
     title: "Business Websites",
-    desc: "Professional websites that build trust and generate quality leads.",
+    desc: "Professional websites designed to build trust, showcase your brand and generate quality leads.",
     tag: "SEO Ready",
     color: "purple",
   },
   {
     icon: <FiUser />,
     title: "Portfolio Websites",
-    desc: "Creative portfolio websites that beautifully showcase your work.",
+    desc: "Creative and professional portfolio websites that present your work, skills and personal brand.",
     tag: "Creative Design",
     color: "green",
   },
   {
     icon: <FiShoppingCart />,
-    title: "E-Commerce",
-    desc: "Modern online stores with secure checkout and premium shopping experience.",
+    title: "E-Commerce Websites",
+    desc: "Secure and user-friendly online stores built for smooth shopping, payments and business growth.",
     tag: "Secure Payments",
     color: "orange",
   },
   {
     icon: <FiTool />,
     title: "Website Maintenance",
-    desc: "Continuous monitoring, updates and optimization for your website.",
-    tag: "24/7 Support",
+    desc: "Reliable website updates, performance optimization and ongoing technical support when you need it.",
+    tag: "Ongoing Support",
     color: "cyan",
   },
   {
     icon: <FiRefreshCw />,
     title: "Website Redesign",
-    desc: "Transform outdated websites into premium digital experiences.",
+    desc: "Transform outdated websites into modern, responsive and conversion-focused digital experiences.",
     tag: "Modern UI",
     color: "pink",
   },
-{
-  icon: <FiSmartphone />,
-  title: "Mobile App Development",
-  desc: "Modern and user-friendly mobile applications built to help businesses connect with their customers.",
-  tag: "Android & iOS",
-  color: "indigo",
-},
-{
-  icon: <FiUsers />,
-  title: "Social Media Growth",
-  desc: "Grow your social media presence with engaging content and strategies designed to increase followers and reach.",
-  tag: "Grow Your Audience",
-  color: "rose",
-},
-{
-  icon: <FiVideo />,
-  title: "Video Editing",
-  desc: "Professional and engaging video editing for reels, social media content, promotional videos and business branding.",
-  tag: "Creative Content",
-  color: "amber",
-},
+  {
+    icon: <FiSmartphone />,
+    title: "Mobile App Development",
+    desc: "Modern mobile applications designed to help businesses connect with customers and grow digitally.",
+    tag: "Android & iOS",
+    color: "indigo",
+  },
+  {
+    icon: <FiUsers />,
+    title: "Social Media Growth",
+    desc: "Engaging content and practical strategies designed to improve your reach, audience and online presence.",
+    tag: "Grow Your Audience",
+    color: "rose",
+  },
+  {
+    icon: <FiVideo />,
+    title: "Video Editing",
+    desc: "Professional editing for reels, promotional videos and social media content that strengthens your brand.",
+    tag: "Creative Content",
+    color: "amber",
+  },
 ];
 
 export default function Services() {
   const gridRef = useRef(null);
-useEffect(() => {
-  const cards = gridRef.current?.querySelectorAll(".service-card");
 
-  if (!cards?.length) return;
+  useEffect(() => {
+    const cards = gridRef.current?.querySelectorAll(".service-card");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // Card viewport-ku varumbothu
-          // Right / Left -> Center
-          entry.target.classList.add("is-visible");
-        } else {
-          // Card viewport-a vittu veliya pogumbothu
-          // Center -> Original Right / Left
-          entry.target.classList.remove("is-visible");
-        }
-      });
-    },
-    {
-      threshold: 0.15,
-      rootMargin: "0px 0px -10% 0px",
-    }
-  );
+    if (!cards?.length) return;
 
-  cards.forEach((card) => observer.observe(card));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          } else {
+            entry.target.classList.remove("is-visible");
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -10% 0px",
+      }
+    );
 
-  return () => observer.disconnect();
-}, []);
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section id="services">
 
+      {/* =========================
+          SECTION HEADER
+      ========================== */}
+
       <div className="services-header section-header">
+
+        <span className="services-eyebrow">
+          
+        </span>
+
         <h2 className="section-title">
-          Web Development Services by Xyron Web Tech
+          Digital Solutions Built
+          <br />
+          <span>For Your Business Growth</span>
         </h2>
 
         <p className="section-subtitle">
-          XyronWebTech designs and develops premium digital experiences —
-          responsive websites, e-commerce stores and business solutions
-          built for growth and search visibility.
+          From professional websites to e-commerce, mobile apps and digital
+          content, we create modern solutions that help your brand grow online.
         </p>
 
         <span className="section-accent"></span>
+
       </div>
 
+
+      {/* =========================
+          SERVICES GRID
+      ========================== */}
 
       <div
         className="services-grid"
@@ -142,10 +152,7 @@ useEffect(() => {
             className={`
               service-card
               card-${service.color}
-              ${index % 2 === 0
-                ? "from-right"
-                : "from-left"
-              }
+              ${index % 2 === 0 ? "from-right" : "from-left"}
             `}
           >
 

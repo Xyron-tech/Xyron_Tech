@@ -1,7 +1,7 @@
 /* ======================================================
    XYRON WEBTECH FOOTER
-   Premium Matte Black • Metallic Silver • Steel Blue
-   Modern • Luxury • Futuristic
+   Dark Navy • Blue • Cyan
+   Poppins Typography • Modern • Premium
 ====================================================== */
 
 .footer {
@@ -14,17 +14,19 @@
   background:
     radial-gradient(
       circle at 0% 0%,
-      rgba(107, 130, 148, 0.10),
+      rgba(37, 99, 235, 0.13),
       transparent 32%
     ),
     radial-gradient(
       circle at 100% 100%,
-      rgba(192, 198, 204, 0.06),
+      rgba(6, 182, 212, 0.09),
       transparent 32%
     ),
-    #08090b;
+    #020617;
 
   color: #94a3b8;
+
+  font-family: "Poppins", sans-serif;
 }
 
 
@@ -48,7 +50,7 @@
   background:
     radial-gradient(
       circle,
-      rgba(107, 130, 148, 0.12),
+      rgba(37, 99, 235, 0.12),
       transparent 70%
     );
 
@@ -71,7 +73,7 @@
   background:
     radial-gradient(
       circle,
-      rgba(192, 198, 204, 0.06),
+      rgba(6, 182, 212, 0.08),
       transparent 70%
     );
 
@@ -153,7 +155,7 @@
   filter:
     drop-shadow(
       0 6px 14px
-      rgba(192, 198, 204, 0.18)
+      rgba(37, 99, 235, 0.22)
     );
 }
 
@@ -163,11 +165,11 @@
 
   color: #e5e7eb;
 
+  font-family: "Poppins", sans-serif;
   font-size: 30px;
   font-weight: 700;
 
   line-height: 1.2;
-
   letter-spacing: -0.03em;
 }
 
@@ -176,10 +178,9 @@
   background:
     linear-gradient(
       135deg,
-      #94a3b8 0%,
-      #e5e7eb 35%,
-      #c0c6cc 55%,
-      #6b8294 100%
+      #e5e7eb 0%,
+      #2563eb 48%,
+      #06b6d4 100%
     );
 
   -webkit-background-clip: text;
@@ -200,6 +201,7 @@
 
   color: #94a3b8;
 
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 400;
 
@@ -230,26 +232,27 @@
 
   border-radius: 11px;
 
-  color: #c0c6cc;
+  color: #cbd5e1;
 
   background:
     linear-gradient(
       135deg,
-      #111418,
-      #1a1e23
+      #0f172a,
+      #111827
     );
 
   border:
     1px solid
-    rgba(192, 198, 204, 0.14);
+    rgba(148, 163, 184, 0.16);
 
   text-decoration: none;
 
+  font-family: "Poppins", sans-serif;
   font-size: 17px;
 
   box-shadow:
     0 5px 16px
-    rgba(0, 0, 0, 0.25);
+    rgba(0, 0, 0, 0.28);
 
   transition:
     transform 0.3s ease,
@@ -265,19 +268,18 @@
   background:
     linear-gradient(
       135deg,
-      #334155,
-      #6b8294
+      #2563eb,
+      #06b6d4
     );
 
-  border-color:
-    transparent;
+  border-color: transparent;
 
   transform:
     translateY(-4px);
 
   box-shadow:
     0 10px 24px
-    rgba(107, 130, 148, 0.25);
+    rgba(37, 99, 235, 0.25);
 }
 
 
@@ -300,6 +302,7 @@
 
   color: #e5e7eb;
 
+  font-family: "Poppins", sans-serif;
   font-size: 18px;
   font-weight: 700;
 
@@ -322,9 +325,8 @@
   background:
     linear-gradient(
       90deg,
-      #6b8294,
-      #c0c6cc,
-      #64748b
+      #2563eb,
+      #06b6d4
     );
 
   transition:
@@ -365,6 +367,7 @@
 
   color: #94a3b8;
 
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 500;
 
@@ -380,7 +383,7 @@
 .footer-column ul li a svg {
   flex-shrink: 0;
 
-  color: #6b8294;
+  color: #2563eb;
 
   font-size: 10px;
 
@@ -397,7 +400,7 @@
 }
 
 .footer-column ul li a:hover svg {
-  color: #c0c6cc;
+  color: #06b6d4;
 
   transform:
     translateX(3px);
@@ -462,18 +465,18 @@
 
   border-radius: 10px;
 
-  color: #c0c6cc;
+  color: #cbd5e1;
 
   background:
     linear-gradient(
       135deg,
-      rgba(107, 130, 148, 0.12),
-      rgba(192, 198, 204, 0.06)
+      rgba(37, 99, 235, 0.12),
+      rgba(6, 182, 212, 0.07)
     );
 
   border:
     1px solid
-    rgba(192, 198, 204, 0.14);
+    rgba(148, 163, 184, 0.14);
 
   font-size: 16px;
 
@@ -491,12 +494,11 @@
   background:
     linear-gradient(
       135deg,
-      #334155,
-      #6b8294
+      #2563eb,
+      #06b6d4
     );
 
-  border-color:
-    transparent;
+  border-color: transparent;
 
   transform:
     scale(1.05);
@@ -516,8 +518,9 @@
 
   margin-bottom: 2px;
 
-  color: #c0c6cc;
+  color: #cbd5e1;
 
+  font-family: "Poppins", sans-serif;
   font-size: 12px;
   font-weight: 600;
 
@@ -529,6 +532,7 @@
 
   color: #94a3b8;
 
+  font-family: "Poppins", sans-serif;
   font-size: 13px;
   font-weight: 400;
 
@@ -572,7 +576,7 @@
 
   border-top:
     1px solid
-    rgba(192, 198, 204, 0.12);
+    rgba(148, 163, 184, 0.12);
 }
 
 .footer-bottom p {
@@ -580,6 +584,7 @@
 
   color: #94a3b8;
 
+  font-family: "Poppins", sans-serif;
   font-size: 12.5px;
   font-weight: 400;
 
@@ -590,9 +595,9 @@
   background:
     linear-gradient(
       135deg,
-      #94a3b8,
+      #2563eb,
       #e5e7eb,
-      #6b8294
+      #06b6d4
     );
 
   -webkit-background-clip: text;
@@ -606,6 +611,7 @@
 .footer-bottom span {
   color: #64748b;
 
+  font-family: "Poppins", sans-serif;
   font-size: 12px;
 
   line-height: 1.6;
@@ -623,14 +629,13 @@
   }
 
   .footer-logo h2,
-.footer-logo .footer-brand-name {
+  .footer-logo .footer-brand-name {
     font-size: 28px;
   }
 
   .footer-description {
     max-width: 390px;
   }
-
 }
 
 
@@ -679,7 +684,6 @@
   .footer-bottom {
     margin-top: 50px;
   }
-
 }
 
 
@@ -730,7 +734,6 @@
   .footer-bottom span {
     text-align: center;
   }
-
 }
 
 
@@ -761,32 +764,28 @@
   }
 
   .footer-logo h2,
-.footer-logo .footer-brand-name {
+  .footer-logo .footer-brand-name {
     font-size: 24px;
   }
 
   .footer-description {
     font-size: 13px;
-
     line-height: 1.75;
   }
 
   .footer-social {
     margin-top: 20px;
-
     gap: 9px;
   }
 
   .footer-social a {
     width: 40px;
     height: 40px;
-
     font-size: 17px;
   }
 
   .footer-column h3 {
     font-size: 17px;
-
     margin-bottom: 25px;
   }
 
@@ -805,7 +804,6 @@
   .footer-contact-icon {
     width: 38px;
     height: 38px;
-
     font-size: 15px;
   }
 
@@ -830,7 +828,6 @@
   .footer-bottom span {
     font-size: 10.5px;
   }
-
 }
 
 
@@ -846,7 +843,7 @@
   }
 
   .footer-logo h2,
-.footer-logo .footer-brand-name {
+  .footer-logo .footer-brand-name {
     font-size: 22px;
   }
 
@@ -857,7 +854,6 @@
   .footer-contact-text p {
     font-size: 10.5px;
   }
-
 }
 
 
@@ -870,10 +866,7 @@
   .footer *,
   .footer *::before,
   .footer *::after {
-
     transition-duration:
       0.01ms !important;
-
   }
-
 }

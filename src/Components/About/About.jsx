@@ -1,5 +1,6 @@
 import React from "react";
 import "./About.css";
+
 import {
   FiTarget,
   FiEye,
@@ -13,21 +14,21 @@ const aboutCards = [
     icon: <FiTarget />,
     title: "Our Mission",
     description:
-      "To help businesses and individuals build a strong digital presence through modern, user-friendly and reliable web solutions.",
+      "We help businesses build a strong digital presence through modern, user-friendly and reliable web solutions.",
   },
   {
     id: 2,
     icon: <FiEye />,
     title: "Our Vision",
     description:
-      "To become a trusted digital technology partner for businesses by creating meaningful digital experiences that support their growth.",
+      "To become a trusted technology partner by creating meaningful digital experiences that help businesses grow.",
   },
   {
     id: 3,
     icon: <TbDiamond />,
     title: "Our Values",
     description:
-      "Quality, transparency, creativity and continuous learning guide the way we work and build every digital solution.",
+      "Quality, transparency, creativity and continuous learning shape everything we design and develop.",
   },
 ];
 
@@ -35,34 +36,36 @@ const About = () => {
   return (
     <section id="about">
 
-      {/* =========================
+      {/* =========================================
           SECTION HEADER
-      ========================== */}
+      ========================================= */}
 
       <div className="about-header">
+
         <span className="about-eyebrow">
           About Us
         </span>
 
         <h2>
-          About Xyron Web Tech
+          Building Digital Experiences
           <br />
-          <span>Digital Experiences That Make an Impact</span>
+          <span>That Make an Impact</span>
         </h2>
 
         <p>
-          Xyron Web Tech (XyronWebTech) is a professional web development company
-          helping businesses, startups and individuals build modern, responsive
-          and SEO-friendly digital experiences at xyronwebtech.com.
+          Xyron Web Tech helps businesses, startups and individuals
+          build modern, responsive and professional digital experiences
+          designed for growth.
         </p>
 
         <div className="about-accent" />
+
       </div>
 
 
-      {/* =========================
+      {/* =========================================
           MISSION / VISION / VALUES
-      ========================== */}
+      ========================================= */}
 
       <div className="about-cards">
 

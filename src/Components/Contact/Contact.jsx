@@ -97,9 +97,7 @@ const Contact = () => {
 
           <div className="form-header">
 
-            <span className="contact-eyebrow">
-              START A PROJECT
-            </span>
+            
 
             <h3 className="contact-form-title">
               Tell Us About Your Project

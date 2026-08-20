@@ -58,9 +58,9 @@ function App() {
       <Navbar />
 
       <Home />
-
+ <About />
       <Services />
-      <About />
+     
       <HowWeWork />
 
       <Projects />

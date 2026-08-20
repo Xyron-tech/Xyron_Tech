@@ -90,7 +90,7 @@ const Footer = () => {
 
 
           <p className="footer-description">
-            Xyron Web Tech (xyronwebtech.com) builds modern, responsive and
+            Xyron Web Tech builds modern, responsive and
             SEO-friendly websites for startups, businesses and creators —
             premium digital experiences that leave a lasting impression.
           </p>
