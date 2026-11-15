@@ -24,6 +24,7 @@ if(env.NODE_ENV!=="production"){
 }
 
 const app=express();
+app.set("trust proxy",1);
 app.disable("x-powered-by");
 app.use(helmet());
 app.use(cors({
