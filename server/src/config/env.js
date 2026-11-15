@@ -3,7 +3,15 @@ dotenv.config({path:fileURLToPath(new URL("../../../.env",import.meta.url))});
 const schema=z.object({
   NODE_ENV:z.enum(["development","test","production"]).default("development"),
   PORT:z.coerce.number().int().positive().default(5000),
-  CLIENT_ORIGIN:z.string().url().default("http://localhost:5173"),
+  CLIENT_ORIGIN:z.string().default("http://localhost:5173").refine(value=>{
+    const origins=value.split(",").map(origin=>origin.trim());
+    return origins.length>0&&origins.every(origin=>{
+      try{
+        const parsed=new URL(origin);
+        return ["http:","https:"].includes(parsed.protocol)&&parsed.origin===origin.replace(/\/+$/g,"");
+      }catch{return false;}
+    });
+  },"CLIENT_ORIGIN must contain comma-separated HTTP(S) origins."),
   JWT_SECRET:z.string().min(32),
   JWT_EXPIRES_IN:z.string().default("8h"),
   MONGODB_URI:z.string().min(1),

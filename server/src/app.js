@@ -10,12 +10,15 @@ import testimonialRoutes from "./routes/testimonialRoutes.js";
 import {notFound,errorHandler} from "./middleware/errors.js";
 import {env} from "./config/env.js";
 
-const allowedOrigins=new Set([env.CLIENT_ORIGIN]);
+const configuredOrigins=env.CLIENT_ORIGIN.split(",").map(origin=>origin.trim());
+const allowedOrigins=new Set(configuredOrigins);
 if(env.NODE_ENV!=="production"){
-  const configuredOrigin=new URL(env.CLIENT_ORIGIN);
-  if(["localhost","127.0.0.1"].includes(configuredOrigin.hostname)){
-    for(const hostname of ["localhost","127.0.0.1"]){
-      allowedOrigins.add(`${configuredOrigin.protocol}//${hostname}${configuredOrigin.port?`:${configuredOrigin.port}`:""}`);
+  for(const origin of configuredOrigins){
+    const configuredOrigin=new URL(origin);
+    if(["localhost","127.0.0.1"].includes(configuredOrigin.hostname)){
+      for(const hostname of ["localhost","127.0.0.1"]){
+        allowedOrigins.add(`${configuredOrigin.protocol}//${hostname}${configuredOrigin.port?`:${configuredOrigin.port}`:""}`);
+      }
     }
   }
 }

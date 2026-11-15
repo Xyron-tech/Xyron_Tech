@@ -56,20 +56,20 @@ The SPA rewrite in `vercel.json` keeps direct navigation and refreshes working f
 
 ### API
 
-Deploy the `server/` workspace as a separate Node.js service. Configure these server environment variables in the hosting provider; do not commit real values:
+The `api/[...path].js` Vercel function serves the existing Express API under the same origin at `/api/*`. Configure these server environment variables in Vercel Project Settings; never commit real values:
 
 - `NODE_ENV=production`
 - `PORT` (provided by the host)
-- `CLIENT_ORIGIN=https://xyronwebtech.com`
+- `CLIENT_ORIGIN=https://xyronwebtech.com,https://www.xyronwebtech.com` (comma-separated allowed frontend origins)
 - `JWT_SECRET` (at least 32 random characters)
 - `MONGODB_URI`
 - `CLOUDINARY_URL`, or all three `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`
 - `XYRON_PIN_DATABASE_PATH` when the PIN database is available on the API host
 - `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` for initial setup only
 
-Set `VITE_API_URL` in the web build environment to the API's HTTPS URL ending in `/api` (for example `https://api.xyronwebtech.com/api`). If the API is instead reverse-proxied at `https://xyronwebtech.com/api`, leave `VITE_API_URL` empty.
+Leave `VITE_API_URL` empty to use the same-origin `/api` function. If you host the API separately, set `VITE_API_URL` at build time to its HTTPS URL ending in `/api` (for example `https://api.example.com/api`).
 
-The server does not serve the website's static files. Keep the web app and API deployments connected through the configured API URL or the production host's `/api` reverse proxy.
+The server does not serve the website's static files. The Vercel function uses the same MongoDB, JWT, Cloudinary, and optional PIN-directory settings as the standalone server.
 
 ## Verification
 
