@@ -1,4 +1,3 @@
-import React from "react";
 import "./About.css";
 
 import {
@@ -11,6 +10,7 @@ import { TbDiamond } from "react-icons/tb";
 const aboutCards = [
   {
     id: 1,
+    anchor: "our-mission",
     icon: <FiTarget />,
     title: "Our Mission",
     description:
@@ -18,6 +18,7 @@ const aboutCards = [
   },
   {
     id: 2,
+    anchor: "our-vision",
     icon: <FiEye />,
     title: "Our Vision",
     description:
@@ -25,6 +26,7 @@ const aboutCards = [
   },
   {
     id: 3,
+    anchor: "our-values",
     icon: <TbDiamond />,
     title: "Our Values",
     description:
@@ -73,6 +75,7 @@ const About = () => {
           <article
             className="about-card"
             key={card.id}
+            id={card.anchor}
           >
 
             {/* Icon */}

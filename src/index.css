@@ -56,6 +56,12 @@
   --arrow-bulb-glow: 0 10px 30px rgba(6,182,255,0.18);
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html[data-theme="dark"] {
   --primary: #3B82F6;
   --secondary: #38BDF8;

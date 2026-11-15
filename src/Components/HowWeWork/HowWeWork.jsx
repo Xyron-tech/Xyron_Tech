@@ -114,10 +114,78 @@ const processSteps = [
   },
 ];
 
-const HowWeWork = () => {
+const wholesaleSteps = [
+  {
+    ...processSteps[0],
+    title: "Business application",
+    shortTitle: "Apply",
+    tagline: "Start with your business details.",
+    description: "Submit your business registration with its contact, address and store details for review.",
+  },
+  {
+    ...processSteps[1],
+    title: "Application review",
+    shortTitle: "Review",
+    tagline: "Xyron checks your application.",
+    description: "The Xyron Super Admin reviews the application and approves or rejects the business account.",
+  },
+  {
+    ...processSteps[2],
+    title: "Set up your profile",
+    shortTitle: "Brand",
+    tagline: "Make the store yours.",
+    description: "Add your business logo, description and optional social links to prepare your customer storefront.",
+  },
+  {
+    ...processSteps[3],
+    title: "Add products and stock",
+    shortTitle: "Products",
+    tagline: "Build your wholesale catalogue.",
+    description: "Create product listings, set prices and manage available stock from your business workspace.",
+  },
+  {
+    ...processSteps[4],
+    title: "Configure checkout",
+    shortTitle: "Payments",
+    tagline: "Set customer payment details.",
+    description: "Add your payment QR and instructions, delivery charge, and store banner images.",
+  },
+  {
+    ...processSteps[5],
+    title: "Publish your storefront",
+    shortTitle: "Publish",
+    tagline: "Share your store link.",
+    description: "Publish your business storefront and share its unique link with your customers.",
+  },
+  {
+    ...processSteps[6],
+    title: "Manage incoming orders",
+    shortTitle: "Orders",
+    tagline: "Handle each order in one place.",
+    description: "Review orders, update fulfilment status, verify submitted payment proof and answer order-specific customer messages.",
+  },
+  {
+    ...processSteps[7],
+    title: "Stay connected with Xyron",
+    shortTitle: "Support",
+    tagline: "Get platform help when needed.",
+    description: "Message Xyron Super Admin about subscriptions, payments, store setup or technical support from your dashboard.",
+  },
+];
+
+const HowWeWork = ({ variant = "default" }) => {
+  const steps = variant === "wholesale" ? wholesaleSteps : processSteps;
+  const isWholesale = variant === "wholesale";
   const [activeStep, setActiveStep] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStep, setModalStep] = useState(0);
+
+  useEffect(() => {
+    document.body.style.overflow = isModalOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   // AUTO ACTIVE CARD
   useEffect(() => {
@@ -125,38 +193,36 @@ const HowWeWork = () => {
 
     const interval = setInterval(() => {
       setActiveStep((prev) => {
-        if (prev >= 7) return 0;
+        if (prev >= steps.length - 1) return 0;
         return prev + 1;
       });
     }, 2500);
 
     return () => clearInterval(interval);
-  }, [isModalOpen]);
+  }, [isModalOpen, steps.length]);
 
   // OPEN MODAL
   const openModal = (index) => {
     setModalStep(index);
     setIsModalOpen(true);
-    document.body.style.overflow = "hidden";
   };
 
   // CLOSE MODAL
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = "";
   };
 
   // NEXT
   const nextStep = () => {
     setModalStep((prev) =>
-      prev === processSteps.length - 1 ? 0 : prev + 1
+      prev === steps.length - 1 ? 0 : prev + 1
     );
   };
 
   // PREVIOUS
   const previousStep = () => {
     setModalStep((prev) =>
-      prev === 0 ? processSteps.length - 1 : prev - 1
+      prev === 0 ? steps.length - 1 : prev - 1
     );
   };
 
@@ -175,9 +241,9 @@ const HowWeWork = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, nextStep, previousStep]);
 
-  const currentModalStep = processSteps[modalStep];
+  const currentModalStep = steps[modalStep];
 
   return (
     <>
@@ -191,11 +257,12 @@ const HowWeWork = () => {
               OUR PROCESS
             </span>
 
-            <h2>How Xyron Web Tech Works</h2>
+            <h2>{isWholesale ? "How Xyron Wholesale Works" : "How Xyron Web Tech Works"}</h2>
 
             <p>
-              From idea to launch, XyronWebTech builds your digital solution
-              step by step — with clarity, quality and you at every stage.
+              {isWholesale
+                ? "From business application to customer orders, manage your independent wholesale store in one connected workspace."
+                : "From idea to launch, XyronWebTech builds your digital solution step by step — with clarity, quality and you at every stage."}
             </p>
           </div>
 
@@ -206,7 +273,7 @@ const HowWeWork = () => {
             {/* FIRST 4 */}
 
             <div className="process-row">
-              {processSteps.slice(0, 4).map((step, index) => (
+              {steps.slice(0, 4).map((step, index) => (
                 <React.Fragment key={step.number}>
 
                   <button
@@ -257,7 +324,7 @@ const HowWeWork = () => {
               <div
                 className="journey-progress"
                 style={{
-                  width: `${(activeStep / 7) * 100}%`,
+                  width: `${(activeStep / (steps.length - 1)) * 100}%`,
                 }}
               />
             </div>
@@ -265,7 +332,7 @@ const HowWeWork = () => {
             {/* SECOND 4 */}
 
             <div className="process-row second-row">
-              {processSteps.slice(4, 8).map((step, index) => {
+              {steps.slice(4, 8).map((step, index) => {
                 const realIndex = index + 4;
 
                 return (
@@ -323,14 +390,14 @@ const HowWeWork = () => {
 
           <div className="how-we-work-cta">
             <p>
-              Want to explore our complete process?
+              {isWholesale ? "Ready to set up your wholesale store?" : "Want to explore our complete process?"}
             </p>
 
             <button
               onClick={() => openModal(0)}
               className="explore-process-btn"
             >
-              Explore Our Process
+              {isWholesale ? "Explore the workflow" : "Explore Our Process"}
               <FiChevronRight />
             </button>
           </div>
@@ -409,7 +476,7 @@ const HowWeWork = () => {
               </button>
 
               <div className="modal-counter">
-                {currentModalStep.number} / 08
+                {currentModalStep.number} / {String(steps.length).padStart(2, "0")}
               </div>
 
               <button onClick={nextStep}>
@@ -422,7 +489,7 @@ const HowWeWork = () => {
             {/* DOTS */}
 
             <div className="modal-dots">
-              {processSteps.map((_, index) => (
+              {steps.map((_, index) => (
                 <button
                   key={index}
                   className={
