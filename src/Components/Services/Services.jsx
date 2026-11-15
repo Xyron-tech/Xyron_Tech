@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import {Link} from "react-router-dom";
 import "./Services.css";
 
 import {
@@ -78,7 +79,7 @@ const services = [
   },
 ];
 
-export default function Services() {
+export default function Services({showAll=false}) {
   const gridRef = useRef(null);
 
   useEffect(() => {
@@ -108,7 +109,7 @@ export default function Services() {
   }, []);
 
   return (
-    <section id="services">
+    <section id="services" className={showAll?"services-page":undefined}>
 
       {/* =========================
           SECTION HEADER
@@ -145,7 +146,7 @@ export default function Services() {
         ref={gridRef}
       >
 
-        {services.map((service, index) => (
+        {services.slice(0,showAll?services.length:6).map((service, index) => (
 
           <article
             key={service.title}
@@ -186,6 +187,8 @@ export default function Services() {
         ))}
 
       </div>
+
+      {!showAll&&<div className="services-more"><Link to="/services">Explore all services <span aria-hidden="true">→</span></Link></div>}
 
     </section>
   );

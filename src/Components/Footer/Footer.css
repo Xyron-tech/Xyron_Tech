@@ -97,11 +97,13 @@
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1.5fr)
-    minmax(180px, 0.8fr)
-    minmax(280px, 1fr);
+    minmax(230px, 1.35fr)
+    minmax(115px, 0.7fr)
+    minmax(150px, 0.9fr)
+    minmax(130px, 0.75fr)
+    minmax(230px, 1.15fr);
 
-  gap: 70px;
+  gap: clamp(24px, 3vw, 46px);
 
   align-items: start;
 }
@@ -130,6 +132,7 @@
   gap: 14px;
 
   margin-bottom: 20px;
+  text-decoration: none;
 }
 
 .footer-logo img {
@@ -652,8 +655,7 @@
 
   .footer-container {
     grid-template-columns:
-      1fr
-      1fr;
+      repeat(2, minmax(0, 1fr));
 
     gap:
       45px 35px;
@@ -661,6 +663,7 @@
 
   .footer-brand {
     max-width: 100%;
+    grid-column: 1 / -1;
   }
 
   .footer-description {
@@ -668,8 +671,7 @@
   }
 
   .footer-contact-column {
-    grid-column:
-      1 / -1;
+    grid-column: auto;
   }
 
   .footer-contact-list {
@@ -856,6 +858,13 @@
   }
 }
 
+.footer-nav-column { min-width: 0; }
+.footer-nav-column ul li a { max-width: 100%; }
+.footer-nav-column ul li a span { overflow-wrap: anywhere; }
+.footer-container>.footer-column:last-child { min-width: 0; }
+@media (max-width: 992px) {
+  .footer-container { gap: 34px 28px; }
+}
 
 /* ======================================================
    ACCESSIBILITY

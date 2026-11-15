@@ -1,91 +1,97 @@
-/* =========================================
-   XYRONTECH PROJECTS
-   PREMIUM MODERN ANIMATED DESIGN
-   Poppins Typography • Service Header Theme
-========================================= */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* =========================================================
+   XYRON WEB TECH
+   PROJECT JOURNEY
+   PREMIUM SCROLL EXPERIENCE
+========================================================= */
 
 
-/* =========================================
-   RESET
-========================================= */
-
-.projects-section {
-  font-family: "Poppins", sans-serif;
-}
-
-
-/* =========================================
+/* =========================================================
    SECTION
-========================================= */
+========================================================= */
 
 .projects-section {
-  width: 100%;
 
-  padding:
-    110px
-    20px
-    120px;
+  width: 100%;
 
   position: relative;
 
   overflow: hidden;
 
+  padding:
+    120px
+    20px
+    180px;
+
+  font-family:
+    "Poppins",
+    sans-serif;
+
   background:
+
     radial-gradient(
       circle at 10% 20%,
-      rgba(37, 99, 235, 0.04),
+      rgba(
+        37,
+        99,
+        235,
+        0.045
+      ),
       transparent 30%
     ),
 
     radial-gradient(
       circle at 90% 80%,
-      rgba(139, 92, 246, 0.04),
+      rgba(
+        139,
+        92,
+        246,
+        0.045
+      ),
       transparent 30%
     ),
 
     linear-gradient(
       180deg,
-      var(--section-bg-start, #ffffff),
-      var(--section-bg-end, #f8fafc)
+      var(
+        --section-bg-start,
+        #ffffff
+      ),
+      var(
+        --section-bg-end,
+        #f8fafc
+      )
     );
 }
 
 
-/* =========================================
+/* =========================================================
    HEADER
-========================================= */
+========================================================= */
 
 .projects-header {
+
   width: 100%;
-  max-width: 820px;
+
+  max-width: 850px;
 
   margin:
-    0
-    auto
-    60px;
+    0 auto
+    110px;
 
   text-align: center;
 
   position: relative;
 
-  z-index: 5;
+  z-index: 20;
 }
 
 
-/* =========================================
-   EYEBROW / BADGE
-========================================= */
-
 .projects-eyebrow {
+
   display: inline-flex;
 
   align-items: center;
+
   justify-content: center;
 
   margin-bottom: 25px;
@@ -111,9 +117,7 @@
     #bfdbfe;
 
   box-shadow:
-    0
-    8px
-    25px
+    0 8px 25px
     rgba(
       37,
       99,
@@ -121,15 +125,11 @@
       0.07
     );
 
-  font-family:
-    "Poppins",
-    sans-serif;
-
   font-size: 13px;
 
   font-weight: 600;
 
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
 
   line-height: 1.4;
 
@@ -143,93 +143,89 @@
 }
 
 
-/* =========================================
-   MAIN HEADING
-========================================= */
+/* =========================================================
+   TITLE
+========================================================= */
 
 .projects-header .section-title {
+
   margin:
-    0
-    0
-    25px;
+    0 0 22px;
 
-  color: #0f172a;
-
-  font-family:
-    "Poppins",
-    sans-serif;
+  color:
+    #0f172a;
 
   font-size:
     clamp(
-      36px,
-      4vw,
-      58px
+      42px,
+      5vw,
+      72px
     );
 
   font-weight: 700;
 
-  line-height: 1.12;
+  line-height: 1.05;
 
-  letter-spacing: -0.045em;
-
-  background:
-    linear-gradient(
-      90deg,
-      #0f172a 0%,
-      #0f172a 42%,
-      #2563eb 60%,
-      #06b6d4 100%
-    );
-
-  -webkit-background-clip: text;
-  background-clip: text;
-
-  -webkit-text-fill-color: transparent;
+  letter-spacing:
+    -0.055em;
 }
 
 
-/* =========================================
-   SUBTITLE
-========================================= */
-
-.projects-header .section-subtitle {
-  width: 100%;
-  max-width: 760px;
-
-  margin:
-    0
-    auto;
-
-  color: #64748b;
+.projects-header .section-title span {
 
   font-family:
-    "Poppins",
-    sans-serif;
+    Georgia,
+    serif;
 
-  font-size: 17px;
+  font-style: italic;
 
   font-weight: 400;
 
-  line-height: 1.75;
-
-  letter-spacing: -0.01em;
+  color:
+    #7c3aed;
 }
 
 
-/* =========================================
-   HEADER ACCENT
-========================================= */
+/* =========================================================
+   SUBTITLE
+========================================================= */
 
-.projects-header .section-accent {
-  display: block;
+.projects-header .section-subtitle {
 
-  width: 102px;
-  height: 5px;
+  width: 100%;
+
+  max-width: 720px;
 
   margin:
-    35px
-    auto
-    0;
+    0 auto;
+
+  color:
+    #64748b;
+
+  font-size:
+    16px;
+
+  font-weight: 400;
+
+  line-height:
+    1.8;
+}
+
+
+/* =========================================================
+   ACCENT
+========================================================= */
+
+.section-accent {
+
+  display: block;
+
+  width: 90px;
+
+  height: 4px;
+
+  margin:
+    30px auto 0;
 
   border-radius: 999px;
 
@@ -241,9 +237,7 @@
     );
 
   box-shadow:
-    0
-    0
-    20px
+    0 0 20px
     rgba(
       37,
       99,
@@ -253,66 +247,228 @@
 }
 
 
-/* =========================================
-   GRID
-========================================= */
+/* =========================================================
+   JOURNEY AREA
+========================================================= */
 
-.projects-grid {
+.projects-journey {
+
   width: 100%;
 
-  max-width: 1500px;
+  max-width: 1450px;
 
-  margin: 0 auto;
+  height: 2500px;
 
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      3,
-      minmax(0, 1fr)
-    );
-
-  gap: 32px;
+  margin:
+    0 auto;
 
   position: relative;
-
-  z-index: 2;
 }
 
 
-/* =========================================
-   CARD LINK
-========================================= */
+/* =========================================================
+   PATH
+========================================================= */
 
-.project-card-link {
-  display: block;
+.journey-path {
 
-  text-decoration: none;
+  position: absolute;
 
-  color: inherit;
+  inset: 0;
 
-  min-width: 0;
-}
-
-
-/* =========================================
-   CARD
-========================================= */
-
-.project-card {
-  position: relative;
+  width: 100%;
 
   height: 100%;
 
-  min-height: 570px;
+  pointer-events: none;
 
-  overflow: hidden;
+  z-index: 1;
+}
+
+
+.journey-path-mobile {
+
+  display: none;
+}
+
+
+/* =========================================================
+   PATH SHADOW
+========================================================= */
+
+.journey-path-shadow {
+
+  fill: none;
+
+  stroke:
+    rgba(
+      148,
+      163,
+      184,
+      0.16
+    );
+
+  stroke-width: 3;
+
+  stroke-linecap: round;
+}
+
+
+/* =========================================================
+   ANIMATED PATH
+========================================================= */
+
+.journey-path-line {
+
+  fill: none;
+
+  stroke:
+    #2563eb;
+
+  stroke-width: 5;
+
+  stroke-linecap: round;
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      rgba(
+        37,
+        99,
+        235,
+        0.18
+      )
+    );
+
+  /*
+    IMPORTANT:
+    JS controls these values.
+  */
+
+  transition:
+    stroke-dashoffset
+    0.08s
+    linear;
+}
+
+
+/* =========================================================
+   JOURNEY ROW
+========================================================= */
+
+.journey-row {
+
+  width: 100%;
+
+  position: absolute;
 
   display: flex;
 
-  flex-direction: column;
+  align-items: center;
 
-  border-radius: 28px;
+  z-index: 5;
+}
+
+
+/* =========================================================
+   CARD POSITIONS
+========================================================= */
+
+
+/*
+   Large gap between cards
+   makes scroll animation visible.
+*/
+
+.journey-row:nth-child(3) {
+
+  top: 80px;
+}
+
+
+.journey-row:nth-child(4) {
+
+  top: 900px;
+}
+
+
+.journey-row:nth-child(5) {
+
+  top: 1720px;
+}
+
+
+/* =========================================================
+   LEFT
+========================================================= */
+
+.journey-left {
+
+  justify-content:
+    flex-start;
+
+  padding-left:
+    5%;
+}
+
+
+/* =========================================================
+   RIGHT
+========================================================= */
+
+.journey-right {
+
+  justify-content:
+    flex-end;
+
+  padding-right:
+    5%;
+}
+
+
+/* =========================================================
+   CARD LINK
+========================================================= */
+
+.journey-card-link {
+
+  width:
+    min(
+      570px,
+      43%
+    );
+
+  display:
+    block;
+
+  text-decoration:
+    none;
+
+  color:
+    inherit;
+
+  position:
+    relative;
+
+  z-index:
+    5;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.journey-card {
+
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    30px;
 
   background:
     rgba(
@@ -332,31 +488,63 @@
     );
 
   box-shadow:
-    0
-    10px
-    35px
+    0 25px 80px
     rgba(
       15,
       23,
       42,
-      0.06
+      0.08
     );
 
-  opacity: 0;
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+
+  /*
+     IMPORTANT:
+
+     Default state is completely hidden.
+     It will NOT show until IntersectionObserver
+     adds .journey-card-visible.
+  */
+
+  opacity:
+    0;
+
+  visibility:
+    hidden;
+
+  transform:
+    translateY(110px)
+    scale(0.9);
 
   transition:
-    opacity
-    0.8s
-    ease,
 
-    transform
-    0.8s
+    opacity
+    0.9s
     cubic-bezier(
       0.22,
       1,
       0.36,
       1
     ),
+
+    transform
+    1s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    ),
+
+    visibility
+    0s
+    linear
+    0.9s,
 
     box-shadow
     0.5s
@@ -368,83 +556,25 @@
 }
 
 
-/* =========================================
-   INITIAL ANIMATION
-========================================= */
+/* =========================================================
+   VISIBLE STATE
+========================================================= */
 
-.project-from-left {
-  transform:
-    translateX(-70px)
-    translateY(30px);
-}
+.journey-card-visible {
 
+  opacity:
+    1;
 
-.project-from-right {
-  transform:
-    translateX(70px)
-    translateY(30px);
-}
-
-
-/* =========================================
-   VISIBLE
-========================================= */
-
-.project-card.project-visible {
-  opacity: 1;
+  visibility:
+    visible;
 
   transform:
-    translateX(0)
-    translateY(0);
-}
-
-
-/* =========================================
-   STAGGER
-========================================= */
-
-.project-card-link:nth-child(2)
-.project-card {
-  transition-delay:
-    0.12s;
-}
-
-
-/* =========================================
-   IMAGE
-========================================= */
-
-.project-image {
-  width: 100%;
-
-  height: 300px;
-
-  position: relative;
-
-  overflow: hidden;
-
-  background:
-    #e2e8f0;
-}
-
-
-/* =========================================
-   IMAGE
-========================================= */
-
-.project-image img {
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: contain;
-
-  object-position: center;
-
-  display: block;
+    translateY(0)
+    scale(1);
 
   transition:
-    transform
+
+    opacity
     0.9s
     cubic-bezier(
       0.22,
@@ -453,35 +583,192 @@
       1
     ),
 
-    filter
-    0.7s
-    ease;
+    transform
+    1s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    ),
+
+    visibility
+    0s
+    linear
+    0s;
 }
 
 
-/* =========================================
+/* =========================================================
+   DOT
+========================================================= */
+
+.journey-dot {
+
+  position:
+    absolute;
+
+  top:
+    50%;
+
+  width:
+    66px;
+
+  height:
+    66px;
+
+  margin-top:
+    -33px;
+
+  border-radius:
+    50%;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  color:
+    #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #06b6d4
+    );
+
+  border:
+    5px solid
+    #ffffff;
+
+  box-shadow:
+    0 10px 35px
+    rgba(
+      37,
+      99,
+      235,
+      0.25
+    );
+
+  font-size:
+    12px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.08em;
+
+  z-index:
+    10;
+}
+
+
+.journey-left
+.journey-dot {
+
+  right:
+    48%;
+
+  transform:
+    translateX(50%);
+}
+
+
+.journey-right
+.journey-dot {
+
+  left:
+    48%;
+
+  transform:
+    translateX(-50%);
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.project-image {
+
+  width:
+    100%;
+
+  height:
+    285px;
+
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  background:
+    #e2e8f0;
+}
+
+
+.project-image img {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+
+  object-position:
+    center;
+
+  display:
+    block;
+
+  transition:
+    transform
+    0.8s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+
+/* =========================================================
    IMAGE OVERLAY
-========================================= */
+========================================================= */
 
 .image-overlay {
-  position: absolute;
 
-  inset: 0;
+  position:
+    absolute;
+
+  inset:
+    0;
 
   background:
     linear-gradient(
       180deg,
-      transparent
-      35%,
+      transparent 35%,
       rgba(
         15,
         23,
         42,
-        0.45
+        0.5
       )
     );
 
-  opacity: 0;
+  opacity:
+    0;
 
   transition:
     opacity
@@ -490,71 +777,32 @@
 }
 
 
-/* =========================================
-   SHINE SWEEP
-========================================= */
-
-.project-image::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-
-  left: -120%;
-
-  width: 80%;
-
-  height: 100%;
-
-  z-index: 3;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(
-        255,
-        255,
-        255,
-        0.28
-      ),
-      transparent
-    );
-
-  transform:
-    skewX(-20deg);
-
-  transition:
-    left
-    0.8s
-    ease;
-}
-
-
-/* =========================================
+/* =========================================================
    CATEGORY
-========================================= */
+========================================================= */
 
 .project-category {
-  position: absolute;
 
-  top: 20px;
+  position:
+    absolute;
 
-  left: 20px;
+  top:
+    20px;
 
-  z-index: 5;
+  left:
+    20px;
+
+  z-index:
+    5;
 
   padding:
-    8px
-    14px;
+    8px 14px;
 
   border-radius:
     999px;
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
   background:
     rgba(
@@ -579,59 +827,65 @@
   -webkit-backdrop-filter:
     blur(12px);
 
-  font-family:
-    "Poppins",
-    sans-serif;
+  font-size:
+    11px;
 
-  font-size: 11px;
+  font-weight:
+    600;
 
-  font-weight: 600;
-
-  line-height: 1.4;
+  opacity:
+    0;
 
   transform:
     translateY(-10px);
 
-  opacity: 0;
-
   transition:
+
     opacity
-    0.5s
+    0.4s
     ease,
 
     transform
-    0.5s
+    0.4s
     ease;
 }
 
 
-/* =========================================
+/* =========================================================
    VIEW PROJECT
-========================================= */
+========================================================= */
 
 .view-project {
-  position: absolute;
 
-  right: 20px;
+  position:
+    absolute;
 
-  bottom: 20px;
+  right:
+    20px;
 
-  z-index: 5;
+  bottom:
+    20px;
 
-  display: flex;
+  z-index:
+    5;
 
-  align-items: center;
+  display:
+    flex;
 
-  gap: 8px;
+  align-items:
+    center;
+
+  gap:
+    8px;
 
   padding:
-    10px
-    15px;
+    10px 15px;
 
   border-radius:
     999px;
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
   background:
     rgba(
@@ -653,144 +907,156 @@
   backdrop-filter:
     blur(12px);
 
-  -webkit-backdrop-filter:
-    blur(12px);
+  font-size:
+    12px;
 
-  font-family:
-    "Poppins",
-    sans-serif;
+  font-weight:
+    600;
 
-  font-size: 12px;
-
-  font-weight: 600;
-
-  line-height: 1.4;
-
-  opacity: 0;
+  opacity:
+    0;
 
   transform:
     translateY(15px);
 
   transition:
+
     opacity
-    0.5s
+    0.4s
     ease,
 
-    transform
-    0.5s
-    ease;
-}
-
-
-.view-project svg {
-  font-size: 17px;
-
-  transition:
     transform
     0.4s
     ease;
 }
 
 
-/* =========================================
+/* =========================================================
    CONTENT
-========================================= */
+========================================================= */
 
 .project-content {
-  flex: 1;
 
-  display: flex;
-
-  flex-direction: column;
+  min-height:
+    300px;
 
   padding:
-    28px;
+    30px;
 
-  position: relative;
+  position:
+    relative;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
 }
 
 
-/* =========================================
-   NUMBER
-========================================= */
+/* =========================================================
+   BIG NUMBER
+========================================================= */
 
 .project-number {
-  position: absolute;
 
-  top: 25px;
+  position:
+    absolute;
 
-  right: 28px;
+  top:
+    20px;
+
+  right:
+    28px;
 
   color:
     rgba(
       37,
       99,
       235,
-      0.08
+      0.07
     );
 
-  font-family:
-    "Poppins",
-    sans-serif;
+  font-size:
+    85px;
 
-  font-size: 70px;
+  font-weight:
+    800;
 
-  font-weight: 800;
+  line-height:
+    1;
 
-  line-height: 1;
-
-  pointer-events: none;
-
-  transition:
-    color
-    0.5s
-    ease,
-
-    transform
-    0.5s
-    ease;
+  pointer-events:
+    none;
 }
 
 
-/* =========================================
+/* =========================================================
    INFO
-========================================= */
+========================================================= */
 
 .project-info {
-  position: relative;
 
-  z-index: 2;
+  position:
+    relative;
+
+  z-index:
+    2;
 }
 
 
-/* =========================================
+/* =========================================================
+   JOURNEY LABEL
+========================================================= */
+
+.journey-label {
+
+  display:
+    inline-block;
+
+  margin-bottom:
+    10px;
+
+  color:
+    #2563eb;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    0.12em;
+}
+
+
+/* =========================================================
    TITLE
-========================================= */
+========================================================= */
 
 .project-content h3 {
+
   margin:
-    0
-    0
-    12px;
+    0 0 18px;
 
   padding-right:
     70px;
 
   color:
-    var(--heading, #0f172a);
-
-  font-family:
-    "Poppins",
-    sans-serif;
+    var(
+      --heading,
+      #0f172a
+    );
 
   font-size:
-    23px;
+    24px;
 
   font-weight:
     700;
 
   line-height:
-    1.35;
+    1.3;
 
   transition:
     color
@@ -803,45 +1069,101 @@
 }
 
 
-/* =========================================
-   DESCRIPTION
-========================================= */
+/* =========================================================
+   TOOLS
+========================================================= */
 
-.project-content p {
-  max-width:
-    540px;
+.project-tools {
 
-  margin:
-    0;
-
-  color:
-    var(--text, #64748b);
-
-  font-family:
-    "Poppins",
-    sans-serif;
-
-  font-size:
-    14px;
-
-  font-weight:
-    400;
-
-  line-height:
-    1.8;
+  margin-top:
+    5px;
 }
 
 
-/* =========================================
+.tools-label {
+
+  display:
+    block;
+
+  margin-bottom:
+    10px;
+
+  color:
+    #94a3b8;
+
+  font-size:
+    10px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    0.1em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.tools-list {
+
+  display:
+    flex;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    8px;
+}
+
+
+.tool-pill {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  padding:
+    6px 11px;
+
+  border-radius:
+    999px;
+
+  color:
+    #2563eb;
+
+  background:
+    #eff6ff;
+
+  border:
+    1px solid
+    #bfdbfe;
+
+  font-size:
+    11px;
+
+  font-weight:
+    600;
+
+  line-height:
+    1.3;
+}
+
+
+/* =========================================================
    FOOTER
-========================================= */
+========================================================= */
 
 .project-footer {
+
   margin-top:
     auto;
 
   padding-top:
-    25px;
+    28px;
 
   display:
     flex;
@@ -857,26 +1179,20 @@
 }
 
 
-/* =========================================
+/* =========================================================
    LINK TEXT
-========================================= */
+========================================================= */
 
 .project-link-text {
+
   color:
     #64748b;
-
-  font-family:
-    "Poppins",
-    sans-serif;
 
   font-size:
     13px;
 
   font-weight:
     600;
-
-  line-height:
-    1.4;
 
   transition:
     color
@@ -885,11 +1201,12 @@
 }
 
 
-/* =========================================
+/* =========================================================
    ACTION BUTTON
-========================================= */
+========================================================= */
 
 .project-links {
+
   width:
     52px;
 
@@ -922,6 +1239,7 @@
     #bfdbfe;
 
   transition:
+
     transform
     0.5s
     cubic-bezier(
@@ -932,20 +1250,21 @@
     ),
 
     background
-    0.5s
+    0.4s
     ease,
 
     color
-    0.5s
+    0.4s
     ease,
 
     box-shadow
-    0.5s
+    0.4s
     ease;
 }
 
 
 .project-links svg {
+
   font-size:
     20px;
 
@@ -956,9 +1275,9 @@
 }
 
 
-/* =========================================
+/* =========================================================
    HOVER
-========================================= */
+========================================================= */
 
 @media (
   hover: hover
@@ -966,10 +1285,13 @@
   pointer: fine
 ) {
 
-  .project-card-link:hover
-  .project-card {
+
+  .journey-card-link:hover
+  .journey-card {
+
     transform:
-      translateY(-12px);
+      translateY(-12px)
+      scale(1.015);
 
     border-color:
       rgba(
@@ -980,52 +1302,35 @@
       );
 
     box-shadow:
-      0
-      30px
-      70px
+      0 35px 90px
       rgba(
         37,
         99,
         235,
-        0.13
+        0.14
       );
   }
 
 
-  /* IMAGE ZOOM */
-
-  .project-card-link:hover
+  .journey-card-link:hover
   .project-image img {
-    transform:
-      scale(1.08);
 
-    filter:
-      saturate(1.08);
+    transform:
+      scale(1.06);
   }
 
 
-  /* OVERLAY */
-
-  .project-card-link:hover
+  .journey-card-link:hover
   .image-overlay {
+
     opacity:
       1;
   }
 
 
-  /* SHINE */
-
-  .project-card-link:hover
-  .project-image::before {
-    left:
-      130%;
-  }
-
-
-  /* CATEGORY */
-
-  .project-card-link:hover
+  .journey-card-link:hover
   .project-category {
+
     opacity:
       1;
 
@@ -1034,10 +1339,9 @@
   }
 
 
-  /* VIEW */
-
-  .project-card-link:hover
+  .journey-card-link:hover
   .view-project {
+
     opacity:
       1;
 
@@ -1046,60 +1350,28 @@
   }
 
 
-  /* VIEW ICON */
-
-  .project-card-link:hover
-  .view-project svg {
-    transform:
-      translate(
-        3px,
-        -3px
-      );
-  }
-
-
-  /* TITLE */
-
-  .project-card-link:hover
+  .journey-card-link:hover
   .project-content h3 {
+
     color:
       #2563eb;
 
     transform:
-      translateX(3px);
+      translateX(4px);
   }
 
 
-  /* NUMBER */
-
-  .project-card-link:hover
-  .project-number {
-    color:
-      rgba(
-        37,
-        99,
-        235,
-        0.13
-      );
-
-    transform:
-      scale(1.05);
-  }
-
-
-  /* LINK TEXT */
-
-  .project-card-link:hover
+  .journey-card-link:hover
   .project-link-text {
+
     color:
       #2563eb;
   }
 
 
-  /* BUTTON */
-
-  .project-card-link:hover
+  .journey-card-link:hover
   .project-links {
+
     color:
       #ffffff;
 
@@ -1118,9 +1390,7 @@
       scale(1.08);
 
     box-shadow:
-      0
-      12px
-      28px
+      0 12px 28px
       rgba(
         37,
         99,
@@ -1130,8 +1400,9 @@
   }
 
 
-  .project-card-link:hover
+  .journey-card-link:hover
   .project-links svg {
+
     transform:
       translate(
         3px,
@@ -1139,367 +1410,706 @@
       )
       rotate(8deg);
   }
-}
 
 
-/* =========================================
-   PURPLE PROJECT
-========================================= */
+  /* ===============================================
+     PURPLE PROJECT
+  =============================================== */
 
-.project-purple:hover
-.project-card {
-  border-color:
-    rgba(
-      196,
-      181,
-      253,
-      0.8
-    );
+  .project-purple:hover
+  .journey-card {
 
-  box-shadow:
-    0
-    30px
-    70px
-    rgba(
-      139,
-      92,
-      246,
-      0.13
-    );
-}
-
-
-.project-purple:hover
-.project-content h3 {
-  color:
-    #7c3aed;
-}
-
-
-.project-purple:hover
-.project-links {
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #a855f7
-    );
-}
-
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media (
-  max-width: 1024px
-) {
-
-  .projects-section {
-    padding:
-      90px
-      25px
-      100px;
-  }
-
-  .projects-grid {
-    grid-template-columns:
-      repeat(
-        2,
-        minmax(0, 1fr)
+    border-color:
+      rgba(
+        196,
+        181,
+        253,
+        0.8
       );
 
-    gap:
-      24px;
+    box-shadow:
+      0 35px 90px
+      rgba(
+        139,
+        92,
+        246,
+        0.14
+      );
   }
 
-  .project-card {
-    min-height:
-      550px;
+
+  .project-purple:hover
+  .project-content h3 {
+
+    color:
+      #7c3aed;
   }
 
-  .project-image {
-    height:
-      250px;
+
+  .project-purple:hover
+  .project-link-text {
+
+    color:
+      #7c3aed;
+  }
+
+
+  .project-purple:hover
+  .project-links {
+
+    background:
+      linear-gradient(
+        135deg,
+        #7c3aed,
+        #a855f7
+      );
   }
 }
 
 
-/* =========================================
-   MOBILE
-========================================= */
+/* =========================================================
+   TABLET
+========================================================= */
 
-@media (
-  max-width: 768px
-) {
+@media (max-width: 1000px) {
 
   .projects-section {
-    padding:
-      75px
-      16px
-      90px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow-x: hidden;
   }
 
+  .projects-journey {
+    width: 100%;
+    max-width: 100%;
+    height: 2350px;
+    overflow: hidden;
+  }
+
+  .journey-card-link {
+    width: 48%;
+    max-width: 570px;
+  }
+
+  .journey-left {
+    padding-left: 2%;
+  }
+
+  .journey-right {
+    padding-right: 2%;
+  }
+
+  .journey-left .journey-dot {
+    left: calc(2% + 470px);
+  }
+
+  .journey-right .journey-dot {
+    right: calc(2% + 470px);
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .projects-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 80px 0 120px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     HEADER
+  ======================================================= */
 
   .projects-header {
-    margin-bottom:
-      50px;
+    width: calc(100% - 40px);
+    max-width: 100%;
+    margin: 0 auto 60px;
+    box-sizing: border-box;
   }
 
+  .projects-eyebrow {
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
 
   .projects-header .section-title {
-    font-size:
-      32px;
-
-    line-height:
-      1.18;
-
-    letter-spacing:
-      -0.035em;
+    width: 100%;
+    max-width: 100%;
+    font-size: 38px;
+    line-height: 1.08;
+    overflow-wrap: break-word;
   }
-
 
   .projects-header .section-subtitle {
-    font-size:
-      14px;
-
-    line-height:
-      1.7;
+    width: 100%;
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: break-word;
   }
 
 
-  .projects-header .section-accent {
-    width:
-      75px;
+  /* =======================================================
+     MOBILE JOURNEY
+  ======================================================= */
 
-    height:
-      4px;
+  .projects-journey {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 2200px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
 
-    margin-top:
+
+  /* =======================================================
+     MOBILE PATH
+     BLUE ONLY
+  ======================================================= */
+
+  .journey-path-desktop {
+    display: none !important;
+  }
+
+  .journey-path-mobile {
+    display: block !important;
+    width: 100%;
+    height: 2200px;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .journey-path-line {
+    stroke: #2563eb !important;
+    stroke-width: 3 !important;
+    opacity: 1;
+
+    filter: drop-shadow(
+      0 0 6px rgba(37, 99, 235, 0.25)
+    );
+  }
+
+  .journey-path-shadow {
+    stroke: rgba(37, 99, 235, 0.10) !important;
+    stroke-width: 2 !important;
+  }
+
+
+  /* =======================================================
+     ROW
+  ======================================================= */
+
+  .journey-row {
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    max-width: 100%;
+
+    display: block;
+
+    padding: 0 !important;
+
+    box-sizing: border-box;
+  }
+
+  .journey-row:nth-child(3) {
+    top: 80px;
+  }
+
+  .journey-row:nth-child(4) {
+    top: 800px;
+  }
+
+  .journey-row:nth-child(5) {
+    top: 1520px;
+  }
+
+  .journey-left {
+    top: 80px;
+  }
+
+  .journey-right {
+    top: 800px;
+  }
+
+  .journey-right ~ .journey-left {
+    top: 1520px;
+  }
+
+
+  /* =======================================================
+     CARD LINK
+  ======================================================= */
+
+  .journey-card-link {
+    display: block;
+
+    width: calc(100% - 70px);
+    max-width: calc(100% - 70px);
+
+    margin-left: 45px;
+    margin-right: 25px;
+
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     CARD
+  ======================================================= */
+
+  .journey-card {
+    width: 100%;
+    max-width: 100%;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+
+    opacity: 0;
+
+    transition:
+      opacity 0.85s ease,
+      transform 0.95s cubic-bezier(
+        0.22,
+        1,
+        0.36,
+        1
+      );
+  }
+
+
+  /* LEFT */
+
+  .journey-left .journey-card {
+    transform:
+      translateX(-120px)
+      scale(0.94);
+  }
+
+
+  /* RIGHT */
+
+  .journey-right .journey-card {
+    transform:
+      translateX(120px)
+      scale(0.94);
+  }
+
+
+  /* VISIBLE */
+
+  .journey-card-visible {
+    opacity: 1 !important;
+
+    transform:
+      translateX(0)
+      scale(1) !important;
+  }
+
+
+  /* =======================================================
+     NUMBER / DOT
+     ONLY NUMBER OUTSIDE CARD
+  ======================================================= */
+
+  .journey-dot {
+    position: absolute;
+
+    top: 145px;
+    left: 7px !important;
+    right: auto !important;
+
+    width: 48px;
+    height: 48px;
+
+    border-width: 4px;
+
+    font-size: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform: translateY(-50%);
+
+    z-index: 20;
+
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     REMOVE DUPLICATE NUMBER INSIDE CARD
+  ======================================================= */
+
+  .project-number {
+    display: none !important;
+  }
+
+
+  /* =======================================================
+     REMOVE PROJECT 01 / PROJECT 02 LABEL
+     NUMBER IS ALREADY OUTSIDE CARD
+  ======================================================= */
+
+  .journey-label {
+    display: none !important;
+  }
+
+
+  /* =======================================================
+     IMAGE
+  ======================================================= */
+
+  .project-image {
+    width: 100%;
+    max-width: 100%;
+
+    height: 250px;
+    min-height: 250px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  .project-image img {
+    width: 100%;
+    max-width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    display: block;
+  }
+
+
+  /* =======================================================
+     CATEGORY
+  ======================================================= */
+
+  .project-category {
+    top: 14px;
+    left: 14px;
+
+    padding: 7px 11px;
+
+    font-size: 9px;
+
+    max-width: calc(100% - 28px);
+
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     VIEW PROJECT
+  ======================================================= */
+
+  .view-project {
+    right: 14px;
+    bottom: 14px;
+
+    padding: 10px 13px;
+
+    font-size: 10px;
+
+    opacity: 1;
+    transform: none;
+
+    max-width: calc(100% - 28px);
+
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     CONTENT
+  ======================================================= */
+
+  .project-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+
+    padding: 26px 22px 28px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+
+  /* =======================================================
+     INFO
+  ======================================================= */
+
+  .project-info {
+    width: 100%;
+    max-width: 100%;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+  .project-info h3,
+  .project-content h3 {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+    padding-right: 0;
+
+    font-size: 24px;
+    line-height: 1.2;
+
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+
+  /* =======================================================
+     TOOLS
+  ======================================================= */
+
+  .project-tools {
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 18px;
+
+    box-sizing: border-box;
+  }
+
+  .tools-label {
+    margin-bottom: 9px;
+    font-size: 9px;
+  }
+
+  .tools-list {
+    width: 100%;
+    max-width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    box-sizing: border-box;
+  }
+
+  .tool-pill {
+    max-width: 100%;
+
+    padding: 6px 9px;
+
+    font-size: 9px;
+
+    box-sizing: border-box;
+
+    overflow-wrap: anywhere;
+  }
+
+
+  /* =======================================================
+     FOOTER
+  ======================================================= */
+
+  .project-footer {
+    width: 100%;
+    max-width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding-top: 5px;
+
+    box-sizing: border-box;
+  }
+
+  .project-link-text {
+    min-width: 0;
+
+    font-size: 11px;
+
+    overflow-wrap: break-word;
+  }
+
+  .project-links {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 390px) {
+
+  .projects-section {
+    padding-top: 65px;
+    overflow-x: hidden;
+  }
+
+  .projects-header {
+    width: calc(100% - 30px);
+  }
+
+  .projects-header .section-title {
+    font-size: 32px;
+  }
+
+
+  /* JOURNEY */
+
+  .projects-journey {
+    width: 100%;
+    max-width: 100%;
+
+    height: 2100px;
+
+    overflow: hidden;
+  }
+
+  .journey-path-mobile {
+    width: 100%;
+    height: 2100px;
+  }
+
+
+  /* =======================================================
+     CARD
+  ======================================================= */
+
+  .journey-card-link {
+    width: calc(100% - 58px);
+    max-width: calc(100% - 58px);
+
+    margin-left: 40px;
+    margin-right: 18px;
+  }
+
+
+  /* =======================================================
+     NUMBER
+  ======================================================= */
+
+  .journey-dot {
+    left: 5px !important;
+
+    width: 44px;
+    height: 44px;
+
+    font-size: 10px;
+
+    border-width: 4px;
+  }
+
+
+  /* =======================================================
+     IMAGE
+  ======================================================= */
+
+  .project-image {
+    width: 100%;
+
+    height: 220px;
+    min-height: 220px;
+  }
+
+
+  /* =======================================================
+     CONTENT
+  ======================================================= */
+
+  .project-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 100%;
+
+    padding:
+      23px
+      19px
       25px;
   }
 
 
-  .projects-grid {
-    grid-template-columns:
-      1fr;
+  /* =======================================================
+     INFO
+  ======================================================= */
 
-    gap:
-      24px;
-
-    max-width:
-      500px;
-  }
-
-
-  .project-card {
-    min-height:
-      auto;
-
-    border-radius:
-      23px;
-  }
-
-
-  .project-image {
-    height:
-      230px;
-  }
-
-
-  .project-content {
-    padding:
-      24px;
-  }
-
-
+  .project-info h3,
   .project-content h3 {
-    font-size:
-      20px;
+    width: 100%;
+    max-width: 100%;
+
+    font-size: 21px;
+  }
+
+  .project-info p {
+    max-width: 100%;
+
+    font-size: 12px;
+
+    overflow-wrap: anywhere;
   }
 
 
-  .project-content p {
-    font-size:
-      13.5px;
+  /* TOOLS */
 
-    line-height:
-      1.75;
-  }
-
-
-  .project-links {
-    width:
-      46px;
-
-    height:
-      46px;
-  }
-
-
-  /* MOBILE ANIMATION */
-
-  .project-from-left {
-    transform:
-      translateX(-45px);
-  }
-
-
-  .project-from-right {
-    transform:
-      translateX(45px);
-  }
-
-
-  /* ALWAYS SHOW CATEGORY */
-
-  .project-category {
-    opacity:
-      1;
-
-    transform:
-      translateY(0);
-  }
-
-
-  /* ALWAYS SHOW VIEW */
-
-  .view-project {
-    opacity:
-      1;
-
-    transform:
-      translateY(0);
+  .tools-list {
+    max-width: 100%;
   }
 }
 
 
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
-@media (
-  max-width: 480px
-) {
-
-  .projects-section {
-    padding:
-      65px
-      14px
-      80px;
-  }
-
-
-  .projects-header {
-    margin-bottom:
-      40px;
-  }
-
-
-  .projects-header .section-title {
-    font-size:
-      28px;
-
-    line-height:
-      1.18;
-  }
-
-
-  .projects-header .section-subtitle {
-    font-size:
-      14px;
-
-    line-height:
-      1.65;
-  }
-
-
-  .projects-header .section-accent {
-    width:
-      65px;
-
-    height:
-      4px;
-
-    margin-top:
-      23px;
-  }
-
-
-  .project-image {
-    height:
-      205px;
-  }
-
-
-  .project-content {
-    padding:
-      21px;
-  }
-
-
-  .project-content h3 {
-    font-size:
-      18px;
-  }
-
-
-  .project-content p {
-    font-size:
-      13px;
-
-    line-height:
-      1.7;
-  }
-
-
-  .project-number {
-    font-size:
-      55px;
-
-    right:
-      20px;
-  }
-
-
-  .project-footer {
-    padding-top:
-      20px;
-  }
-
-
-  .project-link-text {
-    font-size:
-      12px;
-  }
-}
-
-
-/* =========================================
+/* =========================================================
    REDUCED MOTION
-========================================= */
+========================================================= */
 
-@media (
-  prefers-reduced-motion: reduce
-) {
+@media (prefers-reduced-motion: reduce) {
 
-  .project-card,
-  .project-image img,
-  .project-links,
-  .project-category,
-  .view-project {
-    transition:
-      none !important;
+  .journey-card {
+    opacity: 1 !important;
+
+    transform: none !important;
+
+    transition: none !important;
   }
-}
 
-
-/* =========================================
-   KEEP COMPLETE PROJECT IMAGE VISIBLE
-========================================= */
-
-.project-card-link:hover
-.project-image img {
-  transform:
-    none;
+  .journey-path-line {
+    transition: none;
+  }
 }

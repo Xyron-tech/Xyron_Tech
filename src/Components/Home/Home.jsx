@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import {useNavigate} from "react-router-dom";
 import "./Home.css";
 import {
   Swiper,
@@ -175,7 +176,7 @@ const highlights = [
 ========================================= */
 
 const Header = () => {
-
+  const navigate=useNavigate();
   const swiperRef = useRef(null);
   const revealRef = useRef(null);
 
@@ -256,14 +257,7 @@ const Header = () => {
   ========================================= */
 
   const handleViewWork = () => {
-
-    document
-      .getElementById("projects")
-      ?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
+    navigate("/projects");
   };
 
 

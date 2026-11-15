@@ -249,6 +249,10 @@
   gap: 8px;
 }
 
+.contact-section .input-row>.form-field { min-width:0; }
+.contact-section .input-row .form-field input,
+.contact-section .input-row .form-field select { min-width:0; }
+
 .contact-section .form-field label {
   color: var(--heading);
 

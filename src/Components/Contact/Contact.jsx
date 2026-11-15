@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Contact.css";
 import {
   FiPhone,
@@ -41,6 +41,7 @@ const contactInfo = [
 ];
 
 const services = [
+  "Web Development",
   "Business Website",
   "E-Commerce",
   "Portfolio Website",
@@ -55,6 +56,14 @@ const services = [
 const Contact = () => {
   const [selectedService, setSelectedService] = useState("");
   const [customService, setCustomService] = useState("");
+
+  useEffect(() => {
+    const handleServiceSelection = (event) => {
+      if (services.includes(event.detail)) setSelectedService(event.detail);
+    };
+    window.addEventListener("xyron:select-service", handleServiceSelection);
+    return () => window.removeEventListener("xyron:select-service", handleServiceSelection);
+  }, []);
 
   return (
     <section className="contact-section" id="contact">

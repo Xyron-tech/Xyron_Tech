@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet-async";
 
-export const SITE_URL = "https://xyronwebtech.com";
-export const SITE_NAME = "Xyron Web Tech";
-export const SITE_ALT_NAMES = ["XyronWebTech", "Xyron WebTech", "xyronwebtech", "Xyron Tech"];
-export const DEFAULT_IMAGE = `${SITE_URL}/logo.webp`;
+const SITE_URL = "https://xyronwebtech.com";
+const SITE_NAME = "Xyron Web Tech";
+const SITE_ALT_NAMES = ["XyronWebTech", "Xyron WebTech", "xyronwebtech", "Xyron Tech"];
+const DEFAULT_IMAGE = `${SITE_URL}/logo.webp`;
 
-export const DEFAULT_KEYWORDS = [
+const DEFAULT_KEYWORDS = [
   "Xyron Web Tech",
   "XyronWebTech",
   "xyronwebtech",
@@ -28,7 +28,7 @@ export const DEFAULT_KEYWORDS = [
   "modern web development",
 ].join(", ");
 
-export const DEFAULT_DESCRIPTION =
+const DEFAULT_DESCRIPTION =
   "Xyron Web Tech (xyronwebtech.com) — professional web development company building modern, responsive, SEO-friendly websites for businesses, startups and brands across India.";
 
 const SOCIAL_LINKS = [
