@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from "react";
-import {Link,useLocation} from "react-router-dom";
+import {Link,useHref,useLocation} from "react-router-dom";
 import {Check,Copy,ImagePlus,MessageCircle,Package,Pencil,Plus,Store,Trash2,Upload,X} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
@@ -23,7 +23,7 @@ const profileFromBusiness=business=>({
 const newAnnouncement=()=>({id:`announcement-${Date.now()}-${Math.random()}`,title:"Store update",text:""});
 
 export default function StoreAdmin(){
-  const {pathname}=useLocation();
+  const {pathname}=useLocation(),storePathPrefix=useHref("/store/");
   const section=pathname.includes("shipping")?"shipping":pathname.includes("payments")?"payments":pathname.includes("profile")||pathname.includes("storefront")?"profile":"products";
   const [business,setBusiness]=useState(null),[products,setProducts]=useState([]),[productCount,setProductCount]=useState(0),[profile,setProfile]=useState(blankProfile),[payment,setPayment]=useState({upiId:"",paymentInstructions:"",paymentQrEnabled:true});
   const [product,setProduct]=useState(blankProduct),[productImage,setProductImage]=useState(null),[editingProduct,setEditingProduct]=useState(""),[slide,setSlide]=useState(blankSlide),[slideImage,setSlideImage]=useState(null),[editingSlide,setEditingSlide]=useState("");
@@ -66,7 +66,7 @@ export default function StoreAdmin(){
     window.addEventListener("keydown",closeOnEscape);
     return ()=>window.removeEventListener("keydown",closeOnEscape);
   },[productEditorOpen]);
-  async function copyStoreAddress(){try{await navigator.clipboard.writeText(`${window.location.origin}/store/${encodeURIComponent(business.slug)}`);showNotice("Store address copied.");}catch{setError("Could not copy the store address. Please copy the URL from your browser.");}}
+  async function copyStoreAddress(){try{await navigator.clipboard.writeText(new URL(`${storePathPrefix}${encodeURIComponent(business.slug)}`,window.location.origin).toString());showNotice("Store address copied.");}catch{setError("Could not copy the store address. Please copy the URL from your browser.");}}
   async function saveSeoProfile(e){await saveProfile(e);}
   const productForm=<form className="store-admin-form product-modal-form" onSubmit={saveProduct}>
     <label>Product name<input required value={product.name} onChange={e=>setProduct(p=>({...p,name:e.target.value}))}/></label>

@@ -1,4 +1,5 @@
 import {useEffect,useState} from "react";
+import {Link,useHref} from "react-router-dom";
 import {Check,Copy,RefreshCw,ShieldCheck,Trash2,X} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
@@ -7,6 +8,7 @@ import {planFeatureDefaults} from "../data/planCatalog";
 const featureNames={advancedSeo:"Advanced SEO",quickReplies:"Chat quick replies",analytics:"Weekly/monthly analytics"};
 
 export default function SuperAdmin(){
+  const storePathPrefix=useHref("/store/");
   const [apps,setApps]=useState([]),[plans,setPlans]=useState({}),[features,setFeatures]=useState([]),[loading,setLoading]=useState(true),[error,setError]=useState(""),[busy,setBusy]=useState("");
   async function load(){
     setLoading(true);setError("");
@@ -47,7 +49,7 @@ export default function SuperAdmin(){
     finally{setBusy("");}
   }
   async function copyStore(slug){
-    try{await navigator.clipboard.writeText(`${window.location.origin}/store/${encodeURIComponent(slug)}`);notify("Store address copied.");}
+    try{await navigator.clipboard.writeText(new URL(`${storePathPrefix}${encodeURIComponent(slug)}`,window.location.origin).toString());notify("Store address copied.");}
     catch(e){setError("Could not copy the store address. Please copy the URL from your browser.");notify("Could not copy the store address.","error");}
   }
   const pending=apps.filter(app=>app.status==="PENDING").length;
@@ -69,7 +71,7 @@ export default function SuperAdmin(){
             <small>{application.category} · {application.city}, {application.state} · {new Date(application.createdAt).toLocaleDateString()}</small>
             {application.description&&<p>{application.description}</p>}
             <p className="application-plan-summary">Requested plan: <b>{plans[application.selectedPlan]?.name||application.selectedPlan||"Starter"}</b> · ₹{plans[application.selectedPlan]?.monthlyPriceInr??199}/month</p>
-            {business?.slug&&<div className="application-store-link"><a href={`/store/${encodeURIComponent(business.slug)}`} target="_blank" rel="noreferrer">Open customer storefront</a><button type="button" className="secondary-button" onClick={()=>copyStore(business.slug)}><Copy size={14}/> Copy store link</button></div>}
+            {business?.slug&&<div className="application-store-link"><Link to={`/store/${encodeURIComponent(business.slug)}`} target="_blank" rel="noreferrer">Open customer storefront</Link><button type="button" className="secondary-button" onClick={()=>copyStore(business.slug)}><Copy size={14}/> Copy store link</button></div>}
             {business&&application.status==="APPROVED"&&!isDeleted&&<div className="plan-controls">
               <label>Active plan<select value={plan} onChange={event=>{const nextPlan=event.target.value;updateLocal(application._id,{selectedPlan:nextPlan,business:{...business,subscriptionPlan:nextPlan,subscriptionFeatures:{...planFeatureDefaults[nextPlan]}}});}}>{Object.values(plans).map(item=><option key={item.id} value={item.id}>{item.name} · ₹{item.monthlyPriceInr}/month</option>)}</select></label>
               <div className="plan-feature-editor">
