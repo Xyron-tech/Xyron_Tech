@@ -8,7 +8,6 @@ import {FiChevronDown,FiCode,FiGrid,FiHome,FiMail,FiMenu,FiMessageSquare,FiShopp
 const workItems=[
   {label:"Projects",to:"/projects"},
   {label:"How it works",to:"/#how-we-work",section:"how-we-work"},
-  {label:"Plans",to:"/#pricing",section:"pricing"},
   {label:"Wholesale",href:"/wholesale/register"}
 ];
 

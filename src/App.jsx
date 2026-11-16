@@ -9,7 +9,6 @@ import Projects from "./Components/Projects/Projects";
 import Contact from "./Components/Contact/Contact";
 import Footer from "./Components/Footer/Footer";
 import HowWeWork from "./Components/HowWeWork/HowWeWork";
-import Pricing from "./Components/Pricing/Pricing";
 import WhatsAppFloat from "./Components/WhatsAppFloat/WhatsAppFloat";
 import Testimonials from "./Components/Testimonials/Testimonials";
 import BrandLoader from "./Components/BrandLoader";
@@ -19,7 +18,7 @@ import "./styles/typography.css";
 const WholesaleExperience=lazy(()=>import("./WholesaleExperience.jsx"));
 
 function PortfolioHome(){
-  return <><Home/><About/><Services/><HowWeWork/><Pricing/><Testimonials/><Contact/></>;
+  return <><Home/><About/><Services/><HowWeWork/>{/* Pricing section temporarily hidden */}<Testimonials/><Contact/></>;
 }
 
 function PortfolioRoutes(){

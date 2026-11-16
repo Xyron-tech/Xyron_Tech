@@ -7,7 +7,7 @@ import {FiMail,FiPhone,FiMapPin} from "react-icons/fi";
 const footerNavigation=[
   {title:"About Us",links:[{name:"Our Vision",to:"/#our-vision"},{name:"Our Mission",to:"/#our-mission"},{name:"Our Values",to:"/#our-values"}]},
   {title:"Services",links:[{name:"Explore services",to:"/services"},{name:"Contact for a service",to:"/contact"}]},
-  {title:"Our Work",links:[{name:"Projects",to:"/projects"},{name:"How it works",to:"/#how-we-work"},{name:"Plans",to:"/#pricing"},{name:"Testimonials",to:"/#testimonials"},{name:"Wholesale",href:"/wholesale/register"}]}
+  {title:"Our Work",links:[{name:"Projects",to:"/projects"},{name:"How it works",to:"/#how-we-work"},{name:"Testimonials",to:"/#testimonials"},{name:"Wholesale",href:"/wholesale/register"}]}
 ];
 
 const contactInfo=[
