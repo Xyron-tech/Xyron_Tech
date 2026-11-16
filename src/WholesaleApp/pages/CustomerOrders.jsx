@@ -41,6 +41,14 @@ export default function CustomerOrders(){
     load();
     return ()=>{active=false;};
   },[base,slug]);
+  useEffect(()=>{
+    const handleMessagesRead=event=>{
+      if(event.detail?.customer!==true||event.detail?.slug!==slug||!event.detail?.orderNumber)return;
+      setOrders(current=>current.map(order=>order.orderNumber===event.detail.orderNumber?{...order,unreadMessageCount:0,latestMessagePreview:""}:order));
+    };
+    window.addEventListener("xyron:order-chat-read",handleMessagesRead);
+    return ()=>window.removeEventListener("xyron:order-chat-read",handleMessagesRead);
+  },[slug]);
 
   async function loadOrders(page=1){
     setError("");
@@ -84,7 +92,7 @@ export default function CustomerOrders(){
       <section className="customer-orders-list panel" aria-label="Your orders">
         <div className="customer-orders-list-heading"><span><ClipboardList size={17}/> Order history</span><small>{orders.length} loaded</small></div>
         {orders.length?orders.map(order=><article className={`customer-order-row ${activeChatOrder===order.orderNumber?"selected":""}`} key={order._id}>
-          <div className="customer-order-row-info"><b>{order.orderNumber}</b><span>{new Date(order.createdAt).toLocaleDateString()}</span></div>
+          <div className="customer-order-row-info"><b>{order.orderNumber}</b><span>{new Date(order.createdAt).toLocaleDateString()}</span>{order.unreadMessageCount>0&&<span className="customer-order-unread-count" aria-label={`${order.unreadMessageCount} unread chat messages`}>{order.unreadMessageCount>99?"99+":order.unreadMessageCount} new message{order.unreadMessageCount===1?"":"s"}</span>}</div>
           <div className="customer-order-row-total"><b>{money.format(order.totalInr)}</b><span className={`order-status ${order.status.toLowerCase()}`}>{order.status.toLowerCase()}</span></div>
           <div className="customer-order-row-actions">
             <button type="button" className="customer-chat-action" aria-pressed={activeChatOrder===order.orderNumber} onClick={()=>setActiveChatOrder(order.orderNumber)}><MessageCircle size={15}/> Chat</button>

@@ -50,7 +50,9 @@ export default function Shell(){
     }
     loadInboxCounts();
     const timer=window.setInterval(loadInboxCounts,15000);
-    return ()=>window.clearInterval(timer);
+    window.addEventListener("focus",loadInboxCounts);
+    window.addEventListener("xyron:order-chat-read",loadInboxCounts);
+    return ()=>{window.clearInterval(timer);window.removeEventListener("focus",loadInboxCounts);window.removeEventListener("xyron:order-chat-read",loadInboxCounts);};
   },[user?.role,loadInboxCounts]);
   useEffect(()=>{
     if(!storeSlug){setStoreBusiness(null);setStoreError("");return undefined;}

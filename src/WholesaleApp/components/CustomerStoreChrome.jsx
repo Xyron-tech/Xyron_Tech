@@ -2,6 +2,7 @@ import {useEffect,useState} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import {ArrowRight,MapPin,MessageCircle,Phone,Search,ShoppingCart,Store,UserRound} from "lucide-react";
 import {useAuth} from "../context/AuthContext";
+import {api} from "../lib/api";
 import SocialLinks from "./SocialLinks";
 
 export function StoreDashboardLink(){
@@ -45,9 +46,27 @@ export function CustomerStoreFooter({business}){
 }
 
 export default function CustomerStorePage({business,slug,children,isSignedIn}){
-  const navigate=useNavigate(),[searchText,setSearchText]=useState("");
+  const navigate=useNavigate(),[searchText,setSearchText]=useState(""),[unreadCustomerMessages,setUnreadCustomerMessages]=useState(0);
   const store=business||{name:slug,slug,category:"Wholesale",logoUrl:""};
   const storePath=`/store/${encodeURIComponent(slug)}`;
+  useEffect(()=>{
+    let active=true;
+    const loadUnreadMessages=async()=>{
+      try{
+        const {data}=await api.get(`/stores/${encodeURIComponent(slug)}/customer/inbox-counts`);
+        if(active)setUnreadCustomerMessages(data.unreadOrderMessages||0);
+      }catch(error){
+        if(!active)return;
+        if(error?.response?.status===401)setUnreadCustomerMessages(0);
+        else console.error("Could not load unread customer order messages.",error);
+      }
+    };
+    loadUnreadMessages();
+    const timer=window.setInterval(loadUnreadMessages,15000);
+    window.addEventListener("focus",loadUnreadMessages);
+    window.addEventListener("xyron:order-chat-read",loadUnreadMessages);
+    return ()=>{active=false;window.clearInterval(timer);window.removeEventListener("focus",loadUnreadMessages);window.removeEventListener("xyron:order-chat-read",loadUnreadMessages);};
+  },[slug,isSignedIn]);
   function submitSearch(event){
     event.preventDefault();
     const params=new URLSearchParams();
@@ -64,6 +83,7 @@ export default function CustomerStorePage({business,slug,children,isSignedIn}){
         <button type="submit">Search <Search size={15}/></button>
       </form>
       <div className="store-header-actions">
+        <Link className="customer-account-link customer-orders-header-link" to={`${storePath}/orders`} aria-label={`Orders${unreadCustomerMessages?`, ${unreadCustomerMessages} unread chat messages`:""}`}><MessageCircle size={17}/><span>Orders</span>{unreadCustomerMessages>0&&<b className="customer-header-unread-badge" aria-hidden="true">{unreadCustomerMessages>99?"99+":unreadCustomerMessages}</b>}</Link>
         <Link className="customer-account-link" to={`${storePath}/account`} aria-label={isSignedIn?"Open your customer profile":"Sign in to your account"}><UserRound size={17}/><span>{isSignedIn?"Profile":"Sign in"}</span></Link>
         <StoreDashboardLink/>
         <Link className="store-cart-button" to={storePath}><ShoppingCart size={15}/><span>Back to store</span><ArrowRight size={14}/></Link>

@@ -1,4 +1,4 @@
-import {useCallback,useEffect,useRef,useState} from "react";
+import {useCallback,useEffect,useMemo,useRef,useState} from "react";
 import {MessageCircle,RefreshCw,Send} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
@@ -8,22 +8,48 @@ export default function OrderChat({orderId,orderNumber,token="",customer=false,s
   const listRef=useRef(null);
   const mountedRef=useRef(true);
   const requestInFlight=useRef(false);
+  const readRequestInFlight=useRef(false);
+  const chatVisibleRef=useRef(false);
+  const latestMessageIdRef=useRef("");
+  const lastMarkedMessageIdRef=useRef("");
   const endpoint=customer?`/stores/${encodeURIComponent(slug)}/orders/${encodeURIComponent(orderNumber)}/chat`:`/business/orders/${encodeURIComponent(orderId)}/chat`;
-  const config=customer&&token?{headers:{"X-Order-Access-Token":token}}:undefined;
+  const config=useMemo(()=>customer&&token?{headers:{"X-Order-Access-Token":token}}:undefined,[customer,token]);
   useEffect(()=>{mountedRef.current=true;return()=>{mountedRef.current=false;};},[]);
+  const markMessagesRead=useCallback(async()=>{
+    const throughMessageId=latestMessageIdRef.current;
+    if(!chatVisibleRef.current||!throughMessageId||throughMessageId===lastMarkedMessageIdRef.current||readRequestInFlight.current)return;
+    readRequestInFlight.current=true;
+    try{
+      const {data}=await api.post(`${endpoint}/read`,{throughMessageId},config);
+      if(data.markedRead){
+        lastMarkedMessageIdRef.current=throughMessageId;
+        window.dispatchEvent(new CustomEvent("xyron:order-chat-read",{detail:{customer,slug,orderNumber}}));
+      }
+    }catch(error){
+      if(mountedRef.current)setError(getApiError(error));
+    }finally{
+      readRequestInFlight.current=false;
+    }
+  },[endpoint,config,customer,slug,orderNumber]);
   const loadMessages=useCallback(async()=>{
     if(requestInFlight.current)return;
     requestInFlight.current=true;
     try{
       const {data}=await api.get(endpoint,config);
-      if(mountedRef.current){setMessages(data.messages);setError("");}
+      if(mountedRef.current){
+        const nextMessages=data.messages||[];
+        latestMessageIdRef.current=nextMessages[nextMessages.length-1]?._id||"";
+        setMessages(nextMessages);
+        setError("");
+        if(chatVisibleRef.current)await markMessagesRead();
+      }
     }catch(error){
       if(mountedRef.current)setError(getApiError(error));
     }finally{
       requestInFlight.current=false;
       if(mountedRef.current)setLoading(false);
     }
-  },[endpoint,customer,token]);
+  },[endpoint,config,markMessagesRead]);
   useEffect(()=>{
     setLoading(true);
     loadMessages();
@@ -33,6 +59,22 @@ export default function OrderChat({orderId,orderNumber,token="",customer=false,s
   useEffect(()=>{
     if(listRef.current)listRef.current.scrollTop=listRef.current.scrollHeight;
   },[messages]);
+  useEffect(()=>{
+    const messageList=listRef.current;
+    if(!messageList)return undefined;
+    if(typeof IntersectionObserver==="undefined"){
+      const bounds=messageList.getBoundingClientRect();
+      chatVisibleRef.current=bounds.bottom>0&&bounds.top<window.innerHeight;
+      if(chatVisibleRef.current)markMessagesRead();
+      return undefined;
+    }
+    const observer=new IntersectionObserver(([entry])=>{
+      chatVisibleRef.current=entry.isIntersecting&&entry.intersectionRatio>=0.5;
+      if(chatVisibleRef.current)markMessagesRead();
+    },{threshold:[0,0.5]});
+    observer.observe(messageList);
+    return ()=>{chatVisibleRef.current=false;observer.disconnect();};
+  },[markMessagesRead]);
   async function sendMessage(event){
     event.preventDefault();
     const message=body.trim();

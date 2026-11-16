@@ -27,7 +27,8 @@ export default function MobileBottomNav({inboxCounts={pendingOrders:0,unreadConv
     load();
     const timer=window.setInterval(load,15000);
     window.addEventListener("focus",load);
-    return ()=>{active=false;window.clearInterval(timer);window.removeEventListener("focus",load);};
+    window.addEventListener("xyron:order-chat-read",load);
+    return ()=>{active=false;window.clearInterval(timer);window.removeEventListener("focus",load);window.removeEventListener("xyron:order-chat-read",load);};
   },[storeSlug]);
   if(storeMatch){
     const slug=decodeURIComponent(storeMatch[1]);
