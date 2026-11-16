@@ -1,6 +1,5 @@
 import {useEffect,useState} from "react";
 import {Check,RefreshCw,Send,X} from "lucide-react";
-import {Link} from "react-router-dom";
 import {api,getApiError} from "../lib/api";
 
 import {planCatalog} from "../data/planCatalog";

@@ -14,7 +14,13 @@ export default function SuperAdminTestimonials(){
     }catch(error){setError(getApiError(error));}
     finally{setLoading(false);}
   }
-  useEffect(()=>{load();},[]);
+  useEffect(()=>{
+    let active=true;
+    api.get("/super-admin/testimonials").then(({data})=>{
+      if(active){setTestimonials(data.testimonials);setError("");}
+    }).catch(error=>{if(active)setError(getApiError(error));}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[]);
 
   async function update(id,changes){
     setBusy(id);setError("");

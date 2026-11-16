@@ -1,7 +1,7 @@
 import {useEffect,useState} from "react";
 import {Link,useLocation} from "react-router-dom";
 import {BarChart3,ClipboardList,LogOut,MessageCircle,Search,Send,ShieldCheck,Store,UserRound} from "lucide-react";
-import {useAuth} from "../context/AuthContext";
+import {useAuth} from "../context/useAuth";
 import {api} from "../lib/api";
 
 export default function MobileBottomNav({inboxCounts={pendingOrders:0,unreadConversations:0}}){
@@ -12,7 +12,7 @@ export default function MobileBottomNav({inboxCounts={pendingOrders:0,unreadConv
   const storeSlug=storeMatch?decodeURIComponent(storeMatch[1]):"";
   const [unreadCustomerMessages,setUnreadCustomerMessages]=useState(0);
   useEffect(()=>{
-    if(!storeSlug){setUnreadCustomerMessages(0);return undefined;}
+    if(!storeSlug)return undefined;
     let active=true;
     const load=async()=>{
       try{

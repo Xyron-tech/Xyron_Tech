@@ -16,7 +16,13 @@ export default function CustomerRecoveryRequests(){
     finally{setLoading(false);}
   }
 
-  useEffect(()=>{load();},[]);
+  useEffect(()=>{
+    let active=true;
+    api.get("/super-admin/customer-recovery-requests").then(({data})=>{
+      if(active){setRequests(data.requests);setError("");}
+    }).catch(error=>{if(active)setError(getApiError(error));}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[]);
 
   async function updateStatus(request,status){
     setError("");

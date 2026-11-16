@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./Testimonials.css";
 
 const initialForm = {
@@ -116,7 +116,7 @@ const Testimonials = () => {
     }
   };
 
-  const getCardWidth = () => {
+  const getCardWidth = useCallback(() => {
     const slider = sliderRef.current;
 
     if (!slider) return 0;
@@ -129,33 +129,33 @@ const Testimonials = () => {
     const gap = parseFloat(styles.columnGap || styles.gap || 0);
 
     return card.offsetWidth + gap;
-  };
+  }, []);
 
-  const getMaxScroll = () => {
+  const getMaxScroll = useCallback(() => {
     const slider = sliderRef.current;
 
     if (!slider) return 0;
 
     return slider.scrollWidth - slider.clientWidth;
-  };
+  }, []);
 
-  const isAtStart = () => {
+  const isAtStart = useCallback(() => {
     const slider = sliderRef.current;
 
     if (!slider) return true;
 
     return slider.scrollLeft <= 5;
-  };
+  }, []);
 
-  const isAtEnd = () => {
+  const isAtEnd = useCallback(() => {
     const slider = sliderRef.current;
 
     if (!slider) return true;
 
     return slider.scrollLeft >= getMaxScroll() - 5;
-  };
+  }, [getMaxScroll]);
 
-  const moveSlider = (direction) => {
+  const moveSlider = useCallback((direction) => {
     const slider = sliderRef.current;
 
     if (!slider) return;
@@ -180,7 +180,7 @@ const Testimonials = () => {
       left: target,
       behavior: "smooth",
     });
-  };
+  }, [getCardWidth, getMaxScroll]);
 
   /*
     Mouse wheel horizontal control
@@ -197,7 +197,7 @@ const Testimonials = () => {
     First card + up:
     page continues up
   */
-  const handleWheel = (e) => {
+  const handleWheel = useCallback((e) => {
     const slider = sliderRef.current;
 
     if (!slider) return;
@@ -223,7 +223,7 @@ const Testimonials = () => {
     setTimeout(() => {
       wheelLockRef.current = false;
     }, 650);
-  };
+  }, [isAtEnd, isAtStart, moveSlider]);
 
   useEffect(() => {
     const slider = sliderRef.current;
@@ -237,7 +237,7 @@ const Testimonials = () => {
     return () => {
       slider.removeEventListener("wheel", handleWheel);
     };
-  }, [testimonials]);
+  }, [handleWheel, testimonials]);
 
   /*
     Auto slider
@@ -270,7 +270,7 @@ const Testimonials = () => {
     }, 4500);
 
     return () => clearInterval(interval);
-  }, [testimonials]);
+  }, [getCardWidth, getMaxScroll, testimonials]);
 
   /*
     Drag support

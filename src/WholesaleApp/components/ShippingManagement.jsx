@@ -1,4 +1,4 @@
-import {useEffect,useState} from "react";
+import {useState} from "react";
 import {Check,MapPin,Pencil,Plus,Trash2,X} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
@@ -7,11 +7,7 @@ const emptyDraft={name:"",pricePerKg:""};
 const money=new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:2});
 
 export default function ShippingManagement({business,onSaved}){
-  const [deliveryRegions,setDeliveryRegions]=useState([]),[draft,setDraft]=useState(emptyDraft),[editingKey,setEditingKey]=useState(""),[saving,setSaving]=useState(false),[error,setError]=useState("");
-
-  useEffect(()=>{
-    setDeliveryRegions((business?.deliveryRegions||[]).map(region=>({...region,key:String(region._id)})));
-  },[business]);
+  const [deliveryRegions,setDeliveryRegions]=useState(()=> (business?.deliveryRegions||[]).map(region=>({...region,key:String(region._id)}))),[draft,setDraft]=useState(emptyDraft),[editingKey,setEditingKey]=useState(""),[saving,setSaving]=useState(false),[error,setError]=useState("");
 
   function resetDraft(){
     setDraft(emptyDraft);

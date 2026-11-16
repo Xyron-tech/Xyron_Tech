@@ -1,7 +1,7 @@
 import {useEffect,useState} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import {ArrowRight,MapPin,MessageCircle,Phone,Search,ShoppingCart,Store,UserRound} from "lucide-react";
-import {useAuth} from "../context/AuthContext";
+import {useAuth} from "../context/useAuth";
 import {api} from "../lib/api";
 import SocialLinks from "./SocialLinks";
 
@@ -17,14 +17,13 @@ export function CustomerStoreHeader({business,slug,children}){
     {title:"ORDER UPDATES",text:"Track your order and chat with the store from Orders."},
     {title:"STORE INFORMATION",text:`Prices and availability are managed by ${business.name}.`}
   ];
-  const activeAnnouncement=announcements[announcementIndex]||announcements[0];
+  const activeAnnouncement=announcements[announcementIndex%announcements.length]||announcements[0];
   const announcementSignature=JSON.stringify(announcements);
   useEffect(()=>{
-    setAnnouncementIndex(0);
     if(announcements.length<2||window.matchMedia?.("(prefers-reduced-motion: reduce)").matches)return undefined;
     const timer=window.setInterval(()=>setAnnouncementIndex(index=>(index+1)%announcements.length),5000);
     return ()=>window.clearInterval(timer);
-  },[business.name,announcementSignature]);
+  },[announcements.length,announcementSignature]);
   return <>
     <div className="store-announcement" role="region" aria-label="Store announcement"><span className="store-announcement-title"><Store size={14}/>{activeAnnouncement.title||"FROM THE STORE"}</span><span className="store-announcement-message" key={announcementIndex}><span className="store-announcement-track"><span>{activeAnnouncement.text}</span><span aria-hidden="true">{activeAnnouncement.text}</span></span></span></div>
     <header className="customer-header">

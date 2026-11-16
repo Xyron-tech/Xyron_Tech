@@ -1,4 +1,4 @@
-import {lazy,Suspense,useEffect} from "react";
+import {lazy,Suspense,useLayoutEffect} from "react";
 import {BrowserRouter,Navigate,Route,Routes,useLocation} from "react-router-dom";
 import SEO from "./Components/SEO/SEO";
 import Navbar from "./Components/Navbar/Navbar";
@@ -12,25 +12,22 @@ import HowWeWork from "./Components/HowWeWork/HowWeWork";
 import Pricing from "./Components/Pricing/Pricing";
 import WhatsAppFloat from "./Components/WhatsAppFloat/WhatsAppFloat";
 import Testimonials from "./Components/Testimonials/Testimonials";
+import BrandLoader from "./Components/BrandLoader";
 import "./styles/section-headers.css";
 import "./styles/typography.css";
 
 const WholesaleExperience=lazy(()=>import("./WholesaleExperience.jsx"));
 
 function PortfolioHome(){
-  return <><Home/><About/><Services/><HowWeWork/> 
-   {/* // <Pricing/>//   */}
-  <Testimonials/><Contact/></>;
+  return <><Home/><About/><Services/><HowWeWork/><Pricing/><Testimonials/><Contact/></>;
 }
 
 function PortfolioRoutes(){
   const {pathname,hash}=useLocation();
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     if(hash){
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        const target=document.getElementById(decodeURIComponent(hash.slice(1)));
-        if(target)window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-96,behavior:"smooth"});
-      }));
+      const target=document.getElementById(decodeURIComponent(hash.slice(1)));
+      if(target)window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-96,behavior:"smooth"});
     }else window.scrollTo(0,0);
   },[hash,pathname]);
 
@@ -81,6 +78,6 @@ function PortfolioRoutes(){
 
 export default function App(){
   const isWholesale=window.location.pathname==="/wholesale"||window.location.pathname.startsWith("/wholesale/");
-  if(isWholesale)return <Suspense fallback={<div className="loading">Loading Xyron Wholesale…</div>}><WholesaleExperience/></Suspense>;
+  if(isWholesale)return <Suspense fallback={<BrandLoader/>}><WholesaleExperience/></Suspense>;
   return <BrowserRouter><PortfolioRoutes/></BrowserRouter>;
 }

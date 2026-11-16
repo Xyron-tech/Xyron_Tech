@@ -1,10 +1,11 @@
-import {useCallback,useEffect,useMemo,useRef,useState} from "react";
+import {useEffect,useMemo,useState} from "react";
 import {Link,useLocation,useNavigate,useOutletContext,useParams} from "react-router-dom";
 import {ArrowRight,Boxes,ChevronLeft,ChevronRight,Clock3,MessageCircle,Minus,PackageSearch,Plus,Search,ShieldCheck,ShoppingCart,Store,Trash2,Truck,UserRound,X} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import CustomerAuthForm from "../components/CustomerAuthForm";
 import CustomerStorePage,{CustomerStoreFooter,CustomerStoreHeader,StoreDashboardLink} from "../components/CustomerStoreChrome";
 import {notify} from "../lib/notifications";
+import BrandLoader from "../../Components/BrandLoader";
 
 const money=new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:2});
 const MIN_ORDER_WEIGHT_G=1000;
@@ -32,30 +33,24 @@ function ProductCard({product,onAdd}){
   </article>;
 }
 
-export default function Storefront(){
-  const {slug}=useParams(),location=useLocation(),{storeBusiness}=useOutletContext(),navigate=useNavigate(),storeLoadId=useRef(0),[business,setBusiness]=useState(null),[products,setProducts]=useState([]),[categories,setCategories]=useState([]),[category,setCategory]=useState(""),[searchText,setSearchText]=useState(""),[query,setQuery]=useState(""),[productRetry,setProductRetry]=useState(0),[activeSlide,setActiveSlide]=useState(0),[activeWorkflow,setActiveWorkflow]=useState(0),[cart,setCart]=useState([]),[cartOpen,setCartOpen]=useState(false),[checkoutAuthOpen,setCheckoutAuthOpen]=useState(false),[minimumOrderOpen,setMinimumOrderOpen]=useState(false),[customerAccount,setCustomerAccount]=useState(null),[customerAccountError,setCustomerAccountError]=useState(""),[checkoutError,setCheckoutError]=useState(""),[checkoutBusy,setCheckoutBusy]=useState(false),[loading,setLoading]=useState(true),[error,setError]=useState("");
-  const loadStore=useCallback(async()=>{
-    const requestId=++storeLoadId.current;
-    setLoading(true);
-    setError("");
-    setBusiness(null);
-    setProducts([]);
-    setCategories([]);
-    try{
-      const {data}=await api.get(`/stores/${encodeURIComponent(slug)}`);
-      if(requestId!==storeLoadId.current)return false;
-      setBusiness(data.business);
-      return true;
-    }catch(error){if(requestId===storeLoadId.current){setError(getApiError(error));notify(getApiError(error),"error");}return false;}
-    finally{if(requestId===storeLoadId.current)setLoading(false);}
-  },[slug]);
-  useEffect(()=>{loadStore();},[loadStore]);
-  useEffect(()=>{setCart([]);setCartOpen(false);setActiveSlide(0);},[slug]);
+function StorefrontPage({slug}){
+  const location=useLocation(),{storeBusiness}=useOutletContext(),navigate=useNavigate(),[business,setBusiness]=useState(null),[products,setProducts]=useState([]),[categories,setCategories]=useState([]),[category,setCategory]=useState(""),[searchDraft,setSearchDraft]=useState(null),[storeRetry,setStoreRetry]=useState(0),[productRetry,setProductRetry]=useState(0),[activeSlide,setActiveSlide]=useState(0),[activeWorkflow,setActiveWorkflow]=useState(0),[cart,setCart]=useState([]),[cartOpen,setCartOpen]=useState(false),[checkoutAuthOpen,setCheckoutAuthOpen]=useState(false),[minimumOrderOpen,setMinimumOrderOpen]=useState(false),[customerAccount,setCustomerAccount]=useState(null),[customerAccountError,setCustomerAccountError]=useState(""),[checkoutError,setCheckoutError]=useState(""),[checkoutBusy,setCheckoutBusy]=useState(false),[loadedSlug,setLoadedSlug]=useState(""),[error,setError]=useState("");
+  const loading=loadedSlug!==slug;
+  const urlQuery=new URLSearchParams(location.search).get("q")||"";
+  const searchText=searchDraft?.search===location.search?searchDraft.text:urlQuery;
+  const query=searchDraft?.search===location.search?searchDraft.query:urlQuery;
+  function updateSearchText(text){setSearchDraft({search:location.search,text,query});}
+  function updateSearchQuery(nextQuery){setSearchDraft({search:location.search,text:searchText,query:nextQuery});}
+  function clearSearch(){setSearchDraft({search:location.search,text:"",query:""});}
   useEffect(()=>{
-    const initialQuery=new URLSearchParams(location.search).get("q")||"";
-    setSearchText(initialQuery);
-    setQuery(initialQuery);
-  },[location.search]);
+    let active=true;
+    api.get(`/stores/${encodeURIComponent(slug)}`).then(({data})=>{
+      if(active){setBusiness(data.business);setError("");setLoadedSlug(slug);}
+    }).catch(error=>{
+      if(active){setError(getApiError(error));setLoadedSlug(slug);notify(getApiError(error),"error");}
+    });
+    return ()=>{active=false;};
+  },[slug,storeRetry]);
   useEffect(()=>{
     let active=true;
     async function refreshCustomerAccount(){
@@ -75,7 +70,7 @@ export default function Storefront(){
     return ()=>{active=false;window.removeEventListener("focus",refreshCustomerAccount);};
   },[slug]);
   useEffect(()=>{
-    if(!business)return undefined;
+    if(!business||business.slug!==slug)return undefined;
     const timer=window.setTimeout(async()=>{
       try{
         const {data}=await api.get(`/stores/${encodeURIComponent(slug)}/products`,{params:{search:query,category}});
@@ -92,20 +87,20 @@ export default function Storefront(){
   },[location.pathname,location.search,loading,products.length]);
   const slides=business?.sliderSlides||[];
   const businessContact=storeContact(business);
-  useEffect(()=>{if(activeSlide>=slides.length)setActiveSlide(0);},[activeSlide,slides.length]);
+  const safeActiveSlide=slides.length?activeSlide%slides.length:0;
   useEffect(()=>{
     if(slides.length<2)return undefined;
     const timer=window.setInterval(()=>setActiveSlide(current=>(current+1)%slides.length),5000);
     return ()=>window.clearInterval(timer);
   },[slides.length]);
-  const currentSlide=slides[activeSlide];
+  const currentSlide=slides[safeActiveSlide];
   const activeWorkflowStep=workflowSlides[activeWorkflow],WorkflowIcon=activeWorkflowStep.icon;
   const visibleCategories=useMemo(()=>categories.slice(0,12),[categories]);
   const cartTotalWeightG=useMemo(()=>Number(cart.reduce((total,item)=>total+item.quantity*weightPerItem(item.product),0).toFixed(6)),[cart]);
   const cartSubtotalInr=useMemo(()=>cart.reduce((total,item)=>total+item.quantity*item.product.packetPrice,0),[cart]);
   function submitSearch(event){
     event.preventDefault();
-    setQuery(searchText.trim());
+    updateSearchQuery(searchText.trim());
     document.getElementById("products")?.scrollIntoView({behavior:"smooth"});
   }
   function chooseCategory(value){
@@ -114,7 +109,7 @@ export default function Storefront(){
   }
   function moveSlide(direction){
     if(slides.length<2)return;
-    setActiveSlide((activeSlide+direction+slides.length)%slides.length);
+    setActiveSlide((safeActiveSlide+direction+slides.length)%slides.length);
   }
   function addToCart(product){
     const quantity=1;
@@ -138,8 +133,8 @@ export default function Storefront(){
     setCheckoutError("");
     if(cartTotalWeightG<MIN_ORDER_WEIGHT_G){setMinimumOrderOpen(true);return;}
     if(!account){setCheckoutAuthOpen(true);return;}
-    if(!account.customerName?.trim()||!account.deliveryAddress?.trim()||!/^\d{6}$/.test(account.pincode||"")){
-      setCheckoutError("Complete your name, delivery address, and pincode in your customer profile before placing an order.");
+    if(!account.customerName?.trim()||!account.deliveryAddress?.trim()||!/^\d{6}$/.test(account.pincode||"")||!account.district?.trim()||!account.state?.trim()){
+      setCheckoutError("Complete your name, delivery address, pincode, district, and state in your customer profile before placing an order.");
       return;
     }
     setCheckoutBusy(true);
@@ -165,13 +160,13 @@ export default function Storefront(){
     setActiveWorkflow(index=>(index+direction+workflowSlides.length)%workflowSlides.length);
   }
 
-  if(loading)return <CustomerStorePage business={storeBusiness} slug={slug}><div className="store-loading"><span className="store-spinner"/>Loading this store…</div></CustomerStorePage>;
-  if(error||!business)return <CustomerStorePage business={storeBusiness} slug={slug}><div className="store-error"><Store size={28}/><h1>We couldn’t open this store</h1><p>{error||"This store could not be found."}</p><button className="secondary-button" type="button" onClick={loadStore}>Retry opening store</button><Link to="/"><ArrowRight size={14}/> Back to Xyron Wholesale</Link></div></CustomerStorePage>;
+  if(loading)return <CustomerStorePage business={storeBusiness} slug={slug}><BrandLoader label="Loading this store"/></CustomerStorePage>;
+  if(error||!business)return <CustomerStorePage business={storeBusiness} slug={slug}><div className="store-error"><Store size={28}/><h1>We couldn’t open this store</h1><p>{error||"This store could not be found."}</p><button className="secondary-button" type="button" onClick={()=>{setError("");setLoadedSlug("");setStoreRetry(value=>value+1);}}>Retry opening store</button><Link className="wholesale-back-link" to="/"><ArrowRight size={14}/> Back to Xyron Wholesale</Link></div></CustomerStorePage>;
 
   return <div className="customer-store">
     <CustomerStoreHeader business={business} slug={slug}>
       <form className="store-search" onSubmit={submitSearch} role="search">
-        <Search size={18}/><input aria-label="Search products in this store" placeholder={`Search products in ${business.name}`} value={searchText} onChange={event=>setSearchText(event.target.value)}/><button type="submit">Search <Search size={15}/></button>
+        <Search size={18}/><input aria-label="Search products in this store" placeholder={`Search products in ${business.name}`} value={searchText} onChange={event=>updateSearchText(event.target.value)}/><button type="submit">Search <Search size={15}/></button>
       </form>
       <div className="store-header-actions"><Link className="customer-account-link" to={`/store/${encodeURIComponent(slug)}/account`} aria-label={customerAccount?"Open your profile":"Sign in to your account"}><UserRound size={15}/><span>{customerAccount?"Profile":"Sign in"}</span></Link><StoreDashboardLink/><button className="store-cart-button" type="button" onClick={()=>setCartOpen(true)}><ShoppingCart size={16}/> Cart <b>{cart.reduce((total,item)=>total+item.quantity,0)}</b></button></div>
     </CustomerStoreHeader>
@@ -190,9 +185,9 @@ export default function Storefront(){
           <div className="category-panel-foot"><ShieldCheck size={15}/> Products from this store only</div>
         </aside>
         <section className="store-slider" aria-roledescription="carousel" aria-label={`${business.name} store banners`}>
-          {currentSlide?<div className="store-slide" style={{backgroundImage:`linear-gradient(90deg,rgba(9,24,53,.77),rgba(9,24,53,.06)),url("${currentSlide.imageUrl}")`}}>
+          {currentSlide?<div className="store-slide" style={{backgroundImage:`linear-gradient(90deg,rgba(6,17,38,.88) 0%,rgba(6,17,38,.72) 58%,rgba(6,17,38,.44) 100%),linear-gradient(0deg,rgba(6,17,38,.28),transparent 42%),url("${currentSlide.imageUrl}")`}}>
             <div className="store-slide-copy"><span className="store-slide-tag">{business.category}</span><h1>{currentSlide.title}</h1>{currentSlide.subtitle&&<p>{currentSlide.subtitle}</p>}<a className="store-slide-button" href={currentSlide.buttonHref||"#products"}>{currentSlide.buttonLabel||"Explore products"} <ArrowRight size={16}/></a></div>
-            {slides.length>1&&<div className="store-slide-controls"><button onClick={()=>moveSlide(-1)} aria-label="Previous banner"><ChevronLeft size={17}/></button><div>{slides.map((slide,index)=><button key={slide._id} className={index===activeSlide?"active":""} aria-label={`Show banner ${index+1}`} aria-pressed={index===activeSlide} onClick={()=>setActiveSlide(index)}/>)}</div><button onClick={()=>moveSlide(1)} aria-label="Next banner"><ChevronRight size={17}/></button></div>}
+            {slides.length>1&&<div className="store-slide-controls"><button onClick={()=>moveSlide(-1)} aria-label="Previous banner"><ChevronLeft size={17}/></button><div>{slides.map((slide,index)=><button key={slide._id} className={index===safeActiveSlide?"active":""} aria-label={`Show banner ${index+1}`} aria-pressed={index===safeActiveSlide} onClick={()=>setActiveSlide(index)}/>)}</div><button onClick={()=>moveSlide(1)} aria-label="Next banner"><ChevronRight size={17}/></button></div>}
           </div>:<div className="store-slide store-slide-empty"><span className="store-slide-tag">{business.category}</span><h1>{business.name}</h1><p>{business.description||"Welcome to our wholesale store. Browse available products below."}</p><a className="store-slide-button" href="#products">Browse products <ArrowRight size={16}/></a><span className="empty-slider-note">Store banner images will appear here</span></div>}
         </section>
         <aside className="store-benefits" aria-label="Store information">
@@ -203,9 +198,9 @@ export default function Storefront(){
       </div>
 
       <section className="products-section" id="products">
-        <div className="products-heading"><div><span className="store-eyebrow">SHOP {business.name.toUpperCase()}</span><h2>{query?`Results for “${query}”`:category||"Products"}</h2><p>{products.length?`${products.length} product${products.length===1?"":"s"} shown from this store`:"Browse the products this business has added to its store."}</p></div><form className="products-inline-search" onSubmit={submitSearch}><Search size={16}/><input aria-label="Filter products" placeholder="Search these products" value={searchText} onChange={event=>setSearchText(event.target.value)}/><button type="submit">Search</button></form></div>
+        <div className="products-heading"><div><span className="store-eyebrow">SHOP {business.name.toUpperCase()}</span><h2>{query?`Results for “${query}”`:category||"Products"}</h2><p>{products.length?`${products.length} product${products.length===1?"":"s"} shown from this store`:"Browse the products this business has added to its store."}</p></div><form className="products-inline-search" onSubmit={submitSearch}><Search size={16}/><input aria-label="Filter products" placeholder="Search these products" value={searchText} onChange={event=>updateSearchText(event.target.value)}/><button type="submit">Search</button></form></div>
         {error&&<div className="store-inline-error" role="alert">{error}<button type="button" onClick={()=>setProductRetry(value=>value+1)}>Retry</button></div>}
-        {products.length?<div className="product-grid">{products.map(product=><ProductCard key={product._id} product={product} onAdd={()=>addToCart(product)}/>)}</div>:<div className="products-empty"><span><PackageSearch size={25}/></span><h3>{query||category?"No matching products":"This store is getting its catalogue ready"}</h3><p>{query||category?"Try another product name or choose a different category.":"Products added by this business will appear here. There are no sample products in this store."}</p>{query||category?<button onClick={()=>{setSearchText("");setQuery("");setCategory("");}}>Show all products</button>:null}</div>}
+        {products.length?<div className="product-grid">{products.map(product=><ProductCard key={product._id} product={product} onAdd={()=>addToCart(product)}/>)}</div>:<div className="products-empty"><span><PackageSearch size={25}/></span><h3>{query||category?"No matching products":"This store is getting its catalogue ready"}</h3><p>{query||category?"Try another product name or choose a different category.":"Products added by this business will appear here. There are no sample products in this store."}</p>{query||category?<button onClick={()=>{clearSearch();setCategory("");}}>Show all products</button>:null}</div>}
       </section>
       {!query&&!category&&(business.storeSections||[]).map(section=>{
         const sectionProducts=section.productIds.map(id=>products.find(product=>product._id===id)).filter(Boolean);
@@ -230,9 +225,9 @@ export default function Storefront(){
           <div className="cart-items">{cart.map(item=><article className="cart-item" key={item.product._id}>
             <div><b>{item.product.name}</b><small>{item.quantity} {unitName(item.product)}{item.quantity===1?"":"s"}</small></div>
             <div className="cart-item-controls">
-              <button type="button" aria-label={`Decrease ${item.product.name}`} onClick={()=>updateCartQuantity(item.product._id,item.quantity-1)}><Minus size={13}/></button>
+              <button type="button" aria-label={`Decrease ${item.product.name}`} disabled={item.quantity<=1} onClick={()=>updateCartQuantity(item.product._id,item.quantity-1)}><Minus size={16}/></button>
               <span aria-label={`${item.product.name} quantity`}>{item.quantity}</span>
-              <button type="button" aria-label={`Increase ${item.product.name}`} onClick={()=>updateCartQuantity(item.product._id,item.quantity+1)}><Plus size={13}/></button>
+              <button type="button" aria-label={`Increase ${item.product.name}`} disabled={item.quantity>=item.product.stockPackets} onClick={()=>updateCartQuantity(item.product._id,item.quantity+1)}><Plus size={16}/></button>
               <button type="button" className="remove-cart-item" aria-label={`Remove ${item.product.name}`} onClick={()=>setCart(current=>current.filter(entry=>entry.product._id!==item.product._id))}><Trash2 size={14}/></button>
             </div>
             <b className="cart-item-total">{money.format(item.product.packetPrice*item.quantity)}</b>
@@ -244,6 +239,8 @@ export default function Storefront(){
               <label>Full name<input autoComplete="name" readOnly value={customerAccount.customerName||""} placeholder="Name not set"/></label>
               <label>Delivery address<textarea autoComplete="street-address" readOnly rows="2" value={customerAccount.deliveryAddress||""} placeholder="Address not set"/></label>
               <label>Delivery PIN<input autoComplete="postal-code" readOnly value={customerAccount.pincode||""} placeholder="PIN not set"/></label>
+              <label>District<input readOnly value={customerAccount.district||""} placeholder="District not set"/></label>
+              <label>State<input readOnly value={customerAccount.state||""} placeholder="State not set"/></label>
               <Link to={`/store/${encodeURIComponent(slug)}/account`}>Edit saved details</Link>
             </div>
             {customerAccountError&&<div className="store-inline-error" role="alert">{customerAccountError}</div>}
@@ -273,4 +270,9 @@ export default function Storefront(){
       </div>}
     </div>}
   </div>;
+}
+
+export default function Storefront(){
+  const {slug}=useParams();
+  return <StorefrontPage key={slug} slug={slug}/>;
 }

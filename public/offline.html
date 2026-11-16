@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#2867f5">
+    <title>Offline | Xyron WebTech</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { display: grid; min-height: 100vh; min-height: 100dvh; place-items: center; margin: 0; padding: 24px; background: radial-gradient(ellipse at 50% 30%, #182a49, #080d18 72%); color: #f5f8ff; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; }
+      main { width: min(100%, 360px); }
+      .logo-wrap { position: relative; display: grid; width: 92px; height: 92px; place-items: center; margin: 0 auto 24px; }
+      .logo-wrap::before { position: absolute; inset: -9px; border: 3px solid transparent; border-radius: 50%; content: ""; }
+      .logo-wrap img { width: 76px; height: 76px; border: 1px solid #ffffff20; border-radius: 23px; object-fit: cover; box-shadow: 0 12px 40px #0007; }
+      body.is-reconnecting .logo-wrap::before { border-top-color: #2867f5; border-right-color: #2867f588; animation: reconnect-spin .85s linear infinite; }
+      h1 { margin: 0 0 10px; font-size: 24px; letter-spacing: -.03em; }
+      p { margin: 0; color: #aab8cf; font-size: 14px; line-height: 1.65; }
+      .connection { display: inline-flex; align-items: center; gap: 8px; margin-top: 23px; padding: 9px 13px; border: 1px solid #ffffff1a; border-radius: 30px; background: #ffffff08; color: #b7c3d6; font-size: 12px; }
+      .connection span { width: 7px; height: 7px; border-radius: 50%; background: #f0ad4e; }
+      body.is-reconnecting .connection span { background: #2867f5; box-shadow: 0 0 12px #2867f5; }
+      body.is-reconnecting .connection { color: #e3ecff; }
+      @keyframes reconnect-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { body.is-reconnecting .logo-wrap::before { animation-duration: 2.5s; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="logo-wrap"><img src="/logo.webp" alt="Xyron WebTech"></div>
+      <h1>You’re offline</h1>
+      <p>Check your internet connection. Xyron will reconnect automatically when you’re back online.</p>
+      <div class="connection"><span></span><b>Waiting for connection</b></div>
+    </main>
+    <script>
+      window.addEventListener("online",()=>{
+        document.body.classList.add("is-reconnecting");
+        document.querySelector(".connection b").textContent="Back online · reconnecting";
+        window.setTimeout(()=>window.location.reload(),900);
+      });
+    </script>
+  </body>
+</html>

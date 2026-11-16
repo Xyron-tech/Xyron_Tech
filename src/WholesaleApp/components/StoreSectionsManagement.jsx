@@ -1,4 +1,4 @@
-import {useEffect,useState} from "react";
+import {useState} from "react";
 import {Check,Plus,Save,Trash2,X} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
@@ -10,8 +10,6 @@ export default function StoreSectionsManagement({business,products,onSaved,onAdd
   const [sections,setSections]=useState(()=>business.storeSections||[]);
   const [draft,setDraft]=useState(emptySection),[editingId,setEditingId]=useState(""),[busy,setBusy]=useState(false),[error,setError]=useState("");
   const activeProducts=products.filter(product=>product.status==="ACTIVE");
-
-  useEffect(()=>{setSections(business.storeSections||[]);},[business.id]);
 
   function resetDraft(){
     setDraft(emptySection);

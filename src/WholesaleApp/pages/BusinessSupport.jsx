@@ -1,4 +1,4 @@
-import {useEffect,useState} from "react";
+import {useCallback,useEffect,useState} from "react";
 import {MessageCircle,RefreshCw,Send} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
@@ -9,24 +9,30 @@ const formatDate=value=>new Date(value).toLocaleString();
 
 export default function BusinessSupport(){
   const location=useLocation();
-  const [conversations,setConversations]=useState([]),[selected,setSelected]=useState(null),[subject,setSubject]=useState(""),[category,setCategory]=useState("OTHER"),[body,setBody]=useState(""),[reply,setReply]=useState(""),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState(""),[notice,setNotice]=useState("");
-  useEffect(()=>{if(new URLSearchParams(location.search).get("upgrade")==="1"){setCategory("SUBSCRIPTION");setSubject("Request a plan upgrade");setBody("Please review my business plan and share the available upgrade options.");}},[location.search]);
-  async function load(quiet=false){
-    if(!quiet)setError("");
+  const upgradeRequested=new URLSearchParams(location.search).get("upgrade")==="1";
+  const [conversations,setConversations]=useState([]),[selected,setSelected]=useState(null),[subject,setSubject]=useState(()=>upgradeRequested?"Request a plan upgrade":""),[category,setCategory]=useState(()=>upgradeRequested?"SUBSCRIPTION":"OTHER"),[body,setBody]=useState(()=>upgradeRequested?"Please review my business plan and share the available upgrade options.":""),[reply,setReply]=useState(""),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState(""),[notice,setNotice]=useState("");
+  const load=useCallback(async(quiet=false)=>{
     try{
       const {data}=await api.get("/business/support");
       setConversations(data.conversations);
       setSelected(current=>current?data.conversations.find(item=>item._id===current._id)||null:null);
+      if(!quiet)setError("");
     }catch(error){setError(getApiError(error));if(!quiet)notify(getApiError(error),"error");}
     finally{if(!quiet)setLoading(false);}
-  }
-  useEffect(()=>{load();},[]);
+  },[]);
+  useEffect(()=>{
+    let active=true;
+    api.get("/business/support").then(({data})=>{
+      if(active){setConversations(data.conversations);setSelected(current=>current?data.conversations.find(item=>item._id===current._id)||null:null);setError("");}
+    }).catch(error=>{if(active)setError(getApiError(error));}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[]);
   useEffect(()=>{
     const refresh=()=>load(true);
     const timer=window.setInterval(refresh,15000);
     window.addEventListener("focus",refresh);
     return ()=>{window.clearInterval(timer);window.removeEventListener("focus",refresh);};
-  },[]);
+  },[load]);
 
   async function openConversation(id){
     setError("");

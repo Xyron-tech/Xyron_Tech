@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./HowWeWork.css";
 import {
   FiX,
@@ -213,18 +213,18 @@ const HowWeWork = ({ variant = "default" }) => {
   };
 
   // NEXT
-  const nextStep = () => {
+  const nextStep = useCallback(() => {
     setModalStep((prev) =>
       prev === steps.length - 1 ? 0 : prev + 1
     );
-  };
+  }, [steps.length]);
 
   // PREVIOUS
-  const previousStep = () => {
+  const previousStep = useCallback(() => {
     setModalStep((prev) =>
       prev === 0 ? steps.length - 1 : prev - 1
     );
-  };
+  }, [steps.length]);
 
   // KEYBOARD
   useEffect(() => {

@@ -7,7 +7,13 @@ import {planCatalog} from "../data/planCatalog";
 export default function SuperAdminUpgrades(){
   const [requests,setRequests]=useState([]),[loading,setLoading]=useState(true),[busy,setBusy]=useState(""),[error,setError]=useState("");
   async function load(){setLoading(true);setError("");try{const {data}=await api.get("/super-admin/plan-upgrade-requests");setRequests(data.requests||[]);}catch(e){setError(getApiError(e));}finally{setLoading(false);}}
-  useEffect(()=>{load();},[]);
+  useEffect(()=>{
+    let active=true;
+    api.get("/super-admin/plan-upgrade-requests").then(({data})=>{
+      if(active){setRequests(data.requests||[]);setError("");}
+    }).catch(error=>{if(active)setError(getApiError(error));}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[]);
   async function decide(request,decision){
     setBusy(request._id);setError("");
     try{const {data}=await api.patch(`/super-admin/plan-upgrade-requests/${request._id}`,{decision});notify(data.message);await load();}

@@ -1,6 +1,6 @@
 import {useEffect,useState} from "react";
 import {Check,MessageCircle,RefreshCw,Send,Users} from "lucide-react";
-import {useLocation} from "react-router-dom";
+import {useLocation,useNavigate} from "react-router-dom";
 import {api,getApiError} from "../lib/api";
 import {planFeatureDefaults} from "../data/planCatalog";
 
@@ -8,9 +8,9 @@ const categories=["SUBSCRIPTION","PAYMENT","STORE","TECHNICAL","OTHER"];
 const formatDate=value=>new Date(value).toLocaleString();
 
 export default function SuperAdminSupport(){
-  const {hash}=useLocation();
-  const [tab,setTab]=useState(hash==="#broadcast"?"broadcast":"inbox"),[conversations,setConversations]=useState([]),[businesses,setBusinesses]=useState([]),[selected,setSelected]=useState(null),[status,setStatus]=useState("ALL"),[unreadOnly,setUnreadOnly]=useState(false),[reply,setReply]=useState(""),[replyImportant,setReplyImportant]=useState(false),[scope,setScope]=useState("ALL"),[businessIds,setBusinessIds]=useState([]),[subject,setSubject]=useState(""),[category,setCategory]=useState("OTHER"),[body,setBody]=useState(""),[broadcastImportant,setBroadcastImportant]=useState(false),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState(""),[notice,setNotice]=useState("");
-  useEffect(()=>setTab(hash==="#broadcast"?"broadcast":"inbox"),[hash]);
+  const {hash,pathname,search}=useLocation(),navigate=useNavigate();
+  const tab=hash==="#broadcast"?"broadcast":"inbox";
+  const [conversations,setConversations]=useState([]),[businesses,setBusinesses]=useState([]),[selected,setSelected]=useState(null),[status,setStatus]=useState("ALL"),[unreadOnly,setUnreadOnly]=useState(false),[reply,setReply]=useState(""),[replyImportant,setReplyImportant]=useState(false),[scope,setScope]=useState("ALL"),[businessIds,setBusinessIds]=useState([]),[subject,setSubject]=useState(""),[category,setCategory]=useState("OTHER"),[body,setBody]=useState(""),[broadcastImportant,setBroadcastImportant]=useState(false),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState(""),[notice,setNotice]=useState("");
 
   async function load(){
     setError("");
@@ -25,7 +25,19 @@ export default function SuperAdminSupport(){
     }catch(error){setError(getApiError(error));}
     finally{setLoading(false);}
   }
-  useEffect(()=>{load();},[status,unreadOnly]);
+  useEffect(()=>{
+    let active=true;
+    Promise.all([
+      api.get("/super-admin/support",{params:{...(status==="ALL"?{}:{status}),...(unreadOnly?{unread:"true"}:{})}}),
+      api.get("/super-admin/businesses")
+    ]).then(([supportResult,businessResult])=>{
+      if(active){setConversations(supportResult.data.conversations);setBusinesses(businessResult.data.businesses);setSelected(current=>current?supportResult.data.conversations.find(item=>item._id===current._id)||null:null);setError("");}
+    }).catch(error=>{if(active)setError(getApiError(error));}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[status,unreadOnly]);
+  function changeTab(nextTab){
+    navigate({pathname,search,hash:nextTab==="broadcast"?"#broadcast":"#inbox"},{replace:true});
+  }
 
   async function openConversation(conversation){
     setError("");
@@ -91,14 +103,14 @@ export default function SuperAdminSupport(){
     event.preventDefault();setBusy(true);setError("");setNotice("");
     try{
       const {data}=await api.post("/super-admin/support/broadcast",{scope,businessIds:scope==="ALL"?[]:businessIds,subject,category,body,important:broadcastImportant});
-      setNotice(data.message);setSubject("");setBody("");setBusinessIds([]);setBroadcastImportant(false);setTab("inbox");window.history.replaceState(null,"",`${window.location.pathname}#inbox`);await load();
+      setNotice(data.message);setSubject("");setBody("");setBusinessIds([]);setBroadcastImportant(false);changeTab("inbox");await load();
     }catch(error){setError(getApiError(error));}
     finally{setBusy(false);}
   }
 
   return <section className="support-page super-support-page">
     <header className="admin-head"><div><small>PLATFORM SUPPORT</small><h1>Business inbox</h1><p>Reply to requests or send persistent dashboard messages to active businesses.</p></div><span><Users size={16}/> Super Admin</span></header>
-    <div className="support-tabs" role="tablist" aria-label="Support tools"><button type="button" role="tab" aria-selected={tab==="inbox"} className={tab==="inbox"?"active":""} onClick={()=>{setTab("inbox");window.history.replaceState(null,"",`${window.location.pathname}#inbox`);}}>Inbox</button><button type="button" role="tab" aria-selected={tab==="broadcast"} className={tab==="broadcast"?"active":""} onClick={()=>{setTab("broadcast");window.history.replaceState(null,"",`${window.location.pathname}#broadcast`);}}>Broadcast</button></div>
+    <div className="support-tabs" role="tablist" aria-label="Support tools"><button type="button" role="tab" aria-selected={tab==="inbox"} className={tab==="inbox"?"active":""} onClick={()=>changeTab("inbox")}>Inbox</button><button type="button" role="tab" aria-selected={tab==="broadcast"} className={tab==="broadcast"?"active":""} onClick={()=>changeTab("broadcast")}>Broadcast</button></div>
     {error&&<div className="error" role="alert">{error}</div>}{notice&&<div className="support-notice" role="status">{notice}</div>}
     {tab==="broadcast"?<form className="panel support-broadcast" onSubmit={sendBroadcast}>
       <span className="admin-section-kicker">DASHBOARD HIGHLIGHT + INBOX MESSAGE</span><h2>Send a platform message</h2><p>Each selected active business receives a persistent message in its support inbox and a prominent dashboard highlight.</p>

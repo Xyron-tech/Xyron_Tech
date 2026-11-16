@@ -1,6 +1,6 @@
 import {useEffect,useState} from "react";
 import {Link,useHref} from "react-router-dom";
-import {Check,Copy,RefreshCw,ShieldCheck,Trash2,X} from "lucide-react";
+import {Check,Copy,KeyRound,RefreshCw,ShieldCheck,Trash2,X} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
 import {planFeatureDefaults} from "../data/planCatalog";
@@ -9,14 +9,20 @@ const featureNames={advancedSeo:"Advanced SEO",quickReplies:"Chat quick replies"
 
 export default function SuperAdmin(){
   const storePathPrefix=useHref("/store/");
-  const [apps,setApps]=useState([]),[plans,setPlans]=useState({}),[features,setFeatures]=useState([]),[loading,setLoading]=useState(true),[error,setError]=useState(""),[busy,setBusy]=useState("");
+  const [apps,setApps]=useState([]),[plans,setPlans]=useState({}),[features,setFeatures]=useState([]),[loading,setLoading]=useState(true),[error,setError]=useState(""),[busy,setBusy]=useState(""),[passwordTarget,setPasswordTarget]=useState(""),[adminPassword,setAdminPassword]=useState(""),[confirmAdminPassword,setConfirmAdminPassword]=useState("");
   async function load(){
     setLoading(true);setError("");
     try{const {data}=await api.get("/super-admin/applications");setApps(data.applications);setPlans(data.plans||{});setFeatures(data.features||[]);}
     catch(e){setError(getApiError(e));}
     finally{setLoading(false);}
   }
-  useEffect(()=>{load();},[]);
+  useEffect(()=>{
+    let active=true;
+    api.get("/super-admin/applications").then(({data})=>{
+      if(active){setApps(data.applications);setPlans(data.plans||{});setFeatures(data.features||[]);setError("");}
+    }).catch(error=>{if(active)setError(getApiError(error));}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[]);
   async function decide(id,decision){
     setBusy(id);
     try{const {data}=await api.post(`/super-admin/applications/${id}/${decision}`);notify(data.message);await load();}
@@ -36,6 +42,21 @@ export default function SuperAdmin(){
     }catch(e){setError(getApiError(e));notify(getApiError(e),"error");}
     finally{setBusy("");}
   }
+  async function updateAdminPassword(event,application){
+    event.preventDefault();
+    if(adminPassword.length<10){setError("The admin password must be at least 10 characters.");return;}
+    if(adminPassword!==confirmAdminPassword){setError("Passwords do not match.");return;}
+    setBusy(`password-${application._id}`);
+    setError("");
+    try{
+      const {data}=await api.patch(`/super-admin/businesses/${application.businessId._id}/password`,{password:adminPassword,confirmPassword:confirmAdminPassword});
+      notify(data.message);
+      setAdminPassword("");
+      setConfirmAdminPassword("");
+      setPasswordTarget("");
+    }catch(error){setError(getApiError(error));notify(getApiError(error),"error");}
+    finally{setBusy("");}
+  }
   async function changeBusinessStatus(application,action){
     const business=application.businessId;
     if(!business?._id)return;
@@ -50,7 +71,7 @@ export default function SuperAdmin(){
   }
   async function copyStore(slug){
     try{await navigator.clipboard.writeText(new URL(`${storePathPrefix}${encodeURIComponent(slug)}`,window.location.origin).toString());notify("Store address copied.");}
-    catch(e){setError("Could not copy the store address. Please copy the URL from your browser.");notify("Could not copy the store address.","error");}
+    catch{setError("Could not copy the store address. Please copy the URL from your browser.");notify("Could not copy the store address.","error");}
   }
   const pending=apps.filter(app=>app.status==="PENDING").length;
   const approved=apps.filter(app=>app.status==="APPROVED").length;
@@ -85,6 +106,15 @@ export default function SuperAdmin(){
           {!isDeleted&&<div className="actions">
             {application.status==="PENDING"&&<><button className="approve" disabled={busy===application._id} onClick={()=>decide(application._id,"approve")}><Check size={14}/> Approve</button><button className="reject" disabled={busy===application._id} onClick={()=>decide(application._id,"reject")}><X size={14}/> Reject</button></>}
             {business&&application.status==="APPROVED"&&<><button className="reject" disabled={busy===application._id} onClick={()=>changeBusinessStatus(application,"reject")}><X size={14}/> Reject access</button><button className="reject" disabled={busy===application._id} onClick={()=>changeBusinessStatus(application,"delete")}><Trash2 size={14}/> Delete store</button></>}
+          </div>}
+          {business&&application.status==="APPROVED"&&!isDeleted&&<div className="admin-password-panel">
+            <button type="button" className="secondary-button" aria-expanded={passwordTarget===application._id} onClick={()=>{setPasswordTarget(current=>current===application._id?"":application._id);setAdminPassword("");setConfirmAdminPassword("");setError("");}}><KeyRound size={14}/>{passwordTarget===application._id?"Cancel password update":"Update admin password"}</button>
+            {passwordTarget===application._id&&<form className="admin-password-form" onSubmit={event=>updateAdminPassword(event,application)}>
+              <p>Set a new sign-in password for {application.ownerName} ({application.email}). Their current sessions will be signed out.</p>
+              <label>New password<input type="password" autoComplete="new-password" minLength="10" maxLength="100" required value={adminPassword} onChange={event=>setAdminPassword(event.target.value)}/></label>
+              <label>Confirm new password<input type="password" autoComplete="new-password" minLength="10" maxLength="100" required value={confirmAdminPassword} onChange={event=>setConfirmAdminPassword(event.target.value)}/></label>
+              <button type="submit" className="primary" disabled={busy===`password-${application._id}`}>{busy===`password-${application._id}`?"Updating…":"Save new password"}</button>
+            </form>}
           </div>}
         </article>;
       })}

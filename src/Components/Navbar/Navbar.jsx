@@ -1,5 +1,6 @@
-import {useEffect,useRef,useState} from "react";
+import {useEffect,useLayoutEffect,useRef,useState} from "react";
 import {Link,useLocation,useNavigate} from "react-router-dom";
+import {InstallAppButton} from "../InstallAppContext";
 import "./Navbar.css";
 import logo from "../../assets/logo.webp";
 import {FiChevronDown,FiCode,FiGrid,FiHome,FiMail,FiMenu,FiMessageSquare,FiShoppingBag,FiX} from "react-icons/fi";
@@ -24,9 +25,11 @@ export default function Navbar(){
   const closeMenu=()=>{setOpenGroup(false);setMenuOpen(false);};
   const scrollToSection=id=>{
     closeMenu();
-    if(pathname!=="/"){navigate(`/#${id}`);return;}
-    if(hash!==`#${id}`) navigate(`/#${id}`,{replace:true});
-    requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"}));
+    if(pathname!=="/"||hash!==`#${id}`){navigate(`/#${id}`);return;}
+    requestAnimationFrame(()=>{
+      const target=document.getElementById(id);
+      if(target)window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-96,behavior:"smooth"});
+    });
   };
 
   useEffect(()=>{
@@ -61,7 +64,7 @@ export default function Navbar(){
     };
   },[]);
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     document.body.style.overflow=menuOpen?"hidden":"";
     return ()=>{document.body.style.overflow="";};
   },[menuOpen]);
@@ -92,7 +95,7 @@ export default function Navbar(){
       <Link className={activeSection==="contact"?"active":""} to="/contact"> <FiMail aria-hidden="true"/>Contact</Link>
     </nav>
 
-    <div className="nav-actions"><Link className="nav-btn" to="/contact">Get in Touch</Link></div>
+    <div className="nav-actions"><InstallAppButton containerClassName="" buttonClassName="nav-install-btn" helpClassName="nav-install-help" label="Install app"/><Link className="nav-btn" to="/contact">Get in Touch</Link></div>
     <button className="menu-toggle" type="button" aria-label={menuOpen?"Close navigation menu":"Open navigation menu"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={()=>{setMenuOpen(value=>!value);setOpenGroup(false);}}>
       {menuOpen?<FiX/>:<FiMenu/>}
     </button>
@@ -108,7 +111,7 @@ export default function Navbar(){
         {renderWorkMenu(true)}
         <Link to="/contact" onClick={closeMenu}><FiMail aria-hidden="true"/>Contact</Link>
       </nav>
-      <div className="mobile-menu-footer"><Link className="mobile-btn" to="/contact" onClick={closeMenu}>Get in Touch</Link><a className="mobile-whatsapp-link" href={whatsappLink} target="_blank" rel="noreferrer">Chat on WhatsApp</a></div>
+      <div className="mobile-menu-footer"><InstallAppButton containerClassName="" buttonClassName="mobile-install-btn" helpClassName="mobile-install-help" label="Install app"/><Link className="mobile-btn" to="/contact" onClick={closeMenu}>Get in Touch</Link><a className="mobile-whatsapp-link" href={whatsappLink} target="_blank" rel="noreferrer">Chat on WhatsApp</a></div>
     </div>
   </header>;
 }

@@ -1061,4 +1061,61 @@
   .nav-menu { gap:8px; }
   .nav-menu>button,.nav-menu>a,.nav-group-trigger { gap:5px; font-size:12px; }
   .nav-btn { min-width:122px; }
+  .nav-install-btn { padding-inline:10px; font-size:12px; }
 }
+.nav-actions { position:relative; gap:8px; }
+.nav-install-btn,.mobile-install-btn {
+  display:inline-flex;
+  min-height:44px;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 14px;
+  border:1px solid #bfdbfe;
+  border-radius:10px;
+  background:#eff6ff;
+  color:#1d4ed8;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:600;
+  white-space:nowrap;
+  cursor:pointer;
+}
+.nav-install-btn:hover,.mobile-install-btn:hover { background:#dbeafe; }
+.nav-install-btn:focus-visible,.mobile-install-btn:focus-visible {
+  outline:2px solid #06b6d4;
+  outline-offset:3px;
+}
+.nav-install-help,.mobile-install-help {
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:12px;
+  border:1px solid #bfdbfe;
+  border-radius:10px;
+  background:#fff;
+  color:#334155;
+  font-size:12px;
+  line-height:1.5;
+  box-shadow:0 8px 24px rgba(31,58,91,.12);
+}
+.nav-install-help {
+  position:absolute;
+  top:calc(100% + 10px);
+  right:0;
+  z-index:20;
+  width:min(300px,80vw);
+}
+.nav-install-help button,.mobile-install-help button {
+  display:inline-flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  padding:2px;
+  border:0;
+  background:transparent;
+  color:inherit;
+  cursor:pointer;
+}
+.mobile-menu-footer .mobile-install-btn { width:100%; min-height:48px; }
+.mobile-install-help { width:100%; }

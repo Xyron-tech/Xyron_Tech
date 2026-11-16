@@ -1,10 +1,11 @@
 import {useEffect,useRef,useState} from "react";
 import {Link,useHref,useLocation} from "react-router-dom";
-import {Check,Copy,ImagePlus,MessageCircle,Package,Pencil,Plus,Store,Trash2,Upload,X} from "lucide-react";
+import {Check,Copy,ImagePlus,MessageCircle,Package,Pencil,Plus,Store,Trash2,X} from "lucide-react";
 import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
 import ShippingManagement from "../components/ShippingManagement";
 import StoreSectionsManagement from "../components/StoreSectionsManagement";
+import BrandLoader from "../../Components/BrandLoader";
 
 const blankProduct={name:"",category:"",description:"",weightCalculationMethod:"BUNDLE",piecesPerBundle:"",bundleWeightGrams:"",piecesPerKg:"",packetPrice:"",stockPackets:"",imageUrl:"",status:"ACTIVE"};
 const blankProfile={name:"",category:"",description:"",announcementTitle:"",announcementText:"",announcements:[],contactPhone:"",whatsappNumber:"",instagramUrl:"",youtubeUrl:"",facebookUrl:"",linkedinUrl:"",twitterUrl:"",telegramUrl:"",seoTitle:"",seoDescription:""};
@@ -25,18 +26,27 @@ const newAnnouncement=()=>({id:`announcement-${Date.now()}-${Math.random()}`,tit
 export default function StoreAdmin(){
   const {pathname}=useLocation(),storePathPrefix=useHref("/store/");
   const section=pathname.includes("shipping")?"shipping":pathname.includes("payments")?"payments":pathname.includes("profile")||pathname.includes("storefront")?"profile":"products";
-  const [business,setBusiness]=useState(null),[products,setProducts]=useState([]),[productCount,setProductCount]=useState(0),[profile,setProfile]=useState(blankProfile),[payment,setPayment]=useState({upiId:"",paymentInstructions:"",paymentQrEnabled:true});
+  const [business,setBusiness]=useState(null),[products,setProducts]=useState([]),[productCount,setProductCount]=useState(0),[profile,setProfile]=useState(blankProfile),[payment,setPayment]=useState({upiId:"",paymentInstructions:"",paymentMethod:"QR"});
   const [product,setProduct]=useState(blankProduct),[productImage,setProductImage]=useState(null),[editingProduct,setEditingProduct]=useState(""),[slide,setSlide]=useState(blankSlide),[slideImage,setSlideImage]=useState(null),[editingSlide,setEditingSlide]=useState("");
   const [productEditorOpen,setProductEditorOpen]=useState(false),[editingProfile,setEditingProfile]=useState(false);
   const productCreatedHandler=useRef(null);
   const [notice,setNotice]=useState(""),[error,setError]=useState(""),[saving,setSaving]=useState(false),[loading,setLoading]=useState(true);
-  async function reload(){
+  async function fetchWorkspace(){
     const [b,p]=await Promise.all([api.get("/business/storefront"),api.get("/business/products")]);
-    const x=b.data.business;setBusiness(x);setProducts(p.data.products);setProductCount(b.data.productCount??p.data.products.length);
-    setProfile(profileFromBusiness(x));
-    setPayment({upiId:x.upiId||"",paymentInstructions:x.paymentInstructions||"",paymentQrEnabled:x.paymentQrEnabled!==false});
+    const x=b.data.business;
+    return {business:x,products:p.data.products,productCount:b.data.productCount??p.data.products.length};
   }
-  useEffect(()=>{reload().catch(e=>{setError(getApiError(e));notify(getApiError(e),"error");}).finally(()=>setLoading(false));},[]);
+  function applyWorkspace({business:x,products:nextProducts,productCount:nextProductCount}){
+    setBusiness(x);setProducts(nextProducts);setProductCount(nextProductCount);
+    setProfile(profileFromBusiness(x));
+    setPayment({upiId:x.upiId||"",paymentInstructions:x.paymentInstructions||"",paymentMethod:x.paymentMethod||(x.paymentQrEnabled===false?"OFF":"QR")});
+  }
+  async function reload(){applyWorkspace(await fetchWorkspace());}
+  useEffect(()=>{
+    let active=true;
+    fetchWorkspace().then(workspace=>{if(active)applyWorkspace(workspace);}).catch(error=>{if(active){setError(getApiError(error));notify(getApiError(error),"error");}}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[]);
   useEffect(()=>{
     const update=event=>{
       if(!event.detail)return;
@@ -81,7 +91,7 @@ export default function StoreAdmin(){
     <label>Or image URL<input type="url" value={product.imageUrl} onChange={e=>setProduct(p=>({...p,imageUrl:e.target.value}))}/></label>
     <div className="product-modal-actions"><button type="button" className="secondary-button" onClick={resetProduct}>Cancel</button><button className="primary" disabled={saving}><Plus size={15}/>{editingProduct?"Update product":"Add product"}</button></div>
   </form>;
-  if(loading)return <section className="panel">Loading your business workspace…</section>;
+  if(loading)return <BrandLoader label="Loading your business workspace"/>;
   return <section className={`store-admin ${section==="products"?"store-admin-products":""}`}>
     <header className="store-admin-heading"><div><span className="eyebrow">BUSINESS WORKSPACE</span><h1>{section==="profile"?"Profile & sliders":section==="shipping"?"Shipping management":section==="payments"?"Payment settings":"Product management"}</h1><p>Manage your business profile, product cards, slider images, payments, and shipping.</p></div><div className="store-admin-heading-actions"><button type="button" className="secondary-button" onClick={copyStoreAddress}><Copy size={14}/> Copy store link</button><Link className="secondary-button" to={`/store/${business?.slug}`} target="_blank" rel="noreferrer"><Store size={14}/> View store</Link></div></header>
     <nav className="store-admin-tabs" aria-label="Business management">{tabs.map(([id,label,url])=><Link key={id} className={section===id?"active":""} to={url}>{label}</Link>)}</nav>
@@ -99,9 +109,9 @@ export default function StoreAdmin(){
       </form>}
       {business.subscriptionFeatures?.advancedSeo?<form className="panel store-admin-form" onSubmit={saveSeoProfile}><h2>Advanced SEO</h2><p>Customize the title and description shown in search and social previews.</p><label>Search title<input maxLength="70" value={profile.seoTitle} onChange={e=>setProfile(value=>({...value,seoTitle:e.target.value}))}/></label><label>Search description<textarea maxLength="180" value={profile.seoDescription} onChange={e=>setProfile(value=>({...value,seoDescription:e.target.value}))}/></label><button className="primary" disabled={saving}><Check size={15}/> Save SEO settings</button></form>:<div className="panel plan-locked"><h2>Advanced SEO</h2><p>Available on Growth and Pro when enabled by Xyron Admin.</p><Link className="secondary-button" to="/dashboard/upgrade"><MessageCircle size={14}/> Request upgrade</Link></div>}
       <div className="panel"><h2>Store sliders · {business.sliderSlides?.length||0}/{business.planLimits?.maxSlides||0}</h2><form className="store-admin-form" onSubmit={saveSlide}><label>Slide title<input required maxLength="90" value={slide.title} onChange={e=>setSlide(s=>({...s,title:e.target.value}))}/></label><label>Subtitle<textarea value={slide.subtitle} onChange={e=>setSlide(s=>({...s,subtitle:e.target.value}))}/></label><label>Button text<input value={slide.buttonLabel} onChange={e=>setSlide(s=>({...s,buttonLabel:e.target.value}))}/></label><label>Slider image<input required={!editingSlide} type="file" accept="image/jpeg,image/png,image/webp" onChange={e=>chooseImage(e,setSlideImage)}/></label><button className="primary" disabled={saving}><ImagePlus size={15}/>{editingSlide?"Update slider":"Add slider"}</button>{editingSlide&&<button type="button" onClick={resetSlide}>Cancel</button>}</form>{business.sliderSlides?.map(item=><article className="owner-product" key={item._id}><img className="owner-product-image" src={item.imageUrl} alt=""/><div className="owner-product-copy"><b>{item.title}</b><small>{item.subtitle}</small></div><button className="icon-action" type="button" onClick={()=>editSlide(item)} aria-label="Edit slider"><Package size={15}/></button><button className="icon-action danger" type="button" onClick={()=>deleteSlide(item._id)} aria-label="Delete slider"><Trash2 size={15}/></button></article>)}</div>
-      <StoreSectionsManagement business={business} products={products} onSaved={setBusiness} canAddProduct={business.planLimits?.maxProducts==null||productCount<business.planLimits.maxProducts} onAddProduct={onCreated=>openProductEditor(onCreated)}/>
-    </div>:section==="shipping"?<ShippingManagement business={business} products={products} onSaved={setBusiness}/>
-    :section==="payments"?<form className="panel store-admin-form" onSubmit={savePayment}><h2>Payment settings</h2><label>UPI ID<input name="upiId" value={payment.upiId} onChange={setField(setPayment)}/></label><label>Instructions<textarea name="paymentInstructions" value={payment.paymentInstructions} onChange={setField(setPayment)}/></label><label>Payment QR<input name="qr" type="file" accept="image/jpeg,image/png,image/webp"/></label>{business.paymentQrUrl&&<img className="product-upload-preview" src={business.paymentQrUrl} alt="Current customer payment QR"/>}<label className="payment-qr-toggle"><input type="checkbox" checked={payment.paymentQrEnabled!==false} onChange={event=>setPayment(current=>({...current,paymentQrEnabled:event.target.checked}))}/><span><b>Include QR on future final bills</b><small>When off, customers receive the bill without the QR or payment-proof upload. Existing bills will not change.</small></span></label>{payment.paymentQrEnabled&&!business.paymentQrUrl&&<p className="order-bill-warning">Upload a payment QR before sending bills with QR payments enabled, or turn this option off.</p>}<button className="primary" disabled={saving}>Save payment settings</button></form>
+      <StoreSectionsManagement key={`${business.id||business._id}:${business.updatedAt||""}`} business={business} products={products} onSaved={setBusiness} canAddProduct={business.planLimits?.maxProducts==null||productCount<business.planLimits.maxProducts} onAddProduct={onCreated=>openProductEditor(onCreated)}/>
+    </div>:section==="shipping"?<ShippingManagement key={`${business.id||business._id}:${business.updatedAt||""}`} business={business} products={products} onSaved={setBusiness}/>
+    :section==="payments"?<form className="panel store-admin-form" onSubmit={savePayment}><h2>Payment settings</h2><label>Customer payment method<select name="paymentMethod" value={payment.paymentMethod} onChange={setField(setPayment)}><option value="QR">Payment QR</option><option value="GPAY">GPay number / UPI ID</option><option value="OFF">Turn off online payment</option></select></label>{payment.paymentMethod==="QR"?<><label>Payment QR<input name="qr" type="file" accept="image/jpeg,image/png,image/webp"/></label>{business.paymentQrUrl&&<img className="product-upload-preview" src={business.paymentQrUrl} alt="Current customer payment QR"/>}{!business.paymentQrUrl&&<p className="order-bill-warning">Upload a payment QR before sending bills with this method selected.</p>}</>:payment.paymentMethod==="GPAY"?<label>GPay number / UPI ID<input name="upiId" inputMode="text" autoComplete="off" placeholder="98765 43210 or name@bank" required value={payment.upiId} onChange={setField(setPayment)}/></label>:null}{payment.paymentMethod!=="OFF"&&<label>Payment instructions<textarea name="paymentInstructions" maxLength="500" placeholder="Optional instructions shown with the bill." value={payment.paymentInstructions} onChange={setField(setPayment)}/></label>}<p className="order-bill-warning">The selected payment method is saved with each new bill. Existing bills will not change.</p><button className="primary" disabled={saving}>Save payment settings</button></form>
     :<div className="store-admin-layout product-list-only">
       <div className="panel owner-products"><h2>Products · {products.length}</h2>{products.map(item=><article className="owner-product" key={item._id}>
         {item.imageUrl?<img className="owner-product-image" src={item.imageUrl} alt=""/>:<Package className="owner-product-image"/>}

@@ -1,4 +1,4 @@
-import {useEffect,useState} from "react";
+import {useCallback,useEffect,useState} from "react";
 import {BarChart3,CalendarDays,MessageCircle,RefreshCw} from "lucide-react";
 import {Link} from "react-router-dom";
 import {api,getApiError} from "../lib/api";
@@ -8,24 +8,30 @@ const initialSummary={totalOrders:0,acceptedOrders:0,unseenOrders:0,rejectedOrde
 
 export default function BusinessAnalytics(){
   const [period,setPeriod]=useState("today"),[summary,setSummary]=useState(initialSummary),[dailyGroups,setDailyGroups]=useState([]),[range,setRange]=useState(null),[loading,setLoading]=useState(true),[error,setError]=useState("");
-  async function load(nextPeriod=period){
-    setLoading(true);setError("");
+  const load=useCallback(async(nextPeriod=period)=>{
     try{
       const {data}=await api.get("/business/analytics",{params:{period:nextPeriod}});
       setSummary(data.summary);setDailyGroups(data.dailyGroups||[]);setRange({from:data.from,to:data.to});
+      setError("");
     }catch(error){setError(getApiError(error));}
     finally{setLoading(false);}
-  }
-  useEffect(()=>{load(period);},[period]);
+  },[period]);
+  useEffect(()=>{
+    let active=true;
+    api.get("/business/analytics",{params:{period}}).then(({data})=>{
+      if(active){setSummary(data.summary);setDailyGroups(data.dailyGroups||[]);setRange({from:data.from,to:data.to});setError("");}
+    }).catch(error=>{if(active)setError(getApiError(error));}).finally(()=>{if(active)setLoading(false);});
+    return ()=>{active=false;};
+  },[period]);
   useEffect(()=>{
     const refresh=()=>load(period);
     window.addEventListener("xyron:business-profile-updated",refresh);
     return ()=>window.removeEventListener("xyron:business-profile-updated",refresh);
-  },[period]);
+  },[load,period]);
   const maxDailyValue=Math.max(...dailyGroups.map(group=>Number(group.acceptedOrderValueInr)||0),0);
   return <section className="business-analytics">
-    <header className="orders-admin-heading"><div><span className="eyebrow"><i/> BUSINESS WORKSPACE</span><h1>Order analytics</h1><p>Daily, weekly, and monthly sales and order totals for this business.</p></div><button type="button" className="refresh-orders" onClick={()=>load()} disabled={loading}><RefreshCw size={15}/> Refresh</button></header>
-    <div className="analytics-period" role="group" aria-label="Analytics period"><button type="button" className={period==="today"?"active":""} onClick={()=>setPeriod("today")}><CalendarDays size={15}/> Today</button><button type="button" className={period==="week"?"active":""} onClick={()=>setPeriod("week")}><CalendarDays size={15}/> Weekly</button><button type="button" className={period==="month"?"active":""} onClick={()=>setPeriod("month")}><CalendarDays size={15}/> Monthly</button></div>
+    <header className="orders-admin-heading"><div><span className="eyebrow"><i/> BUSINESS WORKSPACE</span><h1>Order analytics</h1><p>Daily, weekly, and monthly sales and order totals for this business.</p></div><button type="button" className="refresh-orders" onClick={()=>{setLoading(true);load();}} disabled={loading}><RefreshCw size={15}/> Refresh</button></header>
+    <div className="analytics-period" role="group" aria-label="Analytics period"><button type="button" className={period==="today"?"active":""} onClick={()=>{setLoading(true);setError("");setPeriod("today");}}><CalendarDays size={15}/> Today</button><button type="button" className={period==="week"?"active":""} onClick={()=>{setLoading(true);setError("");setPeriod("week");}}><CalendarDays size={15}/> Weekly</button><button type="button" className={period==="month"?"active":""} onClick={()=>{setLoading(true);setError("");setPeriod("month");}}><CalendarDays size={15}/> Monthly</button></div>
     {loading?<div className="panel">Loading report…</div>:error?<div className="analytics-locked panel"><BarChart3 size={28}/><h2>Analytics unavailable</h2><p>{error}</p><p>Ask Xyron Admin to enable analytics for your business plan.</p><Link className="primary" to="/dashboard/support?upgrade=1"><MessageCircle size={15}/> Contact Xyron Admin</Link></div>:<>
       {range&&<p className="analytics-range">Report period: {new Date(range.from).toLocaleDateString()} – {new Date(range.to).toLocaleDateString()}</p>}
       {summary.totalOrders===0&&<p className="analytics-empty">There are no orders in this period yet. New orders will appear here automatically.</p>}
