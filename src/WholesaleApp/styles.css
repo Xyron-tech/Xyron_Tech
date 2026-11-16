@@ -2035,3 +2035,30 @@ img,video,iframe { max-width:100%; }
   .store-social-links a { width:40px; height:40px; }
   .store-footer-meta>span { white-space:normal; }
 }
+
+/* Keep store footer identity, contact links, and social links aligned with the header brand. */
+.store-footer { display:flex; min-height:0; align-items:flex-start; flex-direction:column; justify-content:flex-start; gap:14px; padding:18px clamp(22px,4vw,58px); text-align:left; }
+.store-footer-brand { width:auto; align-items:center; justify-content:flex-start; flex-wrap:nowrap; gap:11px; }
+.store-footer-brand img { width:42px; height:42px; border-radius:14px; }
+.store-footer-details { width:auto; justify-items:start; align-items:flex-start; gap:10px; }
+.store-footer-address { justify-content:flex-start; text-align:left; }
+.store-footer-contact { justify-content:flex-start; gap:16px; }
+.store-footer-map { justify-items:start; }
+.store-footer-meta { width:auto; display:flex; align-items:flex-start; justify-content:flex-start; flex-direction:column; gap:12px; text-align:left; }
+.store-footer-meta .store-social-links { justify-content:flex-start; gap:10px; }
+@media (max-width:700px) {
+  .store-footer { gap:12px; padding:16px clamp(10px,3vw,16px) calc(74px + env(safe-area-inset-bottom)); }
+  .store-brand-icon,.store-footer-brand img { width:38px; height:38px; }
+  .store-footer-meta .store-social-links { gap:9px; }
+}
+@media (max-width:360px) {
+  .store-brand-icon,.store-footer-brand img { width:34px; height:34px; }
+}
+.upgrade-admin-list { display:grid; gap:12px; }
+.upgrade-admin-request { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:16px; border:1px solid #e3eaf3; border-radius:12px; background:#fff; }
+.upgrade-admin-request h3 { margin:9px 0 5px; color:#243650; font-size:14px; }
+.upgrade-admin-request p { margin:5px 0; color:#5d6f87; font-size:11px; line-height:1.6; }
+.upgrade-admin-request small { color:#8693a6; font-size:9px; }
+.upgrade-admin-actions { display:flex; flex-wrap:wrap; gap:8px; }
+.upgrade-admin-actions button { display:inline-flex; min-height:36px; align-items:center; justify-content:center; gap:6px; padding:0 11px; white-space:nowrap; }
+@media(max-width:680px) { .upgrade-admin-request { align-items:stretch; flex-direction:column; } .upgrade-admin-actions>* { flex:1; } }

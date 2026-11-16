@@ -43,7 +43,6 @@ export default function SuperAdminTestimonials(){
           <span className={`tag ${item.status.toLowerCase()}`}>{item.status}</span>
         </div>
         <p className="testimonial-admin-message">{item.message}</p>
-        {item.voice&&<audio controls src={item.voice} className="testimonial-admin-audio"/>}
         <div className="testimonial-admin-actions">
           {item.status!=="PUBLISHED"&&<button type="button" className="approve" disabled={busy===item.id} onClick={()=>update(item.id,{status:"PUBLISHED"})}><Check size={14}/> Publish</button>}
           {item.status==="PUBLISHED"&&<button type="button" className="secondary-button" disabled={busy===item.id} onClick={()=>update(item.id,{status:"PENDING"})}>Unpublish</button>}

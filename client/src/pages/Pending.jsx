@@ -1,0 +1,3 @@
+import {Clock3} from "lucide-react";
+import {useAuth} from "../context/AuthContext";
+export default function Pending(){const {user}=useAuth();return <section className="pending"><Clock3/><small>BUSINESS APPLICATION</small><h1>{user?.accountStatus==="ACTIVE"?"Your business is approved":"Your application is under review"}</h1><p>{user?.accountStatus==="ACTIVE"?"Your account is active. Business dashboard setup is planned for Phase 2.":"Thanks for applying. Your workspace will become available after Super Admin approval."}</p><div>Account status <b>{user?.accountStatus}</b></div><div>Signed in as <b>{user?.email}</b></div></section>}
