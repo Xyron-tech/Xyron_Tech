@@ -65,7 +65,7 @@ Deploy the Express API from the separate `Xyron-Wholesale` server repository. Co
 - `XYRON_PIN_DATABASE_PATH` when the PIN database is available on the API host
 - `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` for initial setup only
 
-The production client defaults to `https://xyron-wholesale.onrender.com/api`. Set `VITE_API_URL` in the Xyron WebTech project at build time to override it with another API host's HTTPS URL ending in `/api`. The API allows both `https://xyronwebtech.com` and `https://www.xyronwebtech.com`; configure `CLIENT_ORIGIN` on the API for any additional frontend origin.
+The production client sends API requests to the same-origin `/api` path. The Vercel rewrite proxies these requests to `https://xyron-wholesale.onrender.com/api`, so session cookies remain first-party; do not set `VITE_API_URL` to the Render host in the production project. The API allows both `https://xyronwebtech.com` and `https://www.xyronwebtech.com`; configure `CLIENT_ORIGIN` on the API for any additional frontend origin.
 
 The API host uses its own MongoDB, JWT, Cloudinary, and optional PIN-directory settings. Do not copy these server secrets into the client project.
 

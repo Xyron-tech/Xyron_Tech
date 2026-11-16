@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/api", "destination": "https://xyron-wholesale.onrender.com/api" },
+    { "source": "/api/:path*", "destination": "https://xyron-wholesale.onrender.com/api/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
