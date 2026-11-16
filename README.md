@@ -18,24 +18,22 @@ The Wholesale experience is mounted within the portfolio app and uses its own `/
 
 ## Local development
 
-1. Copy `.env.example` to `.env`.
-2. Set `JWT_SECRET` to a random value of at least 32 characters and configure `MONGODB_URI`.
-3. Configure `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` before seeding the initial admin.
-4. Install dependencies from this repository root:
+1. Install the client dependencies from this repository root:
 
    ```sh
    npm install
    ```
 
-5. Start the portfolio site and API together:
+2. Optionally copy `.env.example` to `.env` to override the local API proxy target.
+3. Start the client:
 
    ```sh
-   npm run dev:full
+   npm run dev
    ```
 
-The Vite server runs at `http://localhost:5173`; the API runs at `http://localhost:5000`. Vite proxies local `/api` requests to the API.
+The Vite server runs at `http://localhost:5173`. For local API access, run the separate server repository at `http://localhost:5000`; Vite proxies `/api` requests there by default. Set `API_PROXY_TARGET` in `.env` if the server uses another local URL.
 
-Create the initial Super Admin with:
+The API runs from the separate `server` repository. In that checkout, install dependencies, copy `.env.example` to `.env`, and start the API with `npm run dev`. After setting the admin credentials, create the initial Super Admin there with:
 
 ```sh
 npm run seed:super-admin
@@ -56,29 +54,29 @@ The SPA rewrite in `vercel.json` keeps direct navigation and refreshes working f
 
 ### API
 
-The `api/[...path].js` Vercel function serves the existing Express API under the same origin at `/api/*`. Configure these server environment variables in Vercel Project Settings; never commit real values:
+Deploy the Express API from the separate `Xyron-Wholesale` server repository. Configure its server environment variables on the API host; never commit real values:
 
 - `NODE_ENV=production`
 - `PORT` (provided by the host)
-- `CLIENT_ORIGIN=https://xyronwebtech.com,https://www.xyronwebtech.com` (comma-separated allowed frontend origins)
+- `CLIENT_ORIGIN=https://xyronwebtech.com` (the exact public frontend origin)
 - `JWT_SECRET` (at least 32 random characters)
 - `MONGODB_URI`
 - `CLOUDINARY_URL`, or all three `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`
 - `XYRON_PIN_DATABASE_PATH` when the PIN database is available on the API host
 - `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` for initial setup only
 
-Leave `VITE_API_URL` empty to use the same-origin `/api` function. If you host the API separately, set `VITE_API_URL` at build time to its HTTPS URL ending in `/api` (for example `https://api.example.com/api`).
+Set `VITE_API_URL` in the Xyron WebTech project at build time to the API host's HTTPS URL ending in `/api` (for example `https://api.example.com/api`). Configure `CLIENT_ORIGIN` on the API to the exact production website origin.
 
-The server does not serve the website's static files. The Vercel function uses the same MongoDB, JWT, Cloudinary, and optional PIN-directory settings as the standalone server.
+The API host uses its own MongoDB, JWT, Cloudinary, and optional PIN-directory settings. Do not copy these server secrets into the client project.
 
 ## Verification
 
 ```sh
 npm run build
-npm run test:api
+npm run lint
 ```
 
-The build produces the portfolio/Wholesale static app and checks backend syntax. API tests that require the external PIN database are skipped when that database is unavailable.
+The client build produces the portfolio/Wholesale static app. Run `npm test` and `npm run check` in the separate server repository; PIN-directory tests are skipped when the optional database is unavailable.
 
 ## Security and source control
 
