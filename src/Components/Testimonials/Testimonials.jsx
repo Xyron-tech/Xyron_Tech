@@ -14,24 +14,22 @@ const initialForm = {
   consent: false,
 };
 
-const apiBaseUrl = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
+const configuredApiUrl = (import.meta.env.VITE_API_URL || "").trim();
+const sameOriginApiUrl = typeof window === "undefined" ? "/api" : new URL("/api", window.location.origin).toString();
+const localApiUrl = /^(?:https?:\/\/)?(?:localhost|127(?:\.\d{1,3}){3}|0\.0\.0\.0|\[?::1\]?)(?::\d+)?(?:\/|$)/i.test(configuredApiUrl);
+const apiBaseUrl = (import.meta.env.PROD && localApiUrl ? sameOriginApiUrl : configuredApiUrl || sameOriginApiUrl).replace(/\/+$/, "");
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(initialForm);
-  const [isRecording, setIsRecording] = useState(false);
-  const [audioPreview, setAudioPreview] = useState("");
   const [photoPreview, setPhotoPreview] = useState("");
   const [photoFile, setPhotoFile] = useState(null);
-  const [voiceFile, setVoiceFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formMessage, setFormMessage] = useState("");
   const [formError, setFormError] = useState("");
 
   const sliderRef = useRef(null);
-  const mediaRecorderRef = useRef(null);
-  const audioChunksRef = useRef([]);
   const wheelLockRef = useRef(false);
 
   const dragStartX = useRef(0);
@@ -54,10 +52,6 @@ const Testimonials = () => {
   useEffect(() => () => {
     if (photoPreview) URL.revokeObjectURL(photoPreview);
   }, [photoPreview]);
-
-  useEffect(() => () => {
-    if (audioPreview) URL.revokeObjectURL(audioPreview);
-  }, [audioPreview]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -88,51 +82,6 @@ const Testimonials = () => {
     setPhotoPreview(URL.createObjectURL(file));
   };
 
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-      });
-
-      const recorder = new MediaRecorder(stream);
-
-      mediaRecorderRef.current = recorder;
-      audioChunksRef.current = [];
-
-      recorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          audioChunksRef.current.push(event.data);
-        }
-      };
-
-      recorder.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, {
-          type: recorder.mimeType || "audio/webm",
-        });
-
-        const audioUrl = URL.createObjectURL(audioBlob);
-
-        setAudioPreview(audioUrl);
-        setVoiceFile(new File([audioBlob], `testimonial-${Date.now()}.webm`, { type: audioBlob.type }));
-
-        stream.getTracks().forEach((track) => track.stop());
-      };
-
-      recorder.start();
-      setIsRecording(true);
-    } catch (error) {
-      console.error("Microphone error:", error);
-      alert("Microphone permission kudunga machan.");
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -140,11 +89,6 @@ const Testimonials = () => {
       setFormError("Please confirm your consent before submitting.");
       return;
     }
-    if (voiceFile?.size > 5 * 1024 * 1024) {
-      setFormError("Voice recordings must be 5 MB or smaller.");
-      return;
-    }
-
     setIsSubmitting(true);
     setFormError("");
     setFormMessage("");
@@ -152,7 +96,6 @@ const Testimonials = () => {
       const payload = new FormData();
       Object.entries(form).forEach(([key, value]) => payload.append(key, String(value)));
       if (photoFile) payload.append("photo", photoFile);
-      if (voiceFile) payload.append("voice", voiceFile);
 
       const response = await fetch(`${apiBaseUrl}/testimonials`, { method: "POST", body: payload });
       const data = await response.json();
@@ -161,8 +104,6 @@ const Testimonials = () => {
       setForm(initialForm);
       setPhotoFile(null);
       setPhotoPreview("");
-      setVoiceFile(null);
-      setAudioPreview("");
       setShowForm(false);
       setFormMessage(data.message || "Your experience was submitted for review.");
 
@@ -494,20 +435,6 @@ const Testimonials = () => {
                     {testimonial.message}
                   </p>
 
-                  {/* Voice */}
-                  {testimonial.voice && (
-                    <div className="testimonial-voice">
-                      <div className="voice-label">
-                        🎙️ Voice Feedback
-                      </div>
-
-                      <audio
-                        controls
-                        src={testimonial.voice}
-                      />
-                    </div>
-                  )}
-
                   {/* Links */}
                   {(testimonial.website ||
                     testimonial.instagram) && (
@@ -771,43 +698,6 @@ const Testimonials = () => {
                     rows="5"
                     required
                   />
-                </div>
-
-                {/* Voice */}
-                <div className="voice-record-section">
-
-                  <label>Voice Feedback</label>
-
-                  <div className="voice-controls">
-
-                    {!isRecording ? (
-                      <button
-                        type="button"
-                        className="record-btn"
-                        onClick={startRecording}
-                      >
-                        🎙️ Record Voice
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="record-btn recording"
-                        onClick={stopRecording}
-                      >
-                        ⏹ Stop Recording
-                      </button>
-                    )}
-
-                  </div>
-
-                  {audioPreview && (
-                    <audio
-                      controls
-                      src={audioPreview}
-                      className="recorded-audio"
-                    />
-                  )}
-
                 </div>
 
                 {/* Consent */}

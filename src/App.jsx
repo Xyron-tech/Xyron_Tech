@@ -9,6 +9,7 @@ import Projects from "./Components/Projects/Projects";
 import Contact from "./Components/Contact/Contact";
 import Footer from "./Components/Footer/Footer";
 import HowWeWork from "./Components/HowWeWork/HowWeWork";
+import Pricing from "./Components/Pricing/Pricing";
 import WhatsAppFloat from "./Components/WhatsAppFloat/WhatsAppFloat";
 import Testimonials from "./Components/Testimonials/Testimonials";
 import "./styles/section-headers.css";
@@ -17,14 +18,19 @@ import "./styles/typography.css";
 const WholesaleExperience=lazy(()=>import("./WholesaleExperience.jsx"));
 
 function PortfolioHome(){
-  return <><Home/><About/><Services/><Testimonials/><Contact/></>;
+  return <><Home/><About/><Services/><HowWeWork/> 
+   {/* // <Pricing/>//   */}
+  <Testimonials/><Contact/></>;
 }
 
 function PortfolioRoutes(){
   const {pathname,hash}=useLocation();
   useEffect(()=>{
     if(hash){
-      requestAnimationFrame(()=>document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({behavior:"smooth",block:"start"}));
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        const target=document.getElementById(decodeURIComponent(hash.slice(1)));
+        if(target)window.scrollTo({top:window.scrollY+target.getBoundingClientRect().top-96,behavior:"smooth"});
+      }));
     }else window.scrollTo(0,0);
   },[hash,pathname]);
 

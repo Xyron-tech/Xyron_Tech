@@ -6,7 +6,8 @@ import {FiChevronDown,FiCode,FiGrid,FiHome,FiMail,FiMenu,FiMessageSquare,FiShopp
 
 const workItems=[
   {label:"Projects",to:"/projects"},
-  {label:"How it works",to:"/how-it-works"},
+  {label:"How it works",to:"/#how-we-work",section:"how-we-work"},
+  {label:"Plans",to:"/#pricing",section:"pricing"},
   {label:"Wholesale",href:"/wholesale/register"}
 ];
 
@@ -18,13 +19,14 @@ export default function Navbar(){
   const [activeSection,setActiveSection]=useState("home");
   const navRef=useRef(null);
   const navigate=useNavigate();
-  const {pathname}=useLocation();
+  const {pathname,hash}=useLocation();
 
   const closeMenu=()=>{setOpenGroup(false);setMenuOpen(false);};
   const scrollToSection=id=>{
     closeMenu();
     if(pathname!=="/"){navigate(`/#${id}`);return;}
-    document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"});
+    if(hash!==`#${id}`) navigate(`/#${id}`,{replace:true});
+    requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"}));
   };
 
   useEffect(()=>{
@@ -71,7 +73,7 @@ export default function Navbar(){
     <div id={mobile?"mobile-work-submenu":"work-submenu"} className="nav-submenu" aria-hidden={!openGroup}>
       {workItems.map(item=>item.href
         ?<a href={item.href} key={item.label} onClick={closeMenu}><FiShoppingBag aria-hidden="true"/>{item.label}</a>
-        :<Link to={item.to} key={item.label} onClick={closeMenu}>{item.label}</Link>)}
+        :<Link to={item.to} key={item.label} onClick={event=>{closeMenu();if(item.section&&pathname==="/"){event.preventDefault();scrollToSection(item.section);}}}>{item.label}</Link>)}
     </div>
   </div>;
 
@@ -97,7 +99,7 @@ export default function Navbar(){
 
     <div className={`mobile-overlay ${menuOpen?"active":""}`} aria-hidden="true" onClick={closeMenu}/>
     <div id="mobile-navigation" className={`mobile-menu ${menuOpen?"active":""}`} aria-label="Mobile navigation" aria-hidden={!menuOpen}>
-      <div className="mobile-menu-header"><div className="mobile-menu-brand"><span className="mobile-menu-title">Navigation</span><span className="mobile-menu-subtitle">XyronWebTech</span></div><button className="mobile-close" onClick={closeMenu} aria-label="Close menu" type="button"><FiX/></button></div>
+      <div className="mobile-menu-header"><div className="mobile-menu-brand"><span className="mobile-menu-subtitle">XyronWebTech</span></div><button className="mobile-close" onClick={closeMenu} aria-label="Close menu" type="button"><FiX/></button></div>
       <nav className="mobile-nav-links" aria-label="Mobile main navigation">
         <button type="button" className={activeSection==="home"?"active":""} onClick={()=>scrollToSection("home")}><FiHome aria-hidden="true"/>Home</button>
         <button type="button" className={activeSection==="about"?"active":""} onClick={()=>scrollToSection("about")}>About</button>

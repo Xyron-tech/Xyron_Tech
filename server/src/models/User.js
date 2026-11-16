@@ -1,3 +1,0 @@
-import mongoose from "mongoose";
-const schema=new mongoose.Schema({name:{type:String,required:true,trim:true,maxlength:100},email:{type:String,required:true,unique:true,lowercase:true,trim:true},phone:{type:String,required:true,trim:true},passwordHash:{type:String,required:true,select:false},role:{type:String,enum:["SUPER_ADMIN","BUSINESS_OWNER"],required:true},accountStatus:{type:String,enum:["PENDING","ACTIVE","REJECTED","SUSPENDED"],default:"PENDING",index:true},businessId:{type:mongoose.Schema.Types.ObjectId,ref:"Business",default:null,index:true},lastLoginAt:Date},{timestamps:true});
-export default mongoose.model("User",schema);
