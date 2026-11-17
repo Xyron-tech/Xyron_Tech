@@ -706,6 +706,11 @@ button { color: inherit; }
 .store-admin-tabs { overflow-x: auto; }
 .api-outage { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 9px 18px; border-bottom: 1px solid #f1caca; background: #fff5f5; color: #a63c3c; font-size: 11px; }
 .api-outage button { padding: 6px 10px; border: 1px solid #e7bcbc; border-radius: 7px; background: #fff; color: #9c3333; font-size: 10px; cursor: pointer; }
+.api-connecting { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 10px 16px; border-bottom: 1px solid #d5e5fb; background: #f0f6ff; color: #315b91; font-size: 11px; line-height: 1.5; text-align: center; }
+.api-connecting::before { width: 13px; height: 13px; flex: 0 0 13px; border: 2px solid #b8cdea; border-top-color: #3478d4; border-radius: 50%; content: ""; animation: api-connection-spin .8s linear infinite; }
+.form-connection { justify-content: flex-start; margin: 12px 0; border: 1px solid #d5e5fb; border-radius: 8px; }
+@keyframes api-connection-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .api-connecting::before { animation-duration: 2s; } }
 
 .customer-order,.orders-admin { width: min(1120px,100%); margin: 0 auto; padding: 26px clamp(15px,3vw,34px); }
 .customer-order-heading,.orders-admin-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 18px; }

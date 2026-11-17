@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from "react";
 import {ArrowRight,HelpCircle} from "lucide-react";
-import {api,getApiError} from "../lib/api";
+import {api,getApiError,waitForApi} from "../lib/api";
 
 function scrollFieldIntoView(field){
   if(!field?.isConnected)return;
@@ -16,7 +16,7 @@ function scrollFieldIntoView(field){
 }
 
 export default function CustomerAuthForm({slug,initialMode="login",onAuthenticated}){
-  const [mode,setMode]=useState(initialMode),[form,setForm]=useState({identifier:"",customerName:"",email:"",phone:"",pincode:"",district:"",state:"",deliveryAddress:"",password:"",confirmPassword:""}),[error,setError]=useState(""),[notice,setNotice]=useState(""),[busy,setBusy]=useState(false);
+  const [mode,setMode]=useState(initialMode),[form,setForm]=useState({identifier:"",customerName:"",email:"",phone:"",pincode:"",district:"",state:"",deliveryAddress:"",password:"",confirmPassword:""}),[error,setError]=useState(""),[notice,setNotice]=useState(""),[connectionMessage,setConnectionMessage]=useState(""),[busy,setBusy]=useState(false);
   const focusedFieldRef=useRef(null);
   const base=`/stores/${encodeURIComponent(slug)}/customer`;
 
@@ -49,8 +49,11 @@ export default function CustomerAuthForm({slug,initialMode="login",onAuthenticat
     event.preventDefault();
     setError("");
     setNotice("");
+    setConnectionMessage("");
     setBusy(true);
     try{
+      await waitForApi(setConnectionMessage);
+      setConnectionMessage("Server is ready. Continuing…");
       if(mode==="help"){
         const {data}=await api.post(`${base}/recovery-requests`,{email:form.email,phone:form.phone});
         setNotice(data.message);
@@ -62,7 +65,7 @@ export default function CustomerAuthForm({slug,initialMode="login",onAuthenticat
       setForm(current=>({...current,password:"",confirmPassword:""}));
       await onAuthenticated?.(data.customer);
     }catch(error){setError(getApiError(error));}
-    finally{setBusy(false);}
+    finally{setBusy(false);setConnectionMessage("");}
   }
 
   function changeMode(next){
@@ -92,9 +95,10 @@ export default function CustomerAuthForm({slug,initialMode="login",onAuthenticat
         <label>Email or mobile number<input autoComplete="username" required maxLength="160" value={form.identifier} onChange={event=>setForm(current=>({...current,identifier:event.target.value}))}/></label>
         <label>Password<input type="password" autoComplete="current-password" required minLength="10" maxLength="100" value={form.password} onChange={event=>setForm(current=>({...current,password:event.target.value}))}/></label>
       </>}
+      {connectionMessage&&<div className="api-connecting form-connection" role="status" aria-live="polite">{connectionMessage}</div>}
       {error&&<div className="error" role="alert">{error}</div>}
       {notice&&<div className="customer-auth-notice" role="status">{notice}</div>}
-      <button className="primary" type="submit" disabled={busy}>{busy?mode==="help"?"Sending…":mode==="register"?"Creating account…":"Signing in…":mode==="help"?"Send help request":mode==="register"?"Create account":"Sign in"} <ArrowRight size={15}/></button>
+      <button className="primary" type="submit" disabled={busy}>{busy?connectionMessage.startsWith("Server is ready")?mode==="help"?"Sending…":mode==="register"?"Creating account…":"Signing in…":"Connecting…":mode==="help"?"Send help request":mode==="register"?"Create account":"Sign in"} <ArrowRight size={15}/></button>
     </form>
     <div className="customer-auth-options">
       {mode==="login"?<><button type="button" onClick={()=>changeMode("register")}>Create a new account</button><button type="button" onClick={()=>changeMode("help")}>Forgot password? Help</button></>:<button type="button" onClick={()=>changeMode("login")}>Back to sign in</button>}
