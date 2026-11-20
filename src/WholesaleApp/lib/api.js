@@ -1,7 +1,8 @@
 import axios from "axios";
+import {resolveApiBaseUrl} from "./apiBaseUrl";
 const configuredApiUrl=(import.meta.env.VITE_API_URL||"").trim();
 const sameOriginApiUrl=typeof window==="undefined"?"/api":new URL("/api",window.location.origin).toString();
-const apiBaseUrl=(import.meta.env.PROD?sameOriginApiUrl:configuredApiUrl||sameOriginApiUrl).replace(/\/+$/,"");
+const apiBaseUrl=resolveApiBaseUrl(configuredApiUrl,import.meta.env.PROD,sameOriginApiUrl);
 export const api=axios.create({baseURL:apiBaseUrl,timeout:15000,withCredentials:true,headers:{"Content-Type":"application/json"}});
 const API_READY_TIMEOUT_MS=120000;
 const API_HEALTH_TIMEOUT_MS=20000;

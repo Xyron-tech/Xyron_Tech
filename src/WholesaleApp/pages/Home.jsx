@@ -1,22 +1,22 @@
 import {useEffect,useState} from "react";
 import {Link} from "react-router-dom";
-import {ArrowRight,ArrowUpRight,Boxes,Check,ChevronLeft,ChevronRight,CreditCard,Layers3,LifeBuoy,MessagesSquare,Package,ShieldCheck,Store,Workflow} from "lucide-react";
+import {ArrowRight,ArrowUpRight,Bell,Boxes,Check,ChevronLeft,ChevronRight,CreditCard,Layers3,Package,ShieldCheck,Store,Truck,Workflow} from "lucide-react";
 import HowWeWork from "../../Components/HowWeWork/HowWeWork";
 import {planCatalog} from "../data/planCatalog";
 import Testimonials from "../../Components/Testimonials/Testimonials";
 
 const slides=[
-  {eyebrow:"WHOLESALE, REIMAGINED",title:<>Your business.<br/><em>Your own store.</em></>,copy:"Start affordable wholesale management from ₹199 per month with your own products, branding, orders, and customer conversations.",label:"One business, one storefront",icon:Store},
+  {eyebrow:"WHOLESALE, REIMAGINED",title:<>Your business.<br/><em>Your own store.</em></>,copy:"Start affordable wholesale management from ₹199 per month with your own products, branding, orders, and customer notifications.",label:"One business, one storefront",icon:Store},
   {eyebrow:"MADE FOR WHOLESALE",title:<>Your products.<br/><em>Managed your way.</em></>,copy:"Manage product details, pricing, stock, store banners, and checkout settings from your business workspace.",label:"A catalogue built around you",icon:Package},
-  {eyebrow:"ONE CONNECTED WORKSPACE",title:<>From first order<br/><em>to customer chat.</em></>,copy:"Review incoming orders, update fulfilment, verify payment proof, and answer each customer in a store-specific workflow.",label:"Orders and conversations together",icon:Workflow}
+  {eyebrow:"ONE CONNECTED WORKSPACE",title:<>From first order<br/><em>to delivery.</em></>,copy:"Review orders, calculate delivery from customer PIN codes, and send payment instructions directly to each order.",label:"Orders, delivery, and payments together",icon:Workflow}
 ];
 
 const modules=[
   {number:"01",title:"Your own storefront",copy:"Set your store name, logo, banner, social links, and unique customer-facing URL.",icon:Store,tone:"blue",status:"Available"},
   {number:"02",title:"Products & inventory",copy:"Add products, set wholesale prices and quantities, and manage availability in your catalogue.",icon:Boxes,tone:"violet",status:"Available"},
-  {number:"03",title:"Orders & customer chat",copy:"Review store orders, update fulfilment status, and message customers in an order-specific chat.",icon:MessagesSquare,tone:"cyan",status:"Available"},
-  {number:"04",title:"Payments & verification",copy:"Set one active customer-payment QR and instructions, then review submitted UTR and proof.",icon:CreditCard,tone:"green",status:"Available"},
-  {number:"05",title:"Xyron support & updates",copy:"Contact Xyron Admin privately and receive persistent platform messages in your dashboard inbox.",icon:LifeBuoy,tone:"blue",status:"Available"}
+  {number:"03",title:"Orders & delivery",copy:"Review customer orders, set location-based per-kg delivery rates, and call or WhatsApp customers when a rate needs confirmation.",icon:Truck,tone:"cyan",status:"Available"},
+  {number:"04",title:"Payments & customer alerts",copy:"Enable a QR or UPI payment option and automatically notify customers with open orders when payment details change.",icon:CreditCard,tone:"green",status:"Available"},
+  {number:"05",title:"Platform updates",copy:"Receive important announcements from Xyron Super Admin in your dashboard notifications.",icon:Bell,tone:"blue",status:"Available"}
 ];
 
 export default function Home(){
@@ -53,7 +53,7 @@ export default function Home(){
                 <div className="preview-headline">{slide.label}</div>
                 <div className="preview-line preview-line-long"/><div className="preview-line"/>
                 <div className="preview-cards">
-                  {[Store,Package,MessagesSquare].map((Icon,index)=><div className="preview-card" key={index}><span><Icon size={18}/></span><i/><i/></div>)}
+                  {[Store,Package,Truck].map((Icon,index)=><div className="preview-card" key={index}><span><Icon size={18}/></span><i/><i/></div>)}
                 </div>
                 <div className="preview-status"><span/><b>One business at a time</b><small>Designed for your store</small></div>
               </div>
@@ -87,7 +87,7 @@ export default function Home(){
             <div className="module-status"><span/>{status}</div>
           </article>)}
         </div>
-        <div className="platform-note"><span className="note-icon"><ShieldCheck size={20}/></span><p><b>Your business stays separate.</b><br/>Products, orders, customer chats, store settings, and support conversations are scoped to the correct business workspace.</p><Link to="/register">Apply for a business account <ArrowRight size={16}/></Link></div>
+        <div className="platform-note"><span className="note-icon"><ShieldCheck size={20}/></span><p><b>Your business stays separate.</b><br/>Products, orders, customer alerts, and store settings are scoped to the correct business workspace.</p><Link to="/register">Apply for a business account <ArrowRight size={16}/></Link></div>
       </section>
 
       <section className="plans-section section-wrap" id="plans">

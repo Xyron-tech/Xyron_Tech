@@ -14,7 +14,7 @@ The Wholesale experience is mounted within the portfolio app and uses its own `/
 - MongoDB (local or Atlas)
 - A deployed Node.js API service for production
 - Cloudinary credentials for image uploads
-- The optional PIN directory SQLite database for PIN lookups and checkout
+- The optional PIN directory SQLite database for state/district lists and PIN-area maps
 
 ## Local development
 
@@ -62,10 +62,10 @@ Deploy the Express API from the separate `Xyron-Wholesale` server repository. Co
 - `JWT_SECRET` (at least 32 random characters)
 - `MONGODB_URI`
 - `CLOUDINARY_URL`, or all three `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and `CLOUDINARY_API_SECRET`
-- `XYRON_PIN_DATABASE_PATH` when the PIN database is available on the API host
+- `XYRON_PIN_DATABASE_PATH` when the optional regions/map database is available on the API host
 - `SUPER_ADMIN_EMAIL` and `SUPER_ADMIN_PASSWORD` for initial setup only
 
-The production client sends API requests to the same-origin `/api` path. The Vercel rewrite proxies these requests to `https://xyron-wholesale.onrender.com/api`, so session cookies remain first-party; do not set `VITE_API_URL` to the Render host in the production project. The API allows both `https://xyronwebtech.com` and `https://www.xyronwebtech.com`; configure `CLIENT_ORIGIN` on the API for any additional frontend origin.
+The production client sends API requests to the same-origin `/api` path. The Vercel rewrite proxies these requests to `https://xyron-wholesale.onrender.com/api`, so session cookies remain first-party; do not set `VITE_API_URL` in the production project. For local Vite development, `VITE_API_URL` can be the API origin or its `/api` URL; the client normalizes either form. The API allows both `https://xyronwebtech.com` and `https://www.xyronwebtech.com`; configure `CLIENT_ORIGIN` on the API for any additional frontend origin.
 
 The API host uses its own MongoDB, JWT, Cloudinary, and optional PIN-directory settings. Do not copy these server secrets into the client project.
 

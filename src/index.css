@@ -10,6 +10,11 @@
   --font-2xl: 2rem;
   --font-3xl: clamp(2.25rem, 4.8vw, 3rem);
   --font-display: clamp(2.5rem, 5.5vw, 3.75rem);
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --tracking-tight: -.035em;
   --leading-tight: 1.15;
   --leading-snug: 1.35;
   --leading-normal: 1.7;

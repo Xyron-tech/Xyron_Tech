@@ -211,6 +211,19 @@
     1.8;
 }
 
+.projects-load-error {
+
+  width: 100%;
+
+  margin: 18px auto 0;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
 
 /* =========================================================
    ACCENT

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Projects.css";
 
 import {
@@ -9,13 +9,14 @@ import {
 import portfolio from "../../assets/portfolio.webp";
 import srikrishnarestaurant from "../../assets/srikrishnarestaurant.webp";
 import srivarahidattaguru from "../../assets/srivarahidattaguru.webp";
+import { api, getApiError } from "../../WholesaleApp/lib/api";
 
 
 /* =========================================================
    PROJECT DATA
 ========================================================= */
 
-const projects = [
+const featuredProjects = [
   {
     id: "01",
 
@@ -89,6 +90,58 @@ const Projects = () => {
   const pathRef = useRef(null);
 
   const mobilePathRef = useRef(null);
+  const [additionalProjects, setAdditionalProjects] = useState([]);
+  const [projectLoadError, setProjectLoadError] = useState("");
+  const [viewportSize, setViewportSize] = useState(() => {
+    if (typeof window === "undefined") return "desktop";
+    if (window.innerWidth <= 700) return "mobile";
+    return window.innerWidth <= 1000 ? "tablet" : "desktop";
+  });
+  const projects = [
+    ...featuredProjects,
+    ...additionalProjects.map(project => ({
+      ...project,
+      image: project.imageUrl,
+    })),
+  ].map((project, index) => ({
+    ...project,
+    displayNumber: String(index + 1).padStart(2, "0"),
+  }));
+  const rowSpacing = viewportSize === "mobile" ? 720 : 820;
+  const minimumJourneyHeight = viewportSize === "mobile" ? 2200 : viewportSize === "tablet" ? 2350 : 2500;
+  const journeyHeight = Math.max(
+    minimumJourneyHeight,
+    80 + Math.max(0, projects.length - 1) * rowSpacing + (viewportSize === "mobile" ? 650 : 780)
+  );
+
+  useEffect(() => {
+    let active = true;
+    api.get("/portfolio/projects")
+      .then(({ data }) => {
+        if (active) {
+          if (!Array.isArray(data?.projects)) {
+            setProjectLoadError("The server returned an invalid project list.");
+          } else {
+            setAdditionalProjects(data.projects);
+            setProjectLoadError("");
+          }
+        }
+      })
+      .catch(error => {
+        if (active) setProjectLoadError(getApiError(error));
+      });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    const updateViewportSize = () => {
+      const width = window.innerWidth;
+      const nextSize = width <= 700 ? "mobile" : width <= 1000 ? "tablet" : "desktop";
+      setViewportSize(currentSize => currentSize === nextSize ? currentSize : nextSize);
+    };
+    window.addEventListener("resize", updateViewportSize, { passive: true });
+    return () => window.removeEventListener("resize", updateViewportSize);
+  }, []);
 
 
   /* =======================================================
@@ -303,7 +356,7 @@ const Projects = () => {
 
     };
 
-  }, []);
+  }, [projects.length, journeyHeight]);
 
 
   /* =========================================================
@@ -348,6 +401,11 @@ const Projects = () => {
 
         </p>
 
+        {projectLoadError && (
+          <p className="projects-load-error" role="status">
+            Additional portfolio projects could not be loaded: {projectLoadError}
+          </p>
+        )}
 
         <span
           className="section-accent"
@@ -361,7 +419,7 @@ const Projects = () => {
           JOURNEY
       ===================================================== */}
 
-      <div className="projects-journey">
+      <div className="projects-journey" style={{ height: `${journeyHeight}px` }}>
 
 
         {/* ===================================================
@@ -448,6 +506,7 @@ const Projects = () => {
 
         <svg
           className="journey-path journey-path-mobile"
+          style={{ height: `${journeyHeight}px` }}
           viewBox="0 0 100 1900"
           preserveAspectRatio="none"
           aria-hidden="true"
@@ -529,6 +588,7 @@ const Projects = () => {
 
             <div
               key={project.id}
+              style={{ top: `${80 + index * rowSpacing}px` }}
               className={`
                 journey-row
                 ${
@@ -546,7 +606,7 @@ const Projects = () => {
               <div className="journey-dot">
 
                 <span>
-                  {project.id}
+                  {project.displayNumber}
                 </span>
 
               </div>
@@ -590,7 +650,7 @@ const Projects = () => {
 
                       PROJECT{" "}
 
-                      {project.id}
+                      {project.displayNumber}
 
                     </div>
 
@@ -617,7 +677,7 @@ const Projects = () => {
 
                     <div className="project-number">
 
-                      {project.id}
+                      {project.displayNumber}
 
                     </div>
 
@@ -629,7 +689,7 @@ const Projects = () => {
 
                         PROJECT{" "}
 
-                        {project.id}
+                        {project.displayNumber}
 
                       </span>
 

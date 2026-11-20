@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://xyronwebtech.com/sitemap.xml
+Sitemap: https://xyronwebtech.com/api/seo/sitemap.xml

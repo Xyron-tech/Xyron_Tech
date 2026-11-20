@@ -1,5 +1,5 @@
 import {useCallback,useEffect,useState} from "react";
-import {BarChart3,CalendarDays,MessageCircle,RefreshCw} from "lucide-react";
+import {ArrowUpRight,BarChart3,CalendarDays,RefreshCw} from "lucide-react";
 import {Link} from "react-router-dom";
 import {api,getApiError} from "../lib/api";
 
@@ -32,7 +32,7 @@ export default function BusinessAnalytics(){
   return <section className="business-analytics">
     <header className="orders-admin-heading"><div><span className="eyebrow"><i/> BUSINESS WORKSPACE</span><h1>Order analytics</h1><p>Daily, weekly, and monthly sales and order totals for this business.</p></div><button type="button" className="refresh-orders" onClick={()=>{setLoading(true);load();}} disabled={loading}><RefreshCw size={15}/> Refresh</button></header>
     <div className="analytics-period" role="group" aria-label="Analytics period"><button type="button" className={period==="today"?"active":""} onClick={()=>{setLoading(true);setError("");setPeriod("today");}}><CalendarDays size={15}/> Today</button><button type="button" className={period==="week"?"active":""} onClick={()=>{setLoading(true);setError("");setPeriod("week");}}><CalendarDays size={15}/> Weekly</button><button type="button" className={period==="month"?"active":""} onClick={()=>{setLoading(true);setError("");setPeriod("month");}}><CalendarDays size={15}/> Monthly</button></div>
-    {loading?<div className="panel">Loading report…</div>:error?<div className="analytics-locked panel"><BarChart3 size={28}/><h2>Analytics unavailable</h2><p>{error}</p><p>Ask Xyron Admin to enable analytics for your business plan.</p><Link className="primary" to="/dashboard/support?upgrade=1"><MessageCircle size={15}/> Contact Xyron Admin</Link></div>:<>
+    {loading?<div className="panel">Loading report…</div>:error?<div className="analytics-locked panel"><BarChart3 size={28}/><h2>Analytics unavailable</h2><p>{error}</p><p>Ask Xyron Admin to enable analytics for your business plan.</p><Link className="primary" to="/dashboard/upgrade"><ArrowUpRight size={15}/> View plan options</Link></div>:<>
       {range&&<p className="analytics-range">Report period: {new Date(range.from).toLocaleDateString()} – {new Date(range.to).toLocaleDateString()}</p>}
       {summary.totalOrders===0&&<p className="analytics-empty">There are no orders in this period yet. New orders will appear here automatically.</p>}
       <div className="analytics-grid">

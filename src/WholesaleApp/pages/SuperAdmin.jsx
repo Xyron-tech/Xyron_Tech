@@ -5,7 +5,7 @@ import {api,getApiError} from "../lib/api";
 import {notify} from "../lib/notifications";
 import {planFeatureDefaults} from "../data/planCatalog";
 
-const featureNames={advancedSeo:"Advanced SEO",quickReplies:"Chat quick replies",analytics:"Weekly/monthly analytics"};
+const featureNames={advancedSeo:"Advanced SEO",analytics:"Weekly/monthly analytics"};
 
 export default function SuperAdmin(){
   const storePathPrefix=useHref("/store/");

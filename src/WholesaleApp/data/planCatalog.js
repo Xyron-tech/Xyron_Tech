@@ -5,8 +5,8 @@ export const planCatalog=[
     price:199,
     products:"25 products",
     slides:"3 banners",
-    features:["Store profile","Products and orders","Customer chat"],
-    featureDefaults:{advancedSeo:false,quickReplies:false,analytics:false}
+    features:["Store profile","Products and orders","Order status alerts"],
+    featureDefaults:{advancedSeo:false,analytics:false}
   },
   {
     id:"GROWTH",
@@ -14,8 +14,8 @@ export const planCatalog=[
     price:499,
     products:"50 products",
     slides:"6 banners",
-    features:["Advanced SEO","Chat quick replies","All Starter features"],
-    featureDefaults:{advancedSeo:true,quickReplies:true,analytics:false}
+    features:["Advanced SEO","6 banner slides","All Starter features"],
+    featureDefaults:{advancedSeo:true,analytics:false}
   },
   {
     id:"PRO",
@@ -23,8 +23,8 @@ export const planCatalog=[
     price:999,
     products:"Unlimited products",
     slides:"6 banners",
-    features:["Daily, weekly & monthly sales analytics","All Growth features"],
-    featureDefaults:{advancedSeo:true,quickReplies:true,analytics:true}
+    features:["Daily, weekly & monthly sales analytics","Unlimited products","All Growth features"],
+    featureDefaults:{advancedSeo:true,analytics:true}
   }
 ];
 

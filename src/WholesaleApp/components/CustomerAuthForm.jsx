@@ -16,7 +16,7 @@ function scrollFieldIntoView(field){
 }
 
 export default function CustomerAuthForm({slug,initialMode="login",onAuthenticated}){
-  const [mode,setMode]=useState(initialMode),[form,setForm]=useState({identifier:"",customerName:"",email:"",phone:"",pincode:"",district:"",state:"",deliveryAddress:"",password:"",confirmPassword:""}),[error,setError]=useState(""),[notice,setNotice]=useState(""),[connectionMessage,setConnectionMessage]=useState(""),[busy,setBusy]=useState(false);
+  const [mode,setMode]=useState(initialMode),[form,setForm]=useState({identifier:"",customerName:"",email:"",phone:"",pincode:"",district:"",state:"",deliveryAddress:"",password:"",confirmPassword:""}),[error,setError]=useState(""),[notice,setNotice]=useState(""),[connectionMessage,setConnectionMessage]=useState(""),[pincodeMessage,setPincodeMessage]=useState(""),[busy,setBusy]=useState(false);
   const focusedFieldRef=useRef(null);
   const base=`/stores/${encodeURIComponent(slug)}/customer`;
 
@@ -43,6 +43,18 @@ export default function CustomerAuthForm({slug,initialMode="login",onAuthenticat
 
   function clearFocusedField(event){
     if(!event.currentTarget.contains(event.relatedTarget))focusedFieldRef.current=null;
+  }
+
+  async function lookupCustomerPincode(){
+    if(!/^[1-9]\d{5}$/.test(form.pincode))return;
+    setPincodeMessage("Checking the PIN with India Post…");
+    try{
+      const {data}=await api.get(`/pincodes/${form.pincode}`);
+      setForm(current=>({...current,district:data.details.district,state:data.details.state}));
+      setPincodeMessage(`${data.details.district}, ${data.details.state} verified.`);
+    }catch(error){
+      setPincodeMessage(`Could not verify this PIN. Enter district and state manually. ${getApiError(error)}`);
+    }
   }
 
   async function submit(event){
@@ -82,7 +94,7 @@ export default function CustomerAuthForm({slug,initialMode="login",onAuthenticat
         <label>Full name<input type="text" autoComplete="name" required minLength="2" maxLength="100" value={form.customerName} onChange={event=>setForm(current=>({...current,customerName:event.target.value}))}/></label>
         <label>Email address<input type="email" autoComplete="email" required maxLength="160" value={form.email} onChange={event=>setForm(current=>({...current,email:event.target.value}))}/></label>
         <label>Mobile number<input type="tel" inputMode="tel" autoComplete="tel" required minLength="10" maxLength="20" placeholder="+91 98765 43210" value={form.phone} onChange={event=>setForm(current=>({...current,phone:event.target.value}))}/></label>
-        <label>Delivery pincode<input type="text" inputMode="numeric" autoComplete="postal-code" required minLength="6" maxLength="6" pattern="[1-9]\d{5}" value={form.pincode} onChange={event=>setForm(current=>({...current,pincode:event.target.value.replace(/\D/g,"").slice(0,6)}))} placeholder="6-digit pincode"/></label>
+        <label>Delivery pincode<input type="text" inputMode="numeric" autoComplete="postal-code" required minLength="6" maxLength="6" pattern="[1-9]\d{5}" value={form.pincode} onBlur={lookupCustomerPincode} onChange={event=>{setPincodeMessage("");setForm(current=>({...current,pincode:event.target.value.replace(/\D/g,"").slice(0,6)}));}} placeholder="6-digit pincode"/>{pincodeMessage&&<small role="status">{pincodeMessage}</small>}</label>
         <label>District<input type="text" autoComplete="address-level2" required minLength="2" maxLength="100" value={form.district} onChange={event=>setForm(current=>({...current,district:event.target.value}))}/></label>
         <label>State<input type="text" autoComplete="address-level1" required minLength="2" maxLength="100" value={form.state} onChange={event=>setForm(current=>({...current,state:event.target.value}))}/></label>
         <label>Full delivery address<textarea autoComplete="street-address" required minLength="8" maxLength="500" rows="3" value={form.deliveryAddress} onChange={event=>setForm(current=>({...current,deliveryAddress:event.target.value}))}/></label>
